@@ -392,7 +392,7 @@
                     "encoder": "RadarTargetDistanceEncoder"
                 },
                 "RadarTargetSpeed": {
-                    "offset": 0,
+                    "offset": 8,
                     "width": 8,
                     "initial": 0,
                     "encoder": "RadarTargetSpeedEncoder"
@@ -725,12 +725,6 @@
         }
     },
     "schedules": {
-        "Normal": {
-            "delay": "30 ms",
-            "strategy": "randomize|balance|order",
-            "messages": {
-                "SpeedStatus": 1
-            }
-        }
+
     }
 }
