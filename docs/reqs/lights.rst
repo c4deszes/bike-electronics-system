@@ -34,8 +34,8 @@ Modes
         * Brake light is enabled but only if the rear light can determine the condition on it's own
 
     * - Adaptive
-      - * Front light is on, level is set according to ambient light level
-        * Rear light is on, level is set according to ambient light level
+      - * Front light is on, level is set according to ambient light level (optionally enabled daytime running lights)
+        * Rear light is on, level is set according to ambient light level (optionally enabled daytime running lights)
         * Brake lights come on during braking
         * Turn signals are enabled upon user request
         * High beams also turn on upon user request

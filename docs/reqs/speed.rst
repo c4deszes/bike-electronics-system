@@ -17,11 +17,11 @@ Speed
   :id: REQ_ACCELERATION_RANGE
   :status: final
 
-  The rotor sensor shall be capable of measuring accelerations from ``-3g`` to ``3g``.
+  The rotor sensor shall be capable of measuring accelerations from ``-1.5g`` to ``1.5g``.
 
 .. req:: Tire Pressure monitoring
   :id: REQ_TIRE_PRESSURE_MONITOR
   :status: draft
-  
+
   The rotor sensor shall be able to distinguish tire circumferences based on speed and then indicate
   whether a tire is low pressure.

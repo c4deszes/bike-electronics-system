@@ -47,7 +47,7 @@ Battery
   There should be an LED indication on the battery management system showing that:
 
   * the battery is connected and good, by a solid red color
-  * the battery is connected but has a low charge, by a blinking red color
+  * the battery is connected but has a low charge, by a slowly blinking red color
   * the battery is connected but has a very low charge, by a a rapidly blinking red color
 
 .. req:: Battery removal intent

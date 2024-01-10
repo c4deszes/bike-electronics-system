@@ -42,7 +42,7 @@ Rear light
 
 **Target:**
 
-* Microcontroller: ATSAMD21x
+* Microcontroller: ATSAMD21x or ATTINY826
 * Communication: LINE / LIN PHY
 * Power consumption: 500mA max. continuous
 
@@ -70,7 +70,7 @@ Battery manager
 
 **Target:**
 
-* Microcontroller: ATSAMD21x
+* Microcontroller: ATSAMD21x or ATTINY826
 * Communication: LINE / LIN PHY
 * Power consumption: 100mA max. internal, 5.0A supplied, 500mA generator input
 
@@ -84,9 +84,9 @@ Cycle computer
 
 **Target:**
 
-* Microcontroller: ATSAMD21x
+* Microcontroller: ESP32-S2/S3
 * Communication: LINE / LIN PHY
-* Power consumption: 200mA max. continuous
+* Power consumption: 300mA max. continuous
 
 More ideas
 ----------

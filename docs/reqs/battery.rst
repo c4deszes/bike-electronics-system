@@ -11,7 +11,7 @@ Battery
   :id: REQ_BATTERY_CURRENT
   :status: draft
 
-  The battery shall be able to provide 5A peak current and 2A contiuously.
+  The battery shall be able to provide ``5A`` peak current and ``2A`` contiuously.
 
 .. req:: Battery capacity
   :id: REQ_BATTERY_CAPACITY
