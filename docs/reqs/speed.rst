@@ -18,6 +18,8 @@ Speed
   :status: final
 
   The rotor sensor shall be capable of measuring accelerations from ``-1.5g`` to ``1.5g``.
+  
+  During standard operation the expected accelerations will be within ``-0.5g`` to ``0.5g``.
 
 .. req:: Tire Pressure monitoring
   :id: REQ_TIRE_PRESSURE_MONITOR

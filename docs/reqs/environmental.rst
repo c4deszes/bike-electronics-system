@@ -43,7 +43,7 @@ Chemical
         * Polymerised fatty acid ester
         * Glyceride alkyl ester mix.
 
-    * household soap at 10% concentration
+    * household soap at 10 M/M% concentration
     * threadlocker
 
         * Tetramethylene dimethacrylat

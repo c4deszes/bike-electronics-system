@@ -59,11 +59,12 @@ Battery
   operation is coordinated by the cycle computer and can be rejected by it.
 
   When rejecting the park the LED should blink twice within 1 second and the user will have to press
-  it again to attempt a park.
+  it again to attempt parking.
 
   When shutdown happened successfully the LED should turn off.
 
   If the shutdown happened but the battery was not removed then the LED should remain off until bus
-  activity.
+  activity which is ideally initiated by the cycle computer or one of the peripherals sensing
+  movement.
 
   .. image:: assets/battery.svg
