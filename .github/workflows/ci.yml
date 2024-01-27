@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install library
-        run: python -m pip install git+https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/c4deszes/bike-line-protocol.git#subdirectory=python-lib
+        run: python -m pip install git+ssh://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/c4deszes/bike-line-protocol.git#subdirectory=python-lib
 
       - name: Validate network
         run: python validate.py
