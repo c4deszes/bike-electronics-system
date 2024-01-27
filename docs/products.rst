@@ -17,6 +17,7 @@ Rotor sensor
 * Microcontroller: ATSAMD21x
 * Communication: LINE / LIN PHY
 * Power consumption: 100mA
+* Software: C (ARM-GCC), Custom HAL, CMake
 
 Lockout actuator
 ----------------
@@ -31,6 +32,7 @@ Lockout actuator
 * Microcontroller: ATSAMD21x
 * Communication: LINE / LIN PHY
 * Power consumption: 100mA idle, 3.0A peak
+* Software: C (ARM-GCC), Custom HAL, CMake
 
 Rear light
 ----------
@@ -45,6 +47,7 @@ Rear light
 * Microcontroller: ATSAMD21x or ATTINY826
 * Communication: LINE / LIN PHY
 * Power consumption: 500mA max. continuous
+* Software: C (ARM-GCC), Custom HAL, CMake
 
 Front light
 -----------
@@ -59,6 +62,7 @@ Front light
 * Microcontroller: ATSAMD21x
 * Communication: LINE / LIN PHY
 * Power consumption: 2.0A max. continuous
+* Software: Rust
 
 Battery manager
 ---------------
@@ -73,6 +77,7 @@ Battery manager
 * Microcontroller: ATSAMD21x or ATTINY826
 * Communication: LINE / LIN PHY
 * Power consumption: 100mA max. internal, 5.0A supplied, 500mA generator input
+* Software: Rust, SAMD HAL
 
 Cycle computer
 --------------
@@ -87,6 +92,7 @@ Cycle computer
 * Microcontroller: ESP32-S2/S3
 * Communication: LINE / LIN PHY
 * Power consumption: 300mA max. continuous
+* Software: C/C++ (ESP32-GCC), CMake/ESP32-IDF
 
 More ideas
 ----------
