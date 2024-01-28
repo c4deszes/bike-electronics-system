@@ -48,4 +48,4 @@ Modes
         * Turn signals are disabled
         * High beams are disabled
         * Wide beams are disabled
-      - The lights stay in emergency mode
+      - The lights stay in emergency mode until POR

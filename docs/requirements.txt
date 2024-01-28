@@ -5,6 +5,7 @@ sphinx-needs
 jupyter-sphinx
 matplotlib
 sphinx-rtd-theme
+sphinxcontrib-drawio
 sphinxcontrib-jsmath
 sphinxcontrib-kroki
 sphinxcontrib-mermaid
