@@ -1,4 +1,7 @@
 Architecture
 ============
 
-.. drawio-figure:: arch.drawio
+Product layout
+--------------
+
+.. drawio-figure:: product-layout.drawio

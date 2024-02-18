@@ -1,5 +1,5 @@
 {
-    "name": "test-network",
+    "name": "BicycleNetwork1",
     "baudrate": 19200,
     "master": "BodyComputer",
     "nodes": {
