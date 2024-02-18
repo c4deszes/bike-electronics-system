@@ -3,5 +3,7 @@ Design
 
 .. toctree::
 
-    connectors
-    cable-harnesses
+    electronics/connectors
+    electronics/cable-harnesses
+
+    communication/speed_signals

@@ -27,6 +27,9 @@ Ingress
     Every product shall be rated level 5 of the IP rating standard, meaning the products are subject
     to water spray and should continue operating normally.
 
+    Products that are 10cm from the ground shall be rated level 6, meaning they are subject to
+    submersion in water.
+
 Chemical
 --------
 

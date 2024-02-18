@@ -13,3 +13,9 @@ Modes
   * Command: actuators go the commanded position
   * Open: actuators stay in the open position, ignoring all commands
   * Manual: actuator movement is disabled, only manual adjustments work
+
+.. req:: Actuation speed
+  :id: REQ_SUSPENSION_CONTROL
+  :status: draft
+
+  The actuators shall be able to go from their open to their closed position within ``4 seconds``.
