@@ -422,6 +422,55 @@
                 }
             }
         },
+        "RearLightSensorDebug": {
+            "id": "0x1053",
+            "size": 8,
+            "layout": {
+                "AccelerationX": {
+                    "offset": 0,
+                    "width": 16,
+                    "initial": 0
+                },
+                "AccelerationY": {
+                    "offset": 16,
+                    "width": 16,
+                    "initial": 0
+                },
+                "AccelerationZ": {
+                    "offset": 32,
+                    "width": 16,
+                    "initial": 0
+                },
+                "SensorErrorCode": {
+                    "offset": 48,
+                    "width": 8,
+                    "initial": 0
+                },
+                "InternalBrakeStatus": {
+                    "offset": 56,
+                    "width": 1,
+                    "initial": "Off",
+                    "encoder": "GenericSwitchEncoder"
+                }
+            }
+        },
+        "RearLightDriverDebug": {
+            "id": "0x1054",
+            "size": 4,
+            "description": "",
+            "layout": {
+                "TailLightDuty": {
+                    "offset": 0,
+                    "width": 16,
+                    "initial": 0
+                },
+                "BrakeLightDuty": {
+                    "offset": 16,
+                    "width": 16,
+                    "initial": 0
+                }
+            }
+        },
         "FrontLightSetting": {
             "id": "0x1060",
             "size": 1,
