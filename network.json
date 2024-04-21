@@ -48,7 +48,9 @@
             ],
             "publishes": [
                 "RearLightStatus",
-                "RearRadarStatus"
+                "RearRadarStatus",
+                "RearLightSensorDebug",
+                "RearLightDriverDebug"
             ]
         },
         "FrontLight": {
@@ -424,7 +426,7 @@
         },
         "RearLightSensorDebug": {
             "id": "0x1053",
-            "size": 8,
+            "size": 7,
             "layout": {
                 "AccelerationX": {
                     "offset": 0,
@@ -445,12 +447,6 @@
                     "offset": 48,
                     "width": 8,
                     "initial": 0
-                },
-                "InternalBrakeStatus": {
-                    "offset": 56,
-                    "width": 1,
-                    "initial": "Off",
-                    "encoder": "GenericSwitchEncoder"
                 }
             }
         },
