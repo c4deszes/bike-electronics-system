@@ -60,7 +60,8 @@
                 "FrontLightSetting"
             ],
             "publishes": [
-                "FrontLightStatus"
+                "FrontLightStatus",
+                "FrontLightDebug"
             ]
         }
     },
@@ -513,23 +514,44 @@
                     "initial": "Off",
                     "encoder": "LightStatusEncoder"
                 },
-                "HighBeamStatus": {
+                "Reserved1": {
                     "offset": 2,
                     "width": 2,
-                    "initial": "Off",
-                    "encoder": "LightStatusEncoder"
+                    "initial": 0
                 },
-                "WideBeamStatus": {
+                "Reserved2": {
                     "offset": 4,
                     "width": 2,
-                    "initial": "Off",
-                    "encoder": "LightStatusEncoder"
+                    "initial": 0
                 },
-                "SignalLightStatus": {
+                "ThermalStatus": {
                     "offset": 6,
                     "width": 2,
-                    "initial": "Off",
-                    "encoder": "LightStatusEncoder"
+                    "initial": "NotMeasured",
+                    "encoder": "ThermalStatusEncoder"
+                }
+            }
+        },
+        "FrontLightDebug": {
+            "id": "0x1062",
+            "size": 8,
+            "layout": {
+                "DriveTemperature": {
+                    "offset": 0,
+                    "width": 8,
+                    "initial": 0,
+                    "encoder": "TemperatureEncoder"
+                },
+                "McuTemperature": {
+                    "offset": 8,
+                    "width": 8,
+                    "initial": 0,
+                    "encoder": "TemperatureEncoder"
+                },
+                "LightDuty": {
+                    "offset": 16,
+                    "width": 16,
+                    "initial": 0
                 }
             }
         }
@@ -636,6 +658,12 @@
                 "0": "Default",
                 "1": "Off"
             }
+        },
+        "TemperatureEncoder": {
+            "type": "formula",
+            "scale": 1,
+            "offset": -40,
+            "unit": "°C"
         },
         "LockoutPositionEncoder": {
             "type": "formula",
