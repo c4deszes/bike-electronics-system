@@ -8,12 +8,10 @@
             "subscribes": [
                 "SpeedStatus",
                 "RideStatus",
-                "RoadSurfaceStatus",
-                "SpeedSensorMonitoring",
-                "LockoutStatus"
+                "RearLightStatus",
+                "FrontLightStatus"
             ],
             "publishes": [
-                "LockoutSetting",
                 "LightSynchronization",
                 "RearLightSetting",
                 "FrontLightSetting"
@@ -26,17 +24,7 @@
             "publishes": [
                 "SpeedStatus",
                 "RideStatus",
-                "RoadSurfaceStatus",
-                "SpeedSensorMonitoring"
-            ]
-        },
-        "LockoutActuator": {
-            "address": "0x2",
-            "subscribes": [
-                "LockoutSetting"
-            ],
-            "publishes": [
-                "LockoutStatus"
+                "SpeedDebug"
             ]
         },
         "RearLight": {
@@ -48,14 +36,13 @@
             ],
             "publishes": [
                 "RearLightStatus",
-                "RearRadarStatus",
-                "RearLightSensorDebug",
-                "RearLightDriverDebug"
+                "RearLightDebug"
             ]
         },
         "FrontLight": {
             "address": "0x04",
             "subscribes": [
+                "SpeedStatus",
                 "LightSynchronization",
                 "FrontLightSetting"
             ],
@@ -138,34 +125,7 @@
                 }
             }
         },
-        "RoadSurfaceStatus": {
-            "id": "0x1002",
-            "size": 2,
-            "layout": {
-                "RoadQuality": {
-                    "offset": 0,
-                    "width": 2,
-                    "initial": "NotMeasured",
-                    "encoder": "RoadQualityEncoder"
-                },
-                "Gradient": {
-                    "offset": 2,
-                    "width": 6
-                },
-                "ITPMS": {
-                    "offset": 8,
-                    "width": 2,
-                    "initial": "Stopped",
-                    "encoder": "ITPMSEncoder"
-                },
-                "Reserved1": {
-                    "offset": 10,
-                    "width": 6,
-                    "initial": 0
-                }
-            }
-        },
-        "SpeedSensorMonitoring": {
+        "SpeedDebug": {
             "id": "0x1003",
             "size": 7,
             "layout": {
@@ -197,96 +157,6 @@
                     "offset": 38,
                     "width": 2,
                     "initial": 0
-                },
-                "Acceleration": {
-                    "offset": 40,
-                    "width": 16,
-                    "initial": 0
-                }
-            }
-        },
-        "LockoutSetting": {
-            "id": "0x1030",
-            "size": 2,
-            "layout": {
-                "LockoutTargetPosition": {
-                    "offset": 0,
-                    "width": 8,
-                    "initial": 0,
-                    "encoder": "LockoutPositionEncoder"
-                },
-                "LockoutModeSelection": {
-                    "offset": 8,
-                    "width": 2,
-                    "initial": "Automatic",
-                    "encoder": "LockoutModeSelectionEncoder"
-                },
-                "LockoutMovementInhibit": {
-                    "offset": 10,
-                    "width": 1,
-                    "initial": "Movement enabled",
-                    "encoder": "LockoutMovementInhibitEncoder"
-                },
-                "LockoutActuationSpeed": {
-                    "offset": 11,
-                    "width": 2,
-                    "initial": "Default",
-                    "encoder": "LockoutActuationSpeedEncoder"
-                },
-                "Reserved": {
-                    "offset": 13,
-                    "width": 3,
-                    "initial": 0
-                }
-            }
-        },
-        "LockoutStatus": {
-            "id": "0x1031",
-            "size": 2,
-            "layout": {
-                "CurrentPosition": {
-                    "offset": 0,
-                    "width": 8,
-                    "initial": 0,
-                    "encoder": "LockoutPositionEncoder"
-                },
-                "ValveMovement": {
-                    "offset": 8,
-                    "width": 1,
-                    "initial": "NotMoving",
-                    "encoder": "LockoutValveMovementEncoder"
-                },
-                "ValveBlocked": {
-                    "offset": 9,
-                    "width": 1,
-                    "initial": "NotBlocked",
-                    "encoder": "LockoutValveBlockedEncoder"
-                },
-                "PositionSensorStatus": {
-                    "offset": 10,
-                    "width": 1,
-                    "encoder": "GenericStatusFlag"
-                },
-                "MotorPowerStatus": {
-                    "offset": 11,
-                    "width": 1,
-                    "encoder": "GenericStatusFlag"
-                },
-                "Reserved": {
-                    "offset": 12,
-                    "width": 1,
-                    "initial": 0
-                },
-                "MotionSensorStatus": {
-                    "offset": 13,
-                    "width": 1,
-                    "encoder": "GenericStatusFlag"
-                },
-                "RoadQuality": {
-                    "offset": 14,
-                    "width": 2,
-                    "initial": "NotMeasured",
-                    "encoder": "RoadQualityEncoder"
                 }
             }
         },
@@ -306,11 +176,11 @@
                     "initial": "Adaptive",
                     "encoder": "LightModeEncoder"
                 },
-                "SignalDirection": {
+                "TurnSignalDirection": {
                     "offset": 10,
                     "width": 2,
                     "initial": "Disabled",
-                    "encoder": "SignalDirectionEncoder"
+                    "encoder": "TurnSignalDirectionEncoder"
                 },
                 "StrobeSignal": {
                     "offset": 12,
@@ -318,9 +188,15 @@
                     "initial": "Off",
                     "encoder": "StrobeSignalEncoder"
                 },
-                "Reserved": {
+                "AntiStrobeSignal": {
                     "offset": 13,
-                    "width": 3,
+                    "width": 1,
+                    "initial": "Off",
+                    "encoder": "StrobeSignalEncoder"
+                },
+                "Reserved": {
+                    "offset": 14,
+                    "width": 2,
                     "initial": 0
                 }
             }
@@ -341,7 +217,7 @@
                     "initial": "Default",
                     "encoder": "GenericModeSwitchEncoder"
                 },
-                "SignalLightMode": {
+                "TurnSignalLightMode": {
                     "offset": 3,
                     "width": 1,
                     "initial": "Default",
@@ -370,7 +246,7 @@
                     "initial": "Off",
                     "encoder": "LightStatusEncoder"
                 },
-                "SignalLightStatus": {
+                "TurnSignalLightStatus": {
                     "offset": 4,
                     "width": 2,
                     "initial": "Off",
@@ -384,87 +260,20 @@
                 }
             }
         },
-        "RearRadarStatus": {
-            "id": "0x1052",
-            "size": 3,
+        "RearLightDebug": {
+            "id": "0x1053",
+            "size": 2,
             "layout": {
-                "RadarTargetDistance": {
+                "SensorErrorCode": {
                     "offset": 0,
                     "width": 8,
-                    "initial": 0,
-                    "encoder": "RadarTargetDistanceEncoder"
+                    "initial": 0
                 },
-                "RadarTargetSpeed": {
+                "EcuTemperature": {
                     "offset": 8,
                     "width": 8,
                     "initial": 0,
-                    "encoder": "RadarTargetSpeedEncoder"
-                },
-                "RadarSignalStatus": {
-                    "offset": 16,
-                    "width": 1,
-                    "initial": "Ok",
-                    "encoder": "GenericStatusFlag"
-                },
-                "RadarTargetCaptured": {
-                    "offset": 17,
-                    "width": 2,
-                    "initial": "NoCapture",
-                    "encoder": "RadarTargetCapturedEncoder"
-                },
-                "RadarTargetDirection": {
-                    "offset": 19,
-                    "width": 2,
-                    "initial": "Unknown",
-                    "encoder": "RadarTargetDirectionEncoder"
-                },
-                "Reserved": {
-                    "offset": 21,
-                    "width": 3,
-                    "initial": 0
-                }
-            }
-        },
-        "RearLightSensorDebug": {
-            "id": "0x1053",
-            "size": 7,
-            "layout": {
-                "AccelerationX": {
-                    "offset": 0,
-                    "width": 16,
-                    "initial": 0
-                },
-                "AccelerationY": {
-                    "offset": 16,
-                    "width": 16,
-                    "initial": 0
-                },
-                "AccelerationZ": {
-                    "offset": 32,
-                    "width": 16,
-                    "initial": 0
-                },
-                "SensorErrorCode": {
-                    "offset": 48,
-                    "width": 8,
-                    "initial": 0
-                }
-            }
-        },
-        "RearLightDriverDebug": {
-            "id": "0x1054",
-            "size": 4,
-            "description": "",
-            "layout": {
-                "TailLightDuty": {
-                    "offset": 0,
-                    "width": 16,
-                    "initial": 0
-                },
-                "BrakeLightDuty": {
-                    "offset": 16,
-                    "width": 16,
-                    "initial": 0
+                    "encoder": "TemperatureEncoder"
                 }
             }
         },
@@ -484,7 +293,7 @@
                     "initial": "Default",
                     "encoder": "GenericModeSwitchEncoder"
                 },
-                "SignalLightMode": {
+                "TurnSignalLightMode": {
                     "offset": 3,
                     "width": 1,
                     "initial": "Default",
@@ -496,11 +305,10 @@
                     "initial": "Off",
                     "encoder": "GenericSwitchEncoder"
                 },
-                "WideBeam": {
+                "Reserved": {
                     "offset": 5,
-                    "width": 1,
-                    "initial": "Off",
-                    "encoder": "GenericSwitchEncoder"
+                    "width": 3,
+                    "initial": 0
                 }
             }
         },
@@ -514,14 +322,9 @@
                     "initial": "Off",
                     "encoder": "LightStatusEncoder"
                 },
-                "Reserved1": {
+                "Reserved": {
                     "offset": 2,
-                    "width": 2,
-                    "initial": 0
-                },
-                "Reserved2": {
-                    "offset": 4,
-                    "width": 2,
+                    "width": 4,
                     "initial": 0
                 },
                 "ThermalStatus": {
@@ -534,7 +337,7 @@
         },
         "FrontLightDebug": {
             "id": "0x1062",
-            "size": 8,
+            "size": 2,
             "layout": {
                 "DriveTemperature": {
                     "offset": 0,
@@ -547,11 +350,6 @@
                     "width": 8,
                     "initial": 0,
                     "encoder": "TemperatureEncoder"
-                },
-                "LightDuty": {
-                    "offset": 16,
-                    "width": 16,
-                    "initial": 0
                 }
             }
         }
@@ -614,30 +412,6 @@
             "offset": 0,
             "unit": "m"
         },
-        "RoadQualityEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "NotMeasured",
-                "1": "Flat",
-                "2": "Rough",
-                "3": "VeryRough"
-            }
-        },
-        "GradientEncoder": {
-            "type": "formula",
-            "scale": 1.4,
-            "offset": -45,
-            "unit": "deg"
-        },
-        "ITPMSEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "Stopped",
-                "1": "Running",
-                "2": "FrontPressureLow",
-                "3": "RearPressureLow"
-            }
-        },
         "GenericStatusFlag": {
             "type": "mapping",
             "mapping": {
@@ -665,51 +439,6 @@
             "offset": -40,
             "unit": "°C"
         },
-        "LockoutPositionEncoder": {
-            "type": "formula",
-            "scale": 1,
-            "offset": 0,
-            "unit": "%"
-        },
-        "LockoutMovementInhibitEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "MovementEnabled",
-                "1": "MovementDisabled"
-            }
-        },
-        "LockoutModeSelectionEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "Automatic",
-                "1": "Command",
-                "2": "Open",
-                "3": "Manual"
-            }
-        },
-        "LockoutActuationSpeedEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "Default",
-                "1": "Slow",
-                "2": "Normal",
-                "3": "Fast"
-            }
-        },
-        "LockoutValveMovementEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "NotMoving",
-                "1": "Moving"
-            }
-        },
-        "LockoutValveBlockedEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "NotBlocked",
-                "1": "Blocked"
-            }
-        },
         "LightBrightnessEncoder": {
             "type": "formula",
             "scale": 1,
@@ -724,7 +453,7 @@
                 "3": "Off"
             }
         },
-        "SignalDirectionEncoder": {
+        "TurnSignalDirectionEncoder": {
             "type": "mapping",
             "mapping": {
                 "0": "Disabled",
@@ -765,35 +494,6 @@
                 "1": "Ok",
                 "2": "Derating",
                 "3": "Shutdown"
-            }
-        },
-        "RadarTargetDistanceEncoder": {
-            "type": "formula",
-            "scale": 0.005,
-            "offset": 0,
-            "unit": "m"
-        },
-        "RadarTargetSpeedEncoder": {
-            "type": "formula",
-            "scale": 0.2,
-            "offset": 5
-        },
-        "RadarTargetCapturedEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "NoCapture",
-                "1": "OutOfRange",
-                "2": "Captured",
-                "3": "MultipleCaptured"
-            }
-        },
-        "RadarTargetDirectionEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "Unknown",
-                "1": "Static",
-                "2": "Approach",
-                "3": "Departure"
             }
         }
     },
