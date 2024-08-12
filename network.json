@@ -314,7 +314,7 @@
         },
         "FrontLightStatus": {
             "id": "0x1061",
-            "size": 1,
+            "size": 2,
             "layout": {
                 "MainBeamStatus": {
                     "offset": 0,
@@ -332,6 +332,11 @@
                     "width": 2,
                     "initial": "NotMeasured",
                     "encoder": "ThermalStatusEncoder"
+                },
+                "ControlCycleCount": {
+                    "offset": 8,
+                    "width": 8,
+                    "initial": 0
                 }
             }
         },
