@@ -29,7 +29,8 @@
                 "RoadStatus",
                 "TirePressure",
                 "RotorSensorPressureDebug",
-                "RotorSensorMotionDebug"
+                "RotorSensorMotionDebug",
+                "RotorSensorSpeedDebug"
             ]
         },
         "LockoutActuator": {
@@ -71,17 +72,17 @@
             "id": "0x1000",
             "size": 3,
             "layout": {
-                "GlobalSpeed": {
+                "Speed": {
                     "offset": 0,
                     "width": 16,
                     "initial": 0.0,
-                    "encoder": "GlobalSpeedEncoder"
+                    "encoder": "SpeedEncoder"
                 },
-                "GlobalSpeedState": {
+                "SpeedState": {
                     "offset": 16,
                     "width": 2,
                     "initial": "Error",
-                    "encoder": "GlobalSpeedStateEncoder"
+                    "encoder": "SpeedStateEncoder"
                 },
                 "BrakeState": {
                     "offset": 18,
@@ -129,13 +130,13 @@
                     "offset": 32,
                     "width": 16,
                     "initial": 0.0,
-                    "encoder": "GlobalSpeedEncoder"
+                    "encoder": "SpeedEncoder"
                 },
                 "AverageSpeed": {
                     "offset": 48,
                     "width": 16,
                     "initial": 0.0,
-                    "encoder": "GlobalSpeedEncoder"
+                    "encoder": "SpeedEncoder"
                 },
                 "Elevation": {
                     "offset": 64,
@@ -220,6 +221,41 @@
                 "gZ": {
                     "offset": 80,
                     "width": 16
+                }
+            }
+        },
+        "RotorSensorSpeedDebug": {
+            "id": "0x1012",
+            "size": 8,
+            "layout": {
+                "FrontSpeed": {
+                    "offset": 0,
+                    "width": 16,
+                    "encoder": "SpeedEncoder"
+                },
+                "RearSpeed": {
+                    "offset": 16,
+                    "width": 16,
+                    "encoder": "SpeedEncoder"
+                },
+                "FrontSensorStatus": {
+                    "offset": 32,
+                    "width": 4,
+                    "encoder": "SpeedSensorStateEncoder"
+                },
+                "RearSensorStatus": {
+                    "offset": 36,
+                    "width": 4,
+                    "encoder": "SpeedSensorStateEncoder"
+                },
+                "CrankSensorStatus": {
+                    "offset": 40,
+                    "width": 4,
+                    "encoder": "SpeedSensorStateEncoder"
+                },
+                "CrankPosition": {
+                    "offset": 44,
+                    "width": 4
                 }
             }
         },
@@ -508,13 +544,13 @@
         }
     },
     "encoders": {
-        "GlobalSpeedEncoder": {
+        "SpeedEncoder": {
             "type": "formula",
             "scale": 0.1,
             "offset": 0.0,
             "unit": "km/h"
         },
-        "GlobalSpeedStateEncoder": {
+        "SpeedStateEncoder": {
             "type": "mapping",
             "mapping": {
                 "0": "Ok",
@@ -523,12 +559,12 @@
                 "3": "Error"
             }
         },
-        "ChannelSpeedStateEncoder": {
+        "SpeedSensorStateEncoder": {
             "type": "mapping",
             "mapping": {
                 "0": "Ok",
-                "1": "UNUSED",
-                "2": "UNUSED",
+                "1": "UNUSED1",
+                "2": "UNUSED2",
                 "3": "SensorWarning",
                 "4": "SensorError",
                 "5": "OutputOpen",
