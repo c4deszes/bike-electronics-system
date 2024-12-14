@@ -9,7 +9,9 @@
                 "SpeedStatus",
                 "RideStatus",
                 "RearLightStatus",
-                "FrontLightStatus"
+                "FrontLightStatus",
+                "RoadStatus",
+                "LockoutStatus"
             ],
             "publishes": [
                 "LightSynchronization",
@@ -24,7 +26,19 @@
             "publishes": [
                 "SpeedStatus",
                 "RideStatus",
-                "SpeedDebug"
+                "RoadStatus",
+                "TirePressure",
+                "RotorSensorPressureDebug",
+                "RotorSensorMotionDebug"
+            ]
+        },
+        "LockoutActuator": {
+            "address": "0x2",
+            "subscribes": [
+                "LockoutSetting"
+            ],
+            "publishes": [
+                "LockoutStatus"
             ]
         },
         "RearLight": {
@@ -55,7 +69,7 @@
     "requests": {
         "SpeedStatus": {
             "id": "0x1000",
-            "size": 5,
+            "size": 3,
             "layout": {
                 "GlobalSpeed": {
                     "offset": 0,
@@ -103,13 +117,13 @@
         },
         "RideStatus": {
             "id": "0x1001",
-            "size": 8,
+            "size": 12,
             "layout": {
-                "RideDistance": {
+                "Distance": {
                     "offset": 0,
                     "width": 32,
                     "initial": 0,
-                    "encoder": "RideDistanceEncoder"
+                    "encoder": "DistanceEncoder"
                 },
                 "MaxSpeed": {
                     "offset": 32,
@@ -122,41 +136,175 @@
                     "width": 16,
                     "initial": 0.0,
                     "encoder": "GlobalSpeedEncoder"
+                },
+                "Elevation": {
+                    "offset": 64,
+                    "width": 16,
+                    "initial": 0,
+                    "encoder": "DistanceEncoder"
+                },
+                "Descent": {
+                    "offset": 80,
+                    "width": 16,
+                    "initial": 0,
+                    "encoder": "DistanceEncoder"
                 }
             }
         },
-        "SpeedDebug": {
-            "id": "0x1003",
-            "size": 7,
+        "RoadStatus": {
+            "id": "0x1002",
+            "size": 3,
             "layout": {
-                "FrontSpeed": {
+                "Altitude": {
                     "offset": 0,
                     "width": 16,
-                    "initial": 0.0,
-                    "encoder": "GlobalSpeedEncoder"
+                    "encoder": "AltitudeEncoder"
                 },
-                "RearSpeed": {
+                "Gradient": {
                     "offset": 16,
-                    "width": 16,
-                    "initial": 0.0,
-                    "encoder": "GlobalSpeedEncoder"
+                    "width": 6,
+                    "encoder": "GradientEncoder"
                 },
-                "FrontWheelSpeedState": {
-                    "offset": 32,
-                    "width": 3,
-                    "initial": "Off",
-                    "encoder": "ChannelSpeedStateEncoder"
-                },
-                "RearWheelSpeedState": {
-                    "offset": 35,
-                    "width": 3,
-                    "initial": "Off",
-                    "encoder": "ChannelSpeedStateEncoder"
-                },
-                "IntertialSensorState": {
-                    "offset": 38,
+                "RoadQuality": {
+                    "offset": 22,
                     "width": 2,
+                    "initial": "NotMeasured",
+                    "encoder": "RoadQualityEncoder"
+                }
+            }
+        },
+        "TirePressure": {
+            "id": "0x1003",
+            "size": 1,
+            "layout": {
+                "ITPMS_Status": {
+                    "offset": 0,
+                    "width": 2
+                }
+            }
+        },
+        "RotorSensorPressureDebug": {
+            "id": "0x1010",
+            "size": 4,
+            "layout": {
+                "Pressure": {
+                    "offset": 0,
+                    "width": 32
+                }
+            }
+        },
+        "RotorSensorMotionDebug": {
+            "id": "0x1011",
+            "size": 12,
+            "layout": {
+                "aX": {
+                    "offset": 0,
+                    "width": 16
+                },
+                "aY": {
+                    "offset": 16,
+                    "width": 16
+                },
+                "aZ": {
+                    "offset": 32,
+                    "width": 16
+                },
+                "gX": {
+                    "offset": 48,
+                    "width": 16
+                },
+                "gY": {
+                    "offset": 64,
+                    "width": 16
+                },
+                "gZ": {
+                    "offset": 80,
+                    "width": 16
+                }
+            }
+        },
+        "LockoutSetting": {
+            "id": "0x1030",
+            "size": 2,
+            "layout": {
+                "LockoutTargetPosition": {
+                    "offset": 0,
+                    "width": 8,
+                    "initial": 0,
+                    "encoder": "LockoutPositionEncoder"
+                },
+                "LockoutModeSelection": {
+                    "offset": 8,
+                    "width": 2,
+                    "initial": "Automatic",
+                    "encoder": "LockoutModeSelectionEncoder"
+                },
+                "LockoutMovementInhibit": {
+                    "offset": 10,
+                    "width": 1,
+                    "initial": "Movement enabled",
+                    "encoder": "LockoutMovementInhibitEncoder"
+                },
+                "LockoutActuationSpeed": {
+                    "offset": 11,
+                    "width": 2,
+                    "initial": "Default",
+                    "encoder": "LockoutActuationSpeedEncoder"
+                },
+                "Reserved": {
+                    "offset": 13,
+                    "width": 3,
                     "initial": 0
+                }
+            }
+        },
+        "LockoutStatus": {
+            "id": "0x1031",
+            "size": 2,
+            "layout": {
+                "CurrentPosition": {
+                    "offset": 0,
+                    "width": 8,
+                    "initial": 0,
+                    "encoder": "LockoutPositionEncoder"
+                },
+                "ValveMovement": {
+                    "offset": 8,
+                    "width": 1,
+                    "initial": "NotMoving",
+                    "encoder": "LockoutValveMovementEncoder"
+                },
+                "ValveBlocked": {
+                    "offset": 9,
+                    "width": 1,
+                    "initial": "NotBlocked",
+                    "encoder": "LockoutValveBlockedEncoder"
+                },
+                "PositionSensorStatus": {
+                    "offset": 10,
+                    "width": 1,
+                    "encoder": "GenericStatusFlag"
+                },
+                "MotorPowerStatus": {
+                    "offset": 11,
+                    "width": 1,
+                    "encoder": "GenericStatusFlag"
+                },
+                "Reserved": {
+                    "offset": 12,
+                    "width": 1,
+                    "initial": 0
+                },
+                "MotionSensorStatus": {
+                    "offset": 13,
+                    "width": 1,
+                    "encoder": "GenericStatusFlag"
+                },
+                "RoadQuality": {
+                    "offset": 14,
+                    "width": 2,
+                    "initial": "NotMeasured",
+                    "encoder": "RoadQualityEncoder"
                 }
             }
         },
@@ -380,8 +528,8 @@
             "mapping": {
                 "0": "Ok",
                 "1": "UNUSED",
-                "2": "SensorWarning",
-                "3": "SpeedUnreliable",
+                "2": "UNUSED",
+                "3": "SensorWarning",
                 "4": "SensorError",
                 "5": "OutputOpen",
                 "6": "OutputShorted",
@@ -411,11 +559,41 @@
                 "1": "Lockup"
             }
         },
-        "RideDistanceEncoder": {
+        "DistanceEncoder": {
             "type": "formula",
             "scale": 1,
             "offset": 0,
             "unit": "m"
+        },
+        "AltitudeEncoder": {
+            "type": "formula",
+            "scale": 1,
+            "offset": -1000,
+            "unit": "m"
+        },
+        "RoadQualityEncoder": {
+            "type": "mapping",
+            "mapping": {
+                "0": "NotMeasured",
+                "1": "Flat",
+                "2": "Rough",
+                "3": "VeryRough"
+            }
+        },
+        "GradientEncoder": {
+            "type": "formula",
+            "scale": 1.4,
+            "offset": -45,
+            "unit": "deg"
+        },
+        "ITPMSEncoder": {
+            "type": "mapping",
+            "mapping": {
+                "0": "Stopped",
+                "1": "Running",
+                "2": "FrontPressureLow",
+                "3": "RearPressureLow"
+            }
         },
         "GenericStatusFlag": {
             "type": "mapping",
