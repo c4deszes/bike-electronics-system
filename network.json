@@ -8,10 +8,10 @@
             "subscribes": [
                 "SpeedStatus",
                 "RideStatus",
-                "RearLightStatus",
-                "FrontLightStatus",
                 "RoadStatus",
-                "LockoutStatus"
+                "TirePressure",
+                "RearLightStatus",
+                "FrontLightStatus"
             ],
             "publishes": [
                 "LightSynchronization",
@@ -30,16 +30,8 @@
                 "TirePressure",
                 "RotorSensorPressureDebug",
                 "RotorSensorMotionDebug",
-                "RotorSensorSpeedDebug"
-            ]
-        },
-        "LockoutActuator": {
-            "address": "0x2",
-            "subscribes": [
-                "LockoutSetting"
-            ],
-            "publishes": [
-                "LockoutStatus"
+                "RotorSensorSpeedDebug",
+                "RotorSensorPeriodDebug"
             ]
         },
         "RearLight": {
@@ -259,88 +251,17 @@
                 }
             }
         },
-        "LockoutSetting": {
-            "id": "0x1030",
-            "size": 2,
+        "RotorSensorPeriodDebug": {
+            "id": "0x1013",
+            "size": 8,
             "layout": {
-                "LockoutTargetPosition": {
-                    "offset": 0,
-                    "width": 8,
-                    "initial": 0,
-                    "encoder": "LockoutPositionEncoder"
+                "Pos": {
+                    "width": 32,
+                    "offset": 0
                 },
-                "LockoutModeSelection": {
-                    "offset": 8,
-                    "width": 2,
-                    "initial": "Automatic",
-                    "encoder": "LockoutModeSelectionEncoder"
-                },
-                "LockoutMovementInhibit": {
-                    "offset": 10,
-                    "width": 1,
-                    "initial": "Movement enabled",
-                    "encoder": "LockoutMovementInhibitEncoder"
-                },
-                "LockoutActuationSpeed": {
-                    "offset": 11,
-                    "width": 2,
-                    "initial": "Default",
-                    "encoder": "LockoutActuationSpeedEncoder"
-                },
-                "Reserved": {
-                    "offset": 13,
-                    "width": 3,
-                    "initial": 0
-                }
-            }
-        },
-        "LockoutStatus": {
-            "id": "0x1031",
-            "size": 2,
-            "layout": {
-                "CurrentPosition": {
-                    "offset": 0,
-                    "width": 8,
-                    "initial": 0,
-                    "encoder": "LockoutPositionEncoder"
-                },
-                "ValveMovement": {
-                    "offset": 8,
-                    "width": 1,
-                    "initial": "NotMoving",
-                    "encoder": "LockoutValveMovementEncoder"
-                },
-                "ValveBlocked": {
-                    "offset": 9,
-                    "width": 1,
-                    "initial": "NotBlocked",
-                    "encoder": "LockoutValveBlockedEncoder"
-                },
-                "PositionSensorStatus": {
-                    "offset": 10,
-                    "width": 1,
-                    "encoder": "GenericStatusFlag"
-                },
-                "MotorPowerStatus": {
-                    "offset": 11,
-                    "width": 1,
-                    "encoder": "GenericStatusFlag"
-                },
-                "Reserved": {
-                    "offset": 12,
-                    "width": 1,
-                    "initial": 0
-                },
-                "MotionSensorStatus": {
-                    "offset": 13,
-                    "width": 1,
-                    "encoder": "GenericStatusFlag"
-                },
-                "RoadQuality": {
-                    "offset": 14,
-                    "width": 2,
-                    "initial": "NotMeasured",
-                    "encoder": "RoadQualityEncoder"
+                "Per": {
+                    "width": 32,
+                    "offset": 32
                 }
             }
         },
