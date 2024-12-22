@@ -7,9 +7,10 @@
             "address": "0x0",
             "subscribes": [
                 "SpeedStatus",
+                "DrivetrainStatus",
                 "RideStatus",
                 "RoadStatus",
-                "TirePressure",
+                "RideStatistics",
                 "RearLightStatus",
                 "FrontLightStatus"
             ],
@@ -25,13 +26,13 @@
             ],
             "publishes": [
                 "SpeedStatus",
+                "DrivetrainStatus",
                 "RideStatus",
                 "RoadStatus",
-                "TirePressure",
+                "RideStatistics",
                 "RotorSensorPressureDebug",
                 "RotorSensorMotionDebug",
-                "RotorSensorSpeedDebug",
-                "RotorSensorPeriodDebug"
+                "RotorSensorSpeedDebug"
             ]
         },
         "RearLight": {
@@ -108,71 +109,122 @@
                 }
             }
         },
-        "RideStatus": {
+        "DrivetrainStatus": {
             "id": "0x1001",
-            "size": 12,
+            "size": 2,
             "layout": {
-                "Distance": {
+                "Cadence": {
                     "offset": 0,
+                    "width": 8,
+                    "encoder": "CadenceEncoder"
+                },
+                "CadenceStatus": {
+                    "offset": 8,
+                    "width": 2,
+                    "encoder": "CadenceStatusEncoder"
+                },
+                "EstimatedGear": {
+                    "offset": 10,
+                    "width": 4
+                },
+                "Reserved": {
+                    "offset": 14,
+                    "width": 2
+                }
+            }
+        },
+        "RideStatus": {
+            "id": "0x1002",
+            "size": 7,
+            "layout": {
+                "Duration": {
+                    "offset": 0,
+                    "width": 16,
+                    "initial": 0
+                },
+                "RideStatus": {
+                    "offset": 16,
+                    "width": 2,
+                    "initial": "NoStarted",
+                    "encoder": "RideStatusEncoder"
+                },
+                "DistanceStatus": {
+                    "offset": 18,
+                    "width": 2,
+                    "initial": "NotAvailable",
+                    "encoder": "DistanceStatusEncoder"
+                },
+                "Reserved": {
+                    "offset": 20,
+                    "width": 4
+                },
+                "Distance": {
+                    "offset": 24,
                     "width": 32,
-                    "initial": 0,
-                    "encoder": "DistanceEncoder"
-                },
-                "MaxSpeed": {
-                    "offset": 32,
-                    "width": 16,
-                    "initial": 0.0,
-                    "encoder": "SpeedEncoder"
-                },
-                "AverageSpeed": {
-                    "offset": 48,
-                    "width": 16,
-                    "initial": 0.0,
-                    "encoder": "SpeedEncoder"
-                },
-                "Elevation": {
-                    "offset": 64,
-                    "width": 16,
-                    "initial": 0,
-                    "encoder": "DistanceEncoder"
-                },
-                "Descent": {
-                    "offset": 80,
-                    "width": 16,
                     "initial": 0,
                     "encoder": "DistanceEncoder"
                 }
             }
         },
         "RoadStatus": {
-            "id": "0x1002",
-            "size": 3,
+            "id": "0x1003",
+            "size": 4,
             "layout": {
                 "Altitude": {
                     "offset": 0,
                     "width": 16,
                     "encoder": "AltitudeEncoder"
                 },
-                "Gradient": {
+                "Grade": {
                     "offset": 16,
-                    "width": 6,
-                    "encoder": "GradientEncoder"
+                    "width": 8,
+                    "encoder": "GradeEncoder"
                 },
                 "RoadQuality": {
-                    "offset": 22,
+                    "offset": 24,
                     "width": 2,
                     "initial": "NotMeasured",
                     "encoder": "RoadQualityEncoder"
+                },
+                "ITPMS": {
+                    "offset": 26,
+                    "width": 2,
+                    "initial": "Stopped",
+                    "encoder": "ITPMSEncoder"
+                },
+                "Reserved": {
+                    "offset": 28,
+                    "width": 4
                 }
             }
         },
-        "TirePressure": {
-            "id": "0x1003",
-            "size": 1,
+        "RideStatistics": {
+            "id": "0x1004",
+            "size": 8,
             "layout": {
-                "ITPMS_Status": {
+                "TopSpeed": {
                     "offset": 0,
-                    "width": 2
+                    "width": 16,
+                    "initial": 0.0,
+                    "encoder": "SpeedEncoder"
+                },
+                "AverageSpeed": {
+                    "offset": 16,
+                    "width": 16,
+                    "initial": 0.0,
+                    "encoder": "SpeedEncoder"
+                },
+                "Elevation": {
+                    "offset": 32,
+                    "width": 16,
+                    "initial": 0,
+                    "encoder": "DistanceEncoder"
+                },
+                "Descent": {
+                    "offset": 48,
+                    "width": 16,
+                    "initial": 0,
+                    "encoder": "DistanceEncoder"
                 }
             }
         },
@@ -248,20 +300,6 @@
                 "CrankPosition": {
                     "offset": 44,
                     "width": 4
-                }
-            }
-        },
-        "RotorSensorPeriodDebug": {
-            "id": "0x1013",
-            "size": 8,
-            "layout": {
-                "Pos": {
-                    "width": 32,
-                    "offset": 0
-                },
-                "Per": {
-                    "width": 32,
-                    "offset": 32
                 }
             }
         },
@@ -516,17 +554,62 @@
                 "1": "Lockup"
             }
         },
+        "CadenceEncoder": {
+            "type": "formula",
+            "scale": 1,
+            "offset": 0,
+            "unit": "rpm"
+        },
+        "CadenceStatusEncoder": {
+            "type": "mapping",
+            "mapping": {
+                "0": "NotAvailable",
+                "1": "Ok",
+                "2": "Coasting",
+                "3": "Error"
+            }
+        },
+        "TimeDurationEncoder": {
+            "type": "formula",
+            "scale": 1,
+            "offset": 0,
+            "unit": "sec"
+        },
         "DistanceEncoder": {
             "type": "formula",
             "scale": 1,
             "offset": 0,
             "unit": "m"
         },
+        "DistanceStatusEncoder": {
+            "type": "mapping",
+            "mapping": {
+                "0": "NotAvailable",
+                "1": "Ok",
+                "2": "Error",
+                "3": "PermanentError"
+            }
+        },
+        "RideStatusEncoder": {
+            "type": "mapping",
+            "mapping": {
+                "0": "NotStarted",
+                "1": "Active",
+                "2": "Idle",
+                "3": "Paused"
+            }
+        },
         "AltitudeEncoder": {
             "type": "formula",
             "scale": 1,
             "offset": -1000,
             "unit": "m"
+        },
+        "GradeEncoder": {
+            "type": "formula",
+            "scale": 1,
+            "offset": -128,
+            "unit": "%"
         },
         "RoadQualityEncoder": {
             "type": "mapping",
@@ -536,12 +619,6 @@
                 "2": "Rough",
                 "3": "VeryRough"
             }
-        },
-        "GradientEncoder": {
-            "type": "formula",
-            "scale": 1.4,
-            "offset": -45,
-            "unit": "deg"
         },
         "ITPMSEncoder": {
             "type": "mapping",
