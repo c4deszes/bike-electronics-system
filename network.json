@@ -192,9 +192,24 @@
                     "initial": "Stopped",
                     "encoder": "ITPMSEncoder"
                 },
-                "Reserved": {
+                "PressureError": {
                     "offset": 28,
-                    "width": 4
+                    "width": 1,
+                    "encoder": "GenericStatusFlag"
+                },
+                "TemperatureError": {
+                    "offset": 29,
+                    "width": 1,
+                    "encoder": "GenericStatusFlag"
+                },
+                "AltitudeError": {
+                    "offset": 30,
+                    "width": 1,
+                    "encoder": "GenericStatusFlag"
+                },
+                "Reserved": {
+                    "offset": 31,
+                    "width": 1
                 }
             }
         },
