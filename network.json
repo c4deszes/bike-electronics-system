@@ -498,7 +498,7 @@
                 }
             }
         },
-        "FrontLightDebug": {
+        "FrontLightTemperatureDebug": {
             "id": "0x1062",
             "size": 2,
             "layout": {
@@ -513,6 +513,17 @@
                     "width": 8,
                     "initial": 0,
                     "encoder": "TemperatureEncoder"
+                }
+            }
+        },
+        "FrontLightBrightnessDebug": {
+            "id": "0x1063",
+            "size": 2,
+            "layout": {
+                "Brightness": {
+                    "offset": 0,
+                    "width": 16,
+                    "initial": 0
                 }
             }
         }
@@ -730,6 +741,23 @@
         }
     },
     "schedules": {
-
+        "LightSchedule": {
+            "delay": 0.25,
+            "entries": [
+                {"type": "request", "request": "LightSynchronization"},
+                {"type": "request", "request": "RearLightSetting"},
+                {"type": "request", "request": "FrontLightSetting"}
+            ]
+        },
+        "FrontLightSchedule": {
+            "delay": 0.25,
+            "entries": [
+                {"type": "request", "request": "LightSynchronization"},
+                {"type": "request", "request": "FrontLightSetting"},
+                {"type": "request", "request": "FrontLightStatus"},
+                {"type": "request", "request": "FrontLightTemperatureDebug"},
+                {"type": "request", "request": "FrontLightBrightnessDebug"}
+            ]
+        }
     }
 }
