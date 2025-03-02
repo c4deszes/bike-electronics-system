@@ -1,0 +1,226 @@
+{
+    "services": {
+        "ReloadConfiguration": {
+            "id": "0x3000",
+            "description": "Reloads the configuration from EEPROM",
+            "args": [],
+            "returns": "uint8"
+        },
+        "SaveConfiguration": {
+            "id": "0x3001",
+            "description": "Saves the configuration to EEPROM",
+            "args": [],
+            "returns": "uint8"
+        },
+        "CalibrateBrightness": {
+            "id": "0x3020",
+            "args": [
+                {"name": "Brightness", "type": "uint16", "min": 0, "max": 1000}
+            ],
+            "returns": "uint8"
+        },
+        "EndBrightnessCalibration": {
+            "id": "0x3021",
+            "args": [],
+            "returns": "void"
+        },
+        "RunDiagnosis": {
+            "id": "0x3030",
+            "args": [],
+            "returns": "uint8"
+        },
+        "GetDiagnosisResult": {
+            "id": "0x3031",
+            "args": [],
+            "returns": "uint32"
+        }
+    },
+    "properties": {
+        "AutomaticDiagnostics": {
+            "id": "0x4000",
+            "description": "When enabled the light is allowed to run segment diagnosis on it's own",
+            "type": "bool",
+            "default": true
+        },
+        "BrightnessCurve_Cutoff_X": {
+            "id": "0x4010",
+            "type": "uint16",
+            "min": 0,
+            "max": 400,
+            "default": 10
+        },
+        "BrightnessCurve_Cutoff_Y": {
+            "id": "0x4011",
+            "type": "uint16",
+            "min": 0,
+            "max": 1000,
+            "default": 10
+        },
+        "BrightnessCurve_Max_X": {
+            "id": "0x4012",
+            "type": "uint16",
+            "min": 500,
+            "max": 1000,
+            "default": 1000
+        },
+        "BrightnessCurve_Max_Y": {
+            "id": "0x4013",
+            "type": "uint16",
+            "min": 0,
+            "max": 1000,
+            "default": 350
+        },
+        "Brightness_LevelStandard": {
+            "id": "0x4020",
+            "description": "Minimum brightness in daylight running mode",
+            "type": "uint16",
+            "min": 10,
+            "max": 800,
+            "default": 150
+        },
+        "Brightness_LevelEmergency": {
+            "id": "0x4021",
+            "description": "Brightness in emergency mode",
+            "type": "uint16",
+            "min": 10,
+            "max": 500,
+            "default": 150
+        },
+        "Brightness_LevelSafety": {
+            "id": "0x4023",
+            "description": "Brightness in case of communication loss",
+            "type": "uint16",
+            "min": 10,
+            "max": 1000,
+            "default": 350
+        },
+        "Brightness_BrakeLow": {
+            "id": "0x4026",
+            "description": "Brake light brightness at 0 setpoint",
+            "type": "uint16",
+            "min": 100,
+            "max": 1000,
+            "default": 200
+        },
+        "Brightness_BrakeHigh": {
+            "id": "0x4027",
+            "description": "Brake light brightness at 100 setpoint",
+            "type": "uint16",
+            "min": 100,
+            "max": 1000,
+            "default": 500
+        },
+        "Strobe_LevelLow": {
+            "id": "0x4030",
+            "description": "Strobe off level at 0 setpoint",
+            "type": "uint16",
+            "min": 0,
+            "max": 1000,
+            "default": 0
+        },
+        "Strobe_LevelHigh": {
+            "id": "0x4031",
+            "description": "Strobe off level at 100 setpoint",
+            "type": "uint16",
+            "min": 0,
+            "max": 1000,
+            "default": 100
+        },
+        "Strobe_LevelEmergency": {
+            "id": "0x4032",
+            "description": "Strobe off level in emergency mode",
+            "type": "uint16",
+            "min": 0,
+            "max": 1000,
+            "default": 0
+        },
+        "Strobe_LevelSafety": {
+            "id": "0x4033",
+            "description": "Strobe off level in safety mode",
+            "type": "uint16",
+            "min": 0,
+            "max": 1000,
+            "default": 0
+        },
+        "Strobe_ModeDefault": {
+            "id": "0x4038",
+            "description": "Strobe pattern in default mode",
+            "type": "enum",
+            "values": [
+                "DISABLED",
+                "INTERNAL_SINGLE",
+                "INTERNAL_RAPID",
+                "EXTERNAL_POS",
+                "EXTERNAL_NEG"
+            ],
+            "default": "DISABLED"
+        },
+        "Strobe_ModePrimary": {
+            "id": "0x4039",
+            "description": "Strobe pattern in blinking mode",
+            "type": "enum",
+            "values": [
+                "DISABLED",
+                "INTERNAL_SINGLE",
+                "INTERNAL_RAPID",
+                "EXTERNAL_POS",
+                "EXTERNAL_NEG"
+            ],
+            "default": "INTERNAL_SINGLE"
+        },
+        "Strobe_ModeEmergency": {
+            "id": "0x4040",
+            "description": "Strobe pattern in emergency mode",
+            "type": "enum",
+            "values": [
+                "DISABLED",
+                "INTERNAL_SINGLE",
+                "INTERNAL_RAPID"
+            ],
+            "default": "DISABLED"
+        },
+        "Strobe_ModeSafety": {
+            "id": "0x4041",
+            "description": "Strobe pattern in safety mode",
+            "type": "enum",
+            "values": [
+                "DISABLED",
+                "INTERNAL_SINGLE",
+                "INTERNAL_RAPID"
+            ],
+            "default": "DISABLED"
+        },
+        "Strobe_SingleOnTime": {
+            "id": "0x4050",
+            "description": "Duration of a single strobe flash",
+            "type": "uint16",
+            "min": 150,
+            "max": 500,
+            "default": 160
+        },
+        "Strobe_SingleOffTime": {
+            "id": "0x4051",
+            "description": "Duration between two strobe flashes",
+            "type": "uint16",
+            "min": 150,
+            "max": 500,
+            "default": 160
+        },
+        "Strobe_RapidOnTime": {
+            "id": "0x4052",
+            "description": "Duration of a single strobe flash",
+            "type": "uint16",
+            "min": 50,
+            "max": 200,
+            "default": 60
+        },
+        "Strobe_RapidOffTime": {
+            "id": "0x4053",
+            "description": "Duration between two strobe flashes",
+            "type": "uint16",
+            "min": 50,
+            "max": 500,
+            "default": 200
+        }
+    }
+}

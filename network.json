@@ -44,7 +44,9 @@
             ],
             "publishes": [
                 "RearLightStatus",
-                "RearLightDebug"
+                "RearLightBrightnessDebug",
+                "RearLightTemperatureDebug",
+                "RearLightMotionDebug"
             ]
         },
         "FrontLight": {
@@ -55,8 +57,7 @@
                 "FrontLightSetting"
             ],
             "publishes": [
-                "FrontLightStatus",
-                "FrontLightDebug"
+                "FrontLightStatus"
             ]
         }
     },
@@ -418,20 +419,61 @@
                 }
             }
         },
-        "RearLightDebug": {
+        "RearLightBrightnessDebug": {
+            "id": "0x1052",
+            "size": 2,
+            "layout": {
+                "Brightness": {
+                    "offset": 0,
+                    "width": 16,
+                    "initial": 0,
+                    "encoder": "LightBrightnessEncoder"
+                }
+            }
+        },
+        "RearLightTemperatureDebug": {
             "id": "0x1053",
             "size": 2,
             "layout": {
-                "SensorErrorCode": {
+                "DriveTemperature": {
                     "offset": 0,
                     "width": 8,
-                    "initial": 0
+                    "initial": 0,
+                    "encoder": "TemperatureEncoder"
                 },
                 "EcuTemperature": {
                     "offset": 8,
                     "width": 8,
                     "initial": 0,
                     "encoder": "TemperatureEncoder"
+                }
+            }
+        },
+        "RearLightMotionDebug": {
+            "id": "0x1054",
+            "size": 7,
+            "layout": {
+                "aX": {
+                    "offset": 0,
+                    "width": 16
+                },
+                "aY": {
+                    "offset": 16,
+                    "width": 16
+                },
+                "aZ": {
+                    "offset": 32,
+                    "width": 16
+                },
+                "Braking": {
+                    "offset": 48,
+                    "width": 1,
+                    "encoder": "GenericSwitchEncoder"
+                },
+                "Reserved": {
+                    "offset": 49,
+                    "width": 7,
+                    "initial": 0
                 }
             }
         },
@@ -741,12 +783,40 @@
         }
     },
     "schedules": {
+        "NormalSchedule": {
+            "delay": 0.1,
+            "entries": [
+                {"type": "request", "request": "SpeedStatus"},
+                {"type": "request", "request": "DrivetrainStatus"},
+                {"type": "request", "request": "RideStatus"},
+                {"type": "request", "request": "RoadStatus"},
+                {"type": "request", "request": "RideStatistics"},
+                {"type": "request", "request": "LightSynchronization"},
+                {"type": "request", "request": "RearLightSetting"},
+                {"type": "request", "request": "RearLightStatus"},
+                {"type": "request", "request": "FrontLightSetting"},
+                {"type": "request", "request": "FrontLightStatus"}
+            ]
+        },
         "LightSchedule": {
             "delay": 0.25,
             "entries": [
                 {"type": "request", "request": "LightSynchronization"},
                 {"type": "request", "request": "RearLightSetting"},
-                {"type": "request", "request": "FrontLightSetting"}
+                {"type": "request", "request": "RearLightStatus"},
+                {"type": "request", "request": "FrontLightSetting"},
+                {"type": "request", "request": "FrontLightStatus"}
+            ]
+        },
+        "RearLightSchedule": {
+            "delay": 0.25,
+            "entries": [
+                {"type": "request", "request": "LightSynchronization"},
+                {"type": "request", "request": "RearLightSetting"},
+                {"type": "request", "request": "RearLightStatus"},
+                {"type": "request", "request": "RearLightBrightnessDebug"},
+                {"type": "request", "request": "RearLightTemperatureDebug"},
+                {"type": "request", "request": "RearLightMotionDebug"}
             ]
         },
         "FrontLightSchedule": {
