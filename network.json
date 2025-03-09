@@ -798,6 +798,19 @@
                 {"type": "request", "request": "FrontLightStatus"}
             ]
         },
+        "RotorSensorSchedule": {
+            "delay": 0.1,
+            "entries": [
+                {"type": "request", "request": "SpeedStatus"},
+                {"type": "request", "request": "DrivetrainStatus"},
+                {"type": "request", "request": "RideStatus"},
+                {"type": "request", "request": "RoadStatus"},
+                {"type": "request", "request": "RideStatistics"},
+                {"type": "request", "request": "RotorSensorPressureDebug"},
+                {"type": "request", "request": "RotorSensorMotionDebug"},
+                {"type": "request", "request": "RotorSensorSpeedDebug"}
+            ]
+        },
         "LightSchedule": {
             "delay": 0.25,
             "entries": [

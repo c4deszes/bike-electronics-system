@@ -1,0 +1,66 @@
+{
+    "services": {
+    },
+    "properties": {
+        "FrontWheel_Circumference": {
+            "id": "0x4000",
+            "type": "uint16",
+            "description": "Front wheel circumference in mm",
+            "default": 2275
+        },
+        "RearWheel_Circumference": {
+            "id": "0x4001",
+            "type": "uint16",
+            "description": "Rear wheel circumference in mm",
+            "default": 2275
+        },
+        "CrankArm_Circumference": {
+            "id": "0x4002",
+            "type": "uint16",
+            "description": "Crank arm circumference in mm",
+            "default": 175
+        },
+        "FrontWheel_PoleCount": {
+            "id": "0x4010",
+            "type": "uint8",
+            "description": "Number of pulses per wheel rotation",
+            "default": 1
+        },
+        "RearWheel_PoleCount": {
+            "id": "0x4011",
+            "type": "uint8",
+            "description": "Number of pulses per wheel rotation",
+            "default": 1
+        },
+        "CrankArm_PoleCount": {
+            "id": "0x4012",
+            "type": "uint8",
+            "description": "Number of pulses per crank rotation",
+            "default": 1
+        },
+        "FrontWheel_Sensor": {
+            "id": "0x4020",
+            "type": "enum",
+            "values": [
+                "TLE5045"
+            ],
+            "default": "TLE5045"
+        },
+        "RearWheel_Sensor": {
+            "id": "0x4021",
+            "type": "enum",
+            "values": [
+                "TLE5045"
+            ],
+            "default": "TLE5045"
+        },
+        "CrankArm_Sensor": {
+            "id": "0x4022",
+            "type": "enum",
+            "values": [
+                "TLE5045"
+            ],
+            "default": "TLE5045"
+        }
+    }
+}
