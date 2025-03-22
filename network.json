@@ -128,9 +128,10 @@
                     "offset": 10,
                     "width": 4
                 },
-                "Reserved": {
+                "GearStatus": {
                     "offset": 14,
-                    "width": 2
+                    "width": 2,
+                    "encoder": "GearStatusEncoder"
                 }
             }
         },
@@ -634,6 +635,15 @@
                 "0": "NotAvailable",
                 "1": "Ok",
                 "2": "Coasting",
+                "3": "Error"
+            }
+        },
+        "GearStatusEncoder": {
+            "type": "mapping",
+            "mapping": {
+                "0": "Unknown",
+                "1": "Ok",
+                "2": "OutOfRange",
                 "3": "Error"
             }
         },

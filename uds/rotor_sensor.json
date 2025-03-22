@@ -61,6 +61,168 @@
                 "TLE5045"
             ],
             "default": "TLE5045"
+        },
+        "Gear_HoldTime": {
+            "id": "0x4040",
+            "type": "uint16",
+            "description": "Time in milliseconds to wait before switching gears",
+            "default": 1000
+        },
+        "Gear_MaxGears": {
+            "id": "0x4041",
+            "type": "uint8",
+            "description": "Maximum number of gears",
+            "default": 10
+        },
+        "Gear_ChainringTeeth": {
+            "id": "0x4042",
+            "type": "uint8",
+            "description": "Number of teeth on the chainring",
+            "default": 42
+        },
+        "Gear_CasetteTeeth1": {
+            "id": "0x4043",
+            "type": "uint8",
+            "description": "Number of teeth on the first casette gear",
+            "default": 11
+        },
+        "Gear_CasetteTeeth2": {
+            "id": "0x4044",
+            "type": "uint8",
+            "description": "Number of teeth on the second casette gear",
+            "default": 13
+        },
+        "Gear_CasetteTeeth3": {
+            "id": "0x4045",
+            "type": "uint8",
+            "description": "Number of teeth on the third casette gear",
+            "default": 15
+        },
+        "Gear_CasetteTeeth4": {
+            "id": "0x4046",
+            "type": "uint8",
+            "description": "Number of teeth on the fourth casette gear",
+            "default": 17
+        },
+        "Gear_CasetteTeeth5": {
+            "id": "0x4047",
+            "type": "uint8",
+            "description": "Number of teeth on the fifth casette gear",
+            "default": 20
+        },
+        "Gear_CasetteTeeth6": {
+            "id": "0x4048",
+            "type": "uint8",
+            "description": "Number of teeth on the sixth casette gear",
+            "default": 23
+        },
+        "Gear_CasetteTeeth7": {
+            "id": "0x4049",
+            "type": "uint8",
+            "description": "Number of teeth on the seventh casette gear",
+            "default": 28
+        },
+        "Gear_CasetteTeeth8": {
+            "id": "0x404A",
+            "type": "uint8",
+            "description": "Number of teeth on the eighth casette gear",
+            "default": 34
+        },
+        "Gear_CasetteTeeth9": {
+            "id": "0x404B",
+            "type": "uint8",
+            "description": "Number of teeth on the ninth casette gear",
+            "default": 41
+        },
+        "Gear_CasetteTeeth10": {
+            "id": "0x404C",
+            "type": "uint8",
+            "description": "Number of teeth on the tenth casette gear",
+            "default": 48
+        },
+        "Gear_CasetteTeeth11": {
+            "id": "0x404D",
+            "type": "uint8",
+            "description": "Number of teeth on the eleventh casette gear",
+            "default": 0
+        },
+        "Gear_CasetteTeeth12": {
+            "id": "0x404E",
+            "type": "uint8",
+            "description": "Number of teeth on the twelfth casette gear",
+            "default": 0
+        },
+        "Ride_AutoStart": {
+            "id": "0x4050",
+            "type": "bool",
+            "description": "Start riding automatically when the bike is moving",
+            "default": true
+        },
+        "Ride_AutoPause": {
+            "id": "0x4051",
+            "type": "bool",
+            "description": "Pause riding automatically when the bike is not moving",
+            "default": true
+        },
+        "Ride_AutoResume": {
+            "id": "0x4052",
+            "type": "bool",
+            "description": "Resume riding automatically when the bike is moving",
+            "default": true
+        },
+        "Ride_IdleSpeed": {
+            "id": "0x405A",
+            "type": "uint16",
+            "description": "Speed in 0.1km/h below which the bike is considered to be idle",
+            "default": 25
+        },
+        "Ride_IdleTimeout": {
+            "id": "0x405B",
+            "type": "uint16",
+            "description": "Time in seconds to wait before declaring the bike to be idle",
+            "default": 2
+        },
+        "Ride_PauseTimeout": {
+            "id": "0x405C",
+            "type": "uint16",
+            "description": "Time in seconds to wait before pausing the ride",
+            "default": 120
+        },
+        "Ride_ResumeTimeout": {
+            "id": "0x405D",
+            "type": "uint16",
+            "description": "Time in seconds to wait before resuming the ride",
+            "default": 5
+        },
+        "Altitude_Enabled": {
+            "id": "0x4060",
+            "type": "bool",
+            "description": "Enable altitude measurement",
+            "default": true
+        },
+        "Altitude_QNH": {
+            "id": "0x4061",
+            "type": "uint16",
+            "description": "QNH altitude in hPa",
+            "default": 1013
+        },
+        "ITPMS_AutoStart": {
+            "id": "0x4070",
+            "type": "bool",
+            "description": "Start ITPMS automatically",
+            "default": true
+        },
+        "ITPMS_MinimumSpeed": {
+            "id": "0x4071",
+            "type": "uint16",
+            "description": "Minimum speed in 0.1km/h for ITPMS to work",
+            "default": 100
+        },
+        "ITPMS_SpeedThreshold": {
+            "id": "0x4072",
+            "type": "uint16",
+            "description": "Speed difference in 0.1km/h to trigger ITPMS",
+            "default": 5
         }
     }
 }
