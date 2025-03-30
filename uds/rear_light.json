@@ -68,7 +68,7 @@
             "type": "uint16",
             "min": 0,
             "max": 1000,
-            "default": 350
+            "default": 1000
         },
         "Brightness_LevelStandard": {
             "id": "0x4020",
