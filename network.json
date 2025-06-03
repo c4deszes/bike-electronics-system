@@ -117,20 +117,24 @@
                 "Cadence": {
                     "offset": 0,
                     "width": 8,
+                    "initial": 0,
                     "encoder": "CadenceEncoder"
                 },
                 "CadenceStatus": {
                     "offset": 8,
                     "width": 2,
+                    "initial": "NotAvailable",
                     "encoder": "CadenceStatusEncoder"
                 },
                 "EstimatedGear": {
                     "offset": 10,
-                    "width": 4
+                    "width": 4,
+                    "initial": 0
                 },
                 "GearStatus": {
                     "offset": 14,
                     "width": 2,
+                    "initial": "Unknown",
                     "encoder": "GearStatusEncoder"
                 }
             }
@@ -147,7 +151,7 @@
                 "RideStatus": {
                     "offset": 16,
                     "width": 2,
-                    "initial": "NoStarted",
+                    "initial": "NotStarted",
                     "encoder": "RideStatusEncoder"
                 },
                 "DistanceStatus": {
@@ -158,7 +162,8 @@
                 },
                 "Reserved": {
                     "offset": 20,
-                    "width": 4
+                    "width": 4,
+                    "initial": 0
                 },
                 "Distance": {
                     "offset": 24,
@@ -175,11 +180,13 @@
                 "Altitude": {
                     "offset": 0,
                     "width": 16,
+                    "initial": 0,
                     "encoder": "AltitudeEncoder"
                 },
                 "Grade": {
                     "offset": 16,
                     "width": 8,
+                    "initial": 0,
                     "encoder": "GradeEncoder"
                 },
                 "RoadQuality": {
@@ -197,21 +204,25 @@
                 "PressureError": {
                     "offset": 28,
                     "width": 1,
+                    "initial": "Ok",
                     "encoder": "GenericStatusFlag"
                 },
                 "TemperatureError": {
                     "offset": 29,
                     "width": 1,
+                    "initial": "Ok",
                     "encoder": "GenericStatusFlag"
                 },
                 "AltitudeError": {
                     "offset": 30,
                     "width": 1,
+                    "initial": "Ok",
                     "encoder": "GenericStatusFlag"
                 },
                 "Reserved": {
                     "offset": 31,
-                    "width": 1
+                    "width": 1,
+                    "initial": 0
                 }
             }
         },
@@ -251,7 +262,8 @@
             "layout": {
                 "Pressure": {
                     "offset": 0,
-                    "width": 32
+                    "width": 32,
+                    "initial": 0
                 }
             }
         },
@@ -261,27 +273,33 @@
             "layout": {
                 "aX": {
                     "offset": 0,
-                    "width": 16
+                    "width": 16,
+                    "initial": 0
                 },
                 "aY": {
                     "offset": 16,
-                    "width": 16
+                    "width": 16,
+                    "initial": 0
                 },
                 "aZ": {
                     "offset": 32,
-                    "width": 16
+                    "width": 16,
+                    "initial": 0
                 },
                 "gX": {
                     "offset": 48,
-                    "width": 16
+                    "width": 16,
+                    "initial": 0
                 },
                 "gY": {
                     "offset": 64,
-                    "width": 16
+                    "width": 16,
+                    "initial": 0
                 },
                 "gZ": {
                     "offset": 80,
-                    "width": 16
+                    "width": 16,
+                    "initial": 0
                 }
             }
         },
@@ -292,31 +310,37 @@
                 "FrontSpeed": {
                     "offset": 0,
                     "width": 16,
+                    "initial": 0,
                     "encoder": "SpeedEncoder"
                 },
                 "RearSpeed": {
                     "offset": 16,
                     "width": 16,
+                    "initial": 0,
                     "encoder": "SpeedEncoder"
                 },
                 "FrontSensorStatus": {
                     "offset": 32,
                     "width": 4,
+                    "initial": "Ok",
                     "encoder": "SpeedSensorStateEncoder"
                 },
                 "RearSensorStatus": {
                     "offset": 36,
                     "width": 4,
+                    "initial": "Ok",
                     "encoder": "SpeedSensorStateEncoder"
                 },
                 "CrankSensorStatus": {
                     "offset": 40,
                     "width": 4,
+                    "initial": "Ok",
                     "encoder": "SpeedSensorStateEncoder"
                 },
                 "CrankPosition": {
                     "offset": 44,
-                    "width": 4
+                    "width": 4,
+                    "initial": 0
                 }
             }
         },
@@ -456,19 +480,23 @@
             "layout": {
                 "aX": {
                     "offset": 0,
-                    "width": 16
+                    "width": 16,
+                    "initial": 0
                 },
                 "aY": {
                     "offset": 16,
-                    "width": 16
+                    "width": 16,
+                    "initial": 0
                 },
                 "aZ": {
                     "offset": 32,
-                    "width": 16
+                    "width": 16,
+                    "initial": 0
                 },
                 "Braking": {
                     "offset": 48,
                     "width": 1,
+                    "initial": "Off",
                     "encoder": "GenericSwitchEncoder"
                 },
                 "Reserved": {
@@ -794,22 +822,23 @@
     },
     "schedules": {
         "NormalSchedule": {
-            "delay": 0.1,
+            "type": "priority-aging",
+            "slots": "variable",
+            "delay": 0.05,
+            "phase": "adjusted",
             "entries": [
-                {"type": "request", "request": "SpeedStatus"},
-                {"type": "request", "request": "DrivetrainStatus"},
-                {"type": "request", "request": "RideStatus"},
-                {"type": "request", "request": "RoadStatus"},
-                {"type": "request", "request": "RideStatistics"},
-                {"type": "request", "request": "LightSynchronization"},
-                {"type": "request", "request": "RearLightSetting"},
-                {"type": "request", "request": "RearLightStatus"},
-                {"type": "request", "request": "FrontLightSetting"},
-                {"type": "request", "request": "FrontLightStatus"}
+                {"type": "request", "request": "SpeedStatus", "cycle": 0, "maxAge": 2},
+                {"type": "request", "request": "LightSynchronization", "cycle": 1, "maxAge": 3},
+                {"type": "request", "request": "FrontLightStatus", "cycle": 3, "maxAge": 8},
+                {"type": "request", "request": "FrontLightSetting", "cycle": 6, "maxAge": 10},
+                {"type": "request", "request": "RearLightStatus", "cycle": 7, "maxAge": 12},
+                {"type": "request", "request": "RearLightSetting", "cycle": 8, "maxAge": 12}
             ]
         },
         "RotorSensorSchedule": {
-            "delay": 0.1,
+            "type": "fixed",
+            "slots": "variable",
+            "delay": 0.05,
             "entries": [
                 {"type": "request", "request": "SpeedStatus"},
                 {"type": "request", "request": "DrivetrainStatus"},
@@ -822,6 +851,8 @@
             ]
         },
         "LightSchedule": {
+            "type": "fixed",
+            "slots": "variable",
             "delay": 0.25,
             "entries": [
                 {"type": "request", "request": "LightSynchronization"},
@@ -832,6 +863,8 @@
             ]
         },
         "RearLightSchedule": {
+            "type": "fixed",
+            "slots": "variable",
             "delay": 0.25,
             "entries": [
                 {"type": "request", "request": "LightSynchronization"},
@@ -843,6 +876,8 @@
             ]
         },
         "FrontLightSchedule": {
+            "type": "fixed",
+            "slots": "variable",
             "delay": 0.25,
             "entries": [
                 {"type": "request", "request": "LightSynchronization"},
