@@ -24,7 +24,9 @@ class BodyComputerSimulation(SimulatedPeripheral):
         ]
 
     def start(self):
-        pass
+        self.last_cycle_count = 0
+        self.last_status = 'NotStarted'
+        self.active = False
 
     def on_tick(self, delta):
         """
@@ -35,8 +37,28 @@ class BodyComputerSimulation(SimulatedPeripheral):
 
     def on_subscriber_event(self, request, signals):
         if request.name == 'FrontLightStatus':
-            cycle_count = signals['ControlCycleCount']
-            self.requests.LightSynchronization.TargetBrightness = self.light_profile[cycle_count][0]
-            self.requests.LightSynchronization.LightMode = self.light_profile[cycle_count][1]
-            self.requests.FrontLightSetting.Behavior = self.light_profile[cycle_count][2]
-            self.requests.RearLightSetting.Behavior = self.light_profile[cycle_count][3]
+            new_cycle_count = signals['ControlCycleCount']
+
+            if new_cycle_count != self.last_cycle_count:
+                self.active = True
+                self.last_cycle_count = new_cycle_count
+
+        if request.name == 'RideStatus':
+            status = signals['RideStatus']
+
+            if status != self.last_status:
+                if status == 'Active':
+                    self.active = True
+                elif status == 'Idle':
+                    self.active = False
+                self.last_status = status
+
+        if not self.active:
+            brightness = 20
+        else:
+            brightness = self.light_profile[self.last_cycle_count][0]
+
+        self.requests.LightSynchronization.TargetBrightness = brightness
+        self.requests.LightSynchronization.LightMode = self.light_profile[self.last_cycle_count][1]
+        self.requests.FrontLightSetting.Behavior = self.light_profile[self.last_cycle_count][2]
+        self.requests.RearLightSetting.Behavior = self.light_profile[self.last_cycle_count][3]

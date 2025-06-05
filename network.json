@@ -829,6 +829,7 @@
             "entries": [
                 {"type": "request", "request": "SpeedStatus", "cycle": 0, "maxAge": 2},
                 {"type": "request", "request": "LightSynchronization", "cycle": 1, "maxAge": 3},
+                {"type": "request", "request": "RideStatus", "cycle": 5, "maxAge": 10},
                 {"type": "request", "request": "FrontLightStatus", "cycle": 3, "maxAge": 8},
                 {"type": "request", "request": "FrontLightSetting", "cycle": 6, "maxAge": 10},
                 {"type": "request", "request": "RearLightStatus", "cycle": 7, "maxAge": 12},
