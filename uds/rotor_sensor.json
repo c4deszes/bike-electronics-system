@@ -1,5 +1,72 @@
 {
     "services": {
+        "Ride_ForceStart": {
+            "id": "0x1000",
+            "description": "Start/resume the ride",
+            "args": [
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        "Ride_ForcePause": {
+            "id": "0x1001",
+            "description": "Pause the ride",
+            "args": [
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        "Ride_ForceStop": {
+            "id": "0x1002",
+            "description": "Stop the ride",
+            "args": [
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        "Alt_SetQNH": {
+            "id": "0x2000",
+            "description": "Set the QNH altitude",
+            "args": [
+                {
+                    "name": "Pressure",
+                    "type": "uint16",
+                    "min": 980,
+                    "max": 1050,
+                    "default": 1013
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        "Imu_Level": {
+            "id": "0x2001",
+            "description": "Calibrate the IMU level",
+            "args": [],
+            "returns": {
+                "type": "void"
+            }
+        },
+        "Config_Reload": {
+            "id": "0x3000",
+            "description": "Reload the configuration from EEPROM",
+            "args": [],
+            "returns": {
+                "type": "uint8"
+            }
+        },
+        "Config_Save": {
+            "id": "0x3001",
+            "description": "Save the configuration to EEPROM",
+            "args": [],
+            "returns": {
+                "type": "uint8"
+            }
+        }
     },
     "properties": {
         "FrontWheel_Circumference": {
@@ -199,30 +266,6 @@
             "type": "bool",
             "description": "Enable altitude measurement",
             "default": true
-        },
-        "Altitude_QNH": {
-            "id": "0x4061",
-            "type": "uint16",
-            "description": "QNH altitude in hPa",
-            "default": 1013
-        },
-        "ITPMS_AutoStart": {
-            "id": "0x4070",
-            "type": "bool",
-            "description": "Start ITPMS automatically",
-            "default": true
-        },
-        "ITPMS_MinimumSpeed": {
-            "id": "0x4071",
-            "type": "uint16",
-            "description": "Minimum speed in 0.1km/h for ITPMS to work",
-            "default": 100
-        },
-        "ITPMS_SpeedThreshold": {
-            "id": "0x4072",
-            "type": "uint16",
-            "description": "Speed difference in 0.1km/h to trigger ITPMS",
-            "default": 5
         }
     }
 }

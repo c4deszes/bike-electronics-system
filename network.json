@@ -57,7 +57,9 @@
                 "FrontLightSetting"
             ],
             "publishes": [
-                "FrontLightStatus"
+                "FrontLightStatus",
+                "FrontLightBrightnessDebug",
+                "FrontLightTemperatureDebug"
             ]
         }
     },
@@ -569,8 +571,19 @@
                 }
             }
         },
+        "FrontLightBrightnessDebug": {
+            "id": "0x1063",
+            "size": 2,
+            "layout": {
+                "Brightness": {
+                    "offset": 0,
+                    "width": 16,
+                    "initial": 0
+                }
+            }
+        },
         "FrontLightTemperatureDebug": {
-            "id": "0x1062",
+            "id": "0x1064",
             "size": 2,
             "layout": {
                 "DriveTemperature": {
@@ -584,17 +597,6 @@
                     "width": 8,
                     "initial": 0,
                     "encoder": "TemperatureEncoder"
-                }
-            }
-        },
-        "FrontLightBrightnessDebug": {
-            "id": "0x1063",
-            "size": 2,
-            "layout": {
-                "Brightness": {
-                    "offset": 0,
-                    "width": 16,
-                    "initial": 0
                 }
             }
         }
@@ -829,11 +831,14 @@
             "entries": [
                 {"type": "request", "request": "SpeedStatus", "cycle": 0, "maxAge": 2},
                 {"type": "request", "request": "LightSynchronization", "cycle": 1, "maxAge": 3},
-                {"type": "request", "request": "RideStatus", "cycle": 5, "maxAge": 10},
-                {"type": "request", "request": "FrontLightStatus", "cycle": 3, "maxAge": 8},
-                {"type": "request", "request": "FrontLightSetting", "cycle": 6, "maxAge": 10},
-                {"type": "request", "request": "RearLightStatus", "cycle": 7, "maxAge": 12},
-                {"type": "request", "request": "RearLightSetting", "cycle": 8, "maxAge": 12}
+                {"type": "request", "request": "RideStatus", "cycle": 5, "maxAge": 20},
+                {"type": "request", "request": "DrivetrainStatus", "cycle": 5, "maxAge": 30},
+                {"type": "request", "request": "RoadStatus", "cycle": 15, "maxAge": 30},
+                {"type": "request", "request": "RideStatistics", "cycle": 15, "maxAge": 30},
+                {"type": "request", "request": "FrontLightStatus", "cycle": 8, "maxAge": 15},
+                {"type": "request", "request": "FrontLightSetting", "cycle": 8, "maxAge": 15},
+                {"type": "request", "request": "RearLightSetting", "cycle": 8, "maxAge": 15},
+                {"type": "request", "request": "RearLightStatus", "cycle": 8, "maxAge": 15}
             ]
         },
         "RotorSensorSchedule": {
