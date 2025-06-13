@@ -1,0 +1,116 @@
+{
+    "products": {
+        "RotorSensor": {
+            "errors": {
+                "E0100": {
+                    "title": "Peripheral unresponsive",
+                    "type": "error",
+                    "description": "RotorSensor peripheral is not connected or not responding"
+                },
+                "E0101": {
+                    "title": "Speed unreliable",
+                    "type": "warning",
+                    "description": "Wheel sensors report unplausible speed data"
+                },
+                "E0102": {
+                    "title": "Speed error",
+                    "type": "error",
+                    "description": "Wheel sensors have failed"
+                },
+                "E0103": {
+                    "title": "Speed slow response",
+                    "type": "warning",
+                    "description": "Wheel sensors have low pole count and IMU is not available"
+                },
+                "E0104": {
+                    "title": "Cadence error",
+                    "type": "error",
+                    "description": "Cadence sensor has failed or the cadence value is unplausible"
+                },
+                "E0105": {
+                    "title": "Distance error",
+                    "type": "error",
+                    "description": "The measured distance is likely not accurate"
+                },
+                "E0106": {
+                    "title": "Altitude error",
+                    "type": "error",
+                    "description": "The measured altitude or pressure data is outside the specifications"
+                },
+                "E0107": {
+                    "title": "Front wheel sensor error",
+                    "type": "error",
+                    "description": "Front wheel sensor has failed, short or open circuit"
+                },
+                "E0108": {
+                    "title": "Rear wheel sensor error",
+                    "type": "error",
+                    "description": "Rear wheel sensor has failed, short or open circuit"
+                },
+                "E0109": {
+                    "title": "Cadence sensor error",
+                    "type": "error",
+                    "description": "Cadence sensor has failed, short or open circuit"
+                }
+            }
+        },
+        "RearLight": {
+            "errors": {
+                "E0300": {
+                    "title": "Peripheral unresponsive",
+                    "type": "error",
+                    "description": "RearLight peripheral is not connected or not responding"
+                },
+                "E0301": {
+                    "title": "Tail light error",
+                    "type": "error",
+                    "description": "Tail light segment(s) have failed, short or open."
+                },
+                "E0302": {
+                    "title": "Brake light error",
+                    "type": "error",
+                    "description": "Brake light segment(s) have failed, short or open."
+                },
+                "E0303": {
+                    "title": "Turn signal light error",
+                    "type": "error",
+                    "description": "Turn signal light segment(s) have failed, short or open."
+                },
+                "E0304": {
+                    "title": "Temperature derating",
+                    "type": "warning",
+                    "description": "Brightness is reduced to prevent overtemperature shutdown."
+                },
+                "E0305": {
+                    "title": "Temperature too high",
+                    "type": "error",
+                    "description": "Lights are turned off to protect the device."
+                }
+            }
+        },
+        "FrontLight": {
+            "errors": {
+                "E0400": {
+                    "title": "Peripheral unresponsive",
+                    "type": "error",
+                    "description": "FrontLight peripheral is not connected or not responding"
+                },
+                "E0401": {
+                    "title": "Main beam error",
+                    "type": "error",
+                    "description": "Main beam segment(s) have failed, short or open."
+                },
+                "E0402": {
+                    "title": "Temperature derating",
+                    "type": "warning",
+                    "description": "Brightness is reduced to prevent overtemperature shutdown."
+                },
+                "E0403": {
+                    "title": "Temperature too high",
+                    "type": "error",
+                    "description": "Lights are turned off to protect the device."
+                }
+            }
+        }
+    }
+}

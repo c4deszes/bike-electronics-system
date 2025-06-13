@@ -9,7 +9,7 @@ Ambient
 
     Every product shall be capable of:
     
-    * operating in ``-10°C`` to ``50°C`` ambient
+    * operating in ``-10°C`` to ``50°C`` ambient, possibly with limitations
     * storage in ``-20°C`` to ``60°C`` ambient
 
 Ingress
@@ -27,8 +27,8 @@ Ingress
     Every product shall be rated level 5 of the IP rating standard, meaning the products are subject
     to water spray and should continue operating normally.
 
-    Products that are 10cm from the ground shall be rated level 6, meaning they are subject to
-    submersion in water.
+    Products that are expected to get as close as 10cm above the ground shall be rated level 6,
+    meaning they are subject to submersion in water.
 
 Chemical
 --------
@@ -47,15 +47,6 @@ Chemical
         * Glyceride alkyl ester mix.
 
     * household soap at 10 M/M% concentration
-    * threadlocker
-
-        * Tetramethylene dimethacrylat
-        * Amorphous fumed silica
-        * Ethene, homopolymer
-        * Propane-1,2-diol
-        * Cumene hydroperoxide
-        * 1-Acetyl-2-phenylhydrazine
-        * Cumene
 
     * chain brite
 
