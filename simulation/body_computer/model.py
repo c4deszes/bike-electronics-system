@@ -1,4 +1,4 @@
-from line_protocol.protocol.virtual_bus import SimulatedPeripheral
+from line_protocol.protocol.simulation import SimulatedPeripheral
 
 class BodyComputerSimulation(SimulatedPeripheral):
     """
@@ -37,14 +37,14 @@ class BodyComputerSimulation(SimulatedPeripheral):
 
     def on_subscriber_event(self, request, signals):
         if request.name == 'FrontLightStatus':
-            new_cycle_count = signals['ControlCycleCount']
+            new_cycle_count = signals['ControlCycleCount'].phy
 
             if new_cycle_count != self.last_cycle_count:
                 self.active = True
                 self.last_cycle_count = new_cycle_count
 
         if request.name == 'RideStatus':
-            status = signals['RideStatus']
+            status = signals['RideStatus'].phy
 
             if status != self.last_status:
                 if status == 'Active':

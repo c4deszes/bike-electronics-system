@@ -3,7 +3,7 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
 
-from line_protocol.protocol.virtual_bus import SimulatedPeripheral
+from line_protocol.protocol.simulation import SimulatedPeripheral
 
 class BodyComputerControlPanel(QWidget):
 

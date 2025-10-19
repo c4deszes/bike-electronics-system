@@ -1,5 +1,5 @@
 from line_protocol.protocol.master import LineMaster
-from line_protocol.protocol.virtual_bus import VirtualBus, SimulatedPeripheral
+from line_protocol.protocol.simulation import SimulatedPeripheral
 from line_protocol.network import load_network, Network
 from line_protocol.monitor.traffic import TrafficLogger
 from line_protocol.protocol.transport import LineSerialTransport
@@ -86,7 +86,7 @@ if __name__ == "__main__":
         bus_thread.stop()
         event.accept()
 
-    rear_light_status_panel = RearLightStatusPanel(bus_thread.master)
+    rear_light_status_panel = RearLightStatusPanel(bus_thread.master, simulation_context.network)
     schedule_control = ScheduleControl(bus_thread.master, simulation_context.network.schedules)
 
     main_layout.addWidget(schedule_control)

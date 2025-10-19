@@ -1,5 +1,5 @@
 from line_protocol.protocol.master import LineMaster
-from line_protocol.protocol.virtual_bus import VirtualBus, SimulatedPeripheral
+from line_protocol.protocol.simulation import SimulatedPeripheral
 from line_protocol.network import load_network, Network
 from line_protocol.monitor.traffic import TrafficLogger
 from line_protocol.protocol.transport import LineSerialTransport
@@ -19,6 +19,7 @@ from front_light import FrontLightSimulation, FrontLightSimulationPanel
 
 # Utilities
 from util.schedule_control import ScheduleControl
+from util.diag_view import DiagnosticInfoView
 
 class SimulationContext:
     def __init__(self, network: Network):
@@ -106,13 +107,19 @@ if __name__ == "__main__":
         event.accept()
 
     rear_light_panel = RearLightSimulationPanel(simulation_context.rear_light)
-    rear_light_status_panel = RearLightStatusPanel(bus_thread.master)
+    rear_light_status_panel = RearLightStatusPanel(bus_thread.master, simulation_context.network)
     front_light_panel = FrontLightSimulationPanel(simulation_context.front_light)
     schedule_control = ScheduleControl(bus_thread.master, simulation_context.network.schedules)
+
+    rear_light_diag = DiagnosticInfoView(bus_thread.master, [
+        simulation_context.network.get_node('RearLight'),
+        simulation_context.network.get_node('FrontLight')
+    ])
 
     main_layout.addWidget(schedule_control)
     main_layout.addWidget(rear_light_panel)
     main_layout.addWidget(rear_light_status_panel)
+    main_layout.addWidget(rear_light_diag)
     main_layout.addWidget(front_light_panel)
 
     simulation_thread.start()

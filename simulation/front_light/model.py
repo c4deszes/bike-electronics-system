@@ -1,4 +1,4 @@
-from line_protocol.protocol.virtual_bus import SimulatedPeripheral
+from line_protocol.protocol.simulation import SimulatedPeripheral
 import time
 
 class FrontLightListener:
@@ -52,6 +52,6 @@ class FrontLightSimulation(SimulatedPeripheral):
 
     def on_subscriber_event(self, request, signals):
         if request.name == 'LightSynchronization':
-            self.set_brightness(signals['TargetBrightness'])
+            self.set_brightness(signals['TargetBrightness'].phy)
 
 
