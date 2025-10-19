@@ -859,7 +859,7 @@
         "LightSchedule": {
             "type": "fixed",
             "slots": "variable",
-            "delay": 0.25,
+            "delay": 0.05,
             "entries": [
                 {"type": "request", "request": "LightSynchronization"},
                 {"type": "request", "request": "RearLightSetting"},
@@ -871,26 +871,34 @@
         "RearLightSchedule": {
             "type": "fixed",
             "slots": "variable",
-            "delay": 0.25,
+            "delay": 0.05,
             "entries": [
                 {"type": "request", "request": "LightSynchronization"},
                 {"type": "request", "request": "RearLightSetting"},
                 {"type": "request", "request": "RearLightStatus"},
                 {"type": "request", "request": "RearLightBrightnessDebug"},
                 {"type": "request", "request": "RearLightTemperatureDebug"},
-                {"type": "request", "request": "RearLightMotionDebug"}
+                {"type": "request", "request": "RearLightMotionDebug"},
+                {"type": "opstatus", "node": "RearLight"},
+                {"type": "pwrstatus", "node": "RearLight"},
+                {"type": "serial", "node": "RearLight"},
+                {"type": "swversion", "node": "RearLight"}
             ]
         },
         "FrontLightSchedule": {
             "type": "fixed",
             "slots": "variable",
-            "delay": 0.25,
+            "delay": 0.05,
             "entries": [
                 {"type": "request", "request": "LightSynchronization"},
                 {"type": "request", "request": "FrontLightSetting"},
                 {"type": "request", "request": "FrontLightStatus"},
                 {"type": "request", "request": "FrontLightTemperatureDebug"},
-                {"type": "request", "request": "FrontLightBrightnessDebug"}
+                {"type": "request", "request": "FrontLightBrightnessDebug"},
+                {"type": "opstatus", "node": "FrontLight"},
+                {"type": "pwrstatus", "node": "FrontLight"},
+                {"type": "serial", "node": "FrontLight"},
+                {"type": "swversion", "node": "FrontLight"}
             ]
         }
     }
