@@ -1,0 +1,96 @@
+{
+    "services": {
+    },
+    "properties": {
+        "Battery_VoltageOffset": {
+            "id": "0x100",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        },
+        "Battery_VoltageGain": {
+            "id": "0x101",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        },
+        "Battery_WarnLowVoltage": {
+            "id": "0x101",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel1_Enable": {
+            "id": "0x200",
+            "type": "bool",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel2_Enable": {
+            "id": "0x201",
+            "type": "bool",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel3_Enable": {
+            "id": "0x202",
+            "type": "bool",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel4_Enable": {
+            "id": "0x203",
+            "type": "bool",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel1_Delay": {
+            "id": "0x210",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel2_Delay": {
+            "id": "0x211",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel3_Delay": {
+            "id": "0x212",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel4_Delay": {
+            "id": "0x213",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel1_Pumping": {
+            "id": "0x220",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel2_Pumping": {
+            "id": "0x220",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel3_Pumping": {
+            "id": "0x220",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        },
+        "Power_Channel4_Pumping": {
+            "id": "0x220",
+            "type": "uint16_t",
+            "description": "",
+            "persistent": true
+        }
+    }
+}
