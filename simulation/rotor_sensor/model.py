@@ -1,7 +1,4 @@
-from line_protocol.protocol.transport import LineSerialSniffer
 from line_protocol.protocol.simulation import SimulatedPeripheral
-from line_protocol.network import load_network
-from line_protocol.monitor.traffic import TrafficLogger
 import logging
 
 class RotorSensorSimulation(SimulatedPeripheral):

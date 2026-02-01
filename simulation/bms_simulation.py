@@ -1,7 +1,7 @@
 from line_protocol.protocol.master import LineMaster
 from line_protocol.protocol.simulation import SimulatedPeripheral
 from line_protocol.network import load_network, Network
-from line_protocol.monitor.traffic import TrafficLogger
+#from line_protocol.monitor.traffic import TrafficLogger
 from line_protocol.protocol.transport import LineSerialTransport
 import logging
 import threading
@@ -18,7 +18,7 @@ from rotor_sensor import RotorSensorSimulation
 from front_light import FrontLightSimulation, FrontLightSimulationPanel
 
 # Utilities
-from util.schedule_control import ScheduleControl
+from views.schedule_control import ScheduleControl
 
 class SimulationContext:
     def __init__(self, network: Network):

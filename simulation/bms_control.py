@@ -17,7 +17,7 @@ from rear_light import RearLightStatusPanel
 from rotor_sensor import RotorSensorStatusPanel
 
 # Utilities
-from util.schedule_control import ScheduleControl
+from views.schedule_control import ScheduleControl
 
 class SimulationContext:
     def __init__(self, network: Network):
@@ -47,7 +47,7 @@ class BusThread(threading.Thread):
         super().__init__()
         self.context = context
         self.running = True
-        self.transport = LineSerialTransport('COM9', self.context.network.baudrate)
+        self.transport = LineSerialTransport('/dev/ttyUSB2', self.context.network.baudrate)
         self.master = LineMaster(self.transport, self.context.network)
 
     def run(self):

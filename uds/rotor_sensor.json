@@ -3,34 +3,34 @@
         "Ride_ForceStart": {
             "id": "0x1000",
             "description": "Start/resume the ride",
-            "args": [
+            "params": [
             ],
-            "returns": {
+            "return": {
                 "type": "void"
             }
         },
         "Ride_ForcePause": {
             "id": "0x1001",
             "description": "Pause the ride",
-            "args": [
+            "params": [
             ],
-            "returns": {
+            "return": {
                 "type": "void"
             }
         },
         "Ride_ForceStop": {
             "id": "0x1002",
             "description": "Stop the ride",
-            "args": [
+            "params": [
             ],
-            "returns": {
+            "return": {
                 "type": "void"
             }
         },
         "Alt_SetQNH": {
             "id": "0x2000",
             "description": "Set the QNH altitude",
-            "args": [
+            "params": [
                 {
                     "name": "Pressure",
                     "type": "uint16",
@@ -39,31 +39,31 @@
                     "default": 1013
                 }
             ],
-            "returns": {
+            "return": {
                 "type": "void"
             }
         },
         "Imu_Level": {
             "id": "0x2001",
             "description": "Calibrate the IMU level",
-            "args": [],
-            "returns": {
+            "params": [],
+            "return": {
                 "type": "void"
             }
         },
         "Config_Reload": {
             "id": "0x3000",
             "description": "Reload the configuration from EEPROM",
-            "args": [],
-            "returns": {
+            "params": [],
+            "return": {
                 "type": "uint8"
             }
         },
         "Config_Save": {
             "id": "0x3001",
             "description": "Save the configuration to EEPROM",
-            "args": [],
-            "returns": {
+            "params": [],
+            "return": {
                 "type": "uint8"
             }
         }

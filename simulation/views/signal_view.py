@@ -42,7 +42,7 @@ class SignalTable(QWidget, RequestListener):
         self.main_layout.addWidget(self.group)
         self.setLayout(self.main_layout)
 
-    def on_user_request(self, timestamp: float, request: Request, signals) -> None:
+    def on_user_request(self, timestamp: float, request: Request, buffer: List[int], signals) -> None:
         for signal_ref in self.signals:
             if request.name == signal_ref.request.name:
                 if signal_ref.signal.name in signals:

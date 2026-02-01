@@ -3,6 +3,9 @@ from line_protocol.protocol.simulation import SimulatedPeripheral
 from line_protocol.network import load_network, Network
 from line_protocol.monitor.traffic import TrafficLogger
 from line_protocol.protocol.transport import LineSerialTransport
+
+from line_uds import load_profile
+
 import logging
 import threading
 import time
@@ -18,8 +21,9 @@ from rotor_sensor import RotorSensorSimulation
 from front_light import FrontLightSimulation, FrontLightSimulationPanel
 
 # Utilities
-from util.schedule_control import ScheduleControl
-from util.diag_view import DiagnosticInfoView
+from views.schedule_control import ScheduleControl
+from views.diag_view import DiagnosticInfoView
+from views.diag_control import DiagnosticControlView
 
 class SimulationContext:
     def __init__(self, network: Network):
@@ -28,14 +32,17 @@ class SimulationContext:
     def setup(self):
         self.body_computer = BodyComputerSimulation(self.network.get_node("BodyComputer"))
 
+        #rotor_sensor_profile = load_profile(os.path.join(os.path.dirname(__file__), '..', 'uds', 'rotor_sensor.json'))
         self.rotor_sensor = RotorSensorSimulation(self.network.get_node("RotorSensor"))
         self.rotor_sensor.software_version = '1.2.3'
         self.rotor_sensor.serial_number = 0x12345678
 
-        self.rear_light = RearLightSimulation(self.network.get_node("RearLight"))
+        rear_light_profile = load_profile(os.path.join(os.path.dirname(__file__), '..', 'uds', 'rear_light.json'))
+        self.rear_light = RearLightSimulation(self.network.get_node("RearLight"), rear_light_profile)
         self.rear_light.software_version = '1.0.0'
         self.rear_light.serial_number = 0x87654321
 
+        #front_light_profile = load_profile(os.path.join(os.path.dirname(__file__), '..', 'uds', 'front_light.json'))
         self.front_light = FrontLightSimulation(self.network.get_node("FrontLight"))
         self.front_light.software_version = '1.0.0'
         self.front_light.serial_number = 0x11223344
@@ -55,9 +62,9 @@ class SimulationThread(threading.Thread):
 
         while self.running:
             # TODO: increase tick rate
-            self.context.rear_light.on_tick(0.1)
-            self.context.front_light.on_tick(0.1)
-            time.sleep(0.1)
+            self.context.rear_light.on_tick(0.01)
+            self.context.front_light.on_tick(0.01)
+            time.sleep(0.01)
 
     def stop(self):
         self.running = False
@@ -111,15 +118,19 @@ if __name__ == "__main__":
     front_light_panel = FrontLightSimulationPanel(simulation_context.front_light)
     schedule_control = ScheduleControl(bus_thread.master, simulation_context.network.schedules)
 
-    rear_light_diag = DiagnosticInfoView(bus_thread.master, [
+    diag_info = DiagnosticInfoView(bus_thread.master, [
         simulation_context.network.get_node('RearLight'),
         simulation_context.network.get_node('FrontLight')
     ])
 
+    diag_control = DiagnosticControlView(bus_thread.master,
+                                         simulation_context.network.nodes)
+
     main_layout.addWidget(schedule_control)
     main_layout.addWidget(rear_light_panel)
     main_layout.addWidget(rear_light_status_panel)
-    main_layout.addWidget(rear_light_diag)
+    main_layout.addWidget(diag_info)
+    main_layout.addWidget(diag_control)
     main_layout.addWidget(front_light_panel)
 
     simulation_thread.start()

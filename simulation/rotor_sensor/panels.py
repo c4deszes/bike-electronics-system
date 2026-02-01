@@ -5,8 +5,8 @@ from PyQt6.QtWidgets import *
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 from pyqtgraph import DateAxisItem, InfiniteLine
-from util.plotter import PlotView, SignalRef
-from util.signal_view import SignalTable
+from views.plotter import PlotView, SignalRef
+from views.signal_view import SignalTable
 
 from line_protocol.network import Network
 from line_protocol.protocol.master import LineMaster, RequestListener, NodeStatusListener, Request
