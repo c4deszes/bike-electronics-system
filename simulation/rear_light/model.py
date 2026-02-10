@@ -33,7 +33,6 @@ class RearLightSimulation(SimulatedPeripheral):
         self._brightness = 0
 
         self._blink_state = True
-        print(self.uds_extension.properties)
         self._blink_timer = self.uds_extension.properties[0x4050] / 1000
 
         self.last_setpoint = time.time()
@@ -47,6 +46,7 @@ class RearLightSimulation(SimulatedPeripheral):
 
         if current_time - self.last_setpoint > 4:
             self.target_brightness = 80
+            self.target_mode = 'Default'
 
         if self.target_mode == 'Blink':
             self._blink_timer -= delta

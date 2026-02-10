@@ -18,7 +18,7 @@ from PyQt6.QtWidgets import *
 from body_computer import BodyComputerSimulation
 from rear_light import RearLightSimulationPanel, RearLightSimulation, RearLightStatusPanel
 from rotor_sensor import RotorSensorSimulation
-from front_light import FrontLightSimulation, FrontLightSimulationPanel
+from front_light import FrontLightSimulation, FrontLightSimulationPanel, FrontLightStatusPanel
 
 # Utilities
 from views.schedule_control import ScheduleControl
@@ -100,7 +100,7 @@ if __name__ == "__main__":
     app.setApplicationName("Bicycle Simulation")
     window = QWidget()
 
-    main_layout = QVBoxLayout()
+    main_layout = QHBoxLayout()
 
     simulation_context = SimulationContext(load_network(os.path.join(os.path.dirname(__file__), '..', 'network.json')))
     simulation_context.setup()
@@ -116,6 +116,7 @@ if __name__ == "__main__":
     rear_light_panel = RearLightSimulationPanel(simulation_context.rear_light)
     rear_light_status_panel = RearLightStatusPanel(bus_thread.master, simulation_context.network)
     front_light_panel = FrontLightSimulationPanel(simulation_context.front_light)
+    front_light_status_panel = FrontLightStatusPanel(bus_thread.master, simulation_context.network)
     schedule_control = ScheduleControl(bus_thread.master, simulation_context.network.schedules)
 
     diag_info = DiagnosticInfoView(bus_thread.master, [
@@ -126,12 +127,23 @@ if __name__ == "__main__":
     diag_control = DiagnosticControlView(bus_thread.master,
                                          simulation_context.network.nodes)
 
-    main_layout.addWidget(schedule_control)
-    main_layout.addWidget(rear_light_panel)
-    main_layout.addWidget(rear_light_status_panel)
-    main_layout.addWidget(diag_info)
-    main_layout.addWidget(diag_control)
-    main_layout.addWidget(front_light_panel)
+    left_layout = QVBoxLayout()
+    middle_layout = QVBoxLayout()
+    right_layout = QVBoxLayout()
+
+    left_layout.addWidget(schedule_control)
+    left_layout.addWidget(diag_control)
+    left_layout.addWidget(diag_info)
+
+    middle_layout.addWidget(rear_light_panel)
+    middle_layout.addWidget(rear_light_status_panel)
+
+    right_layout.addWidget(front_light_panel)
+    right_layout.addWidget(front_light_status_panel)
+
+    main_layout.addLayout(left_layout)
+    main_layout.addLayout(middle_layout)
+    main_layout.addLayout(right_layout)
 
     simulation_thread.start()
     bus_thread.start()

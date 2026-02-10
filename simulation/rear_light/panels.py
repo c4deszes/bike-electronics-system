@@ -10,6 +10,13 @@ from line_protocol.network import Network
 from .model import RearLightSimulation, RearLightListener
 from views.signal_view import SignalTable
 
+LIGHT_WIDTH = 33
+LIGHT_HEIGHT = 63
+LIGHT_OFFSET = 12
+LIGHT_SIZE = 20
+LIGHTBODY_COLOR = QColor(20, 20, 20)
+MIN_BRIGHTNESS_COLOR = 30
+
 class RearLightSimulationPanel(QWidget, RearLightListener):
 
     brightness_signal = pyqtSignal(int)
@@ -32,60 +39,51 @@ class RearLightSimulationPanel(QWidget, RearLightListener):
         self.bus_switch.setChecked(True)
         self.bus_switch.stateChanged.connect(self.bus_change)
 
-        self.brightness_label = QLabel("Brightness: 0%")
-        self.brightness_signal.connect(lambda x: self.brightness_label.setText(f"Brightness: {x}%"))
-
         self.light_canvas_label = QLabel()
+
         light_scale = 3
-        light_width = 33 * light_scale
-        light_height = 63 * light_scale
-        light_offset = 12 * light_scale
-        light_size = 20 * light_scale
+        light_width = LIGHT_WIDTH * light_scale
+        light_height = LIGHT_HEIGHT * light_scale
+        light_offset = LIGHT_OFFSET * light_scale
+        light_size = LIGHT_SIZE * light_scale
+
         self.light_canvas = QPixmap(light_width, light_height)
         self.light_canvas.fill(QColor(0, 0, 0, 0))
-        self.draw_lightbody(light_width, light_height, light_offset, light_size)
+        self.draw_lightbody(self.light_canvas, light_width, light_height, light_offset, light_size)
         
-        self.brightness_signal.connect(lambda brightness: self.update_light_brightness(light_height, light_width, light_offset, light_size, brightness))
+        self.brightness_signal.connect(lambda brightness: self.update_light_brightness(self.light_canvas, light_height, light_width, light_offset, light_size, brightness))
         self.light_canvas_label.setPixmap(self.light_canvas)
 
         self.group_layout.addWidget(self.power_switch)
         self.group_layout.addWidget(self.bus_switch)
-        self.group_layout.addWidget(self.brightness_label)
         self.main_layout.addWidget(self.light_canvas_label)
         self.group.setLayout(self.group_layout)
         self.main_layout.addWidget(self.group)
         self.setLayout(self.main_layout)
 
     def power_change(self):
-        # if self.power_switch.isChecked():
-        #     if self.bus_switch.isChecked():
-        #         self.simulation.connected = True
-        #     else:
-        #         self.simulation.connected = False
-        # else:
-        #     self.simulation.reset()
-        #     self.simulation.connected = False
+        # TODO: powerdown the simulation
         pass
 
     def bus_change(self):
+        # TODO: disconnect the simulation from the bus
         if self.bus_switch.isChecked() and self.power_switch.isChecked():
             self.simulation.connected = True
         else:
             self.simulation.connected = False
 
-    def draw_lightbody(self, light_width, light_height, light_offset, light_size):
-        painter = QPainter(self.light_canvas)
-        painter.setBrush(QColor(10, 10, 10))
+    def draw_lightbody(self, canvas, light_width, light_height, light_offset, light_size):
+        painter = QPainter(canvas)
+        painter.setBrush(LIGHTBODY_COLOR)
         painter.drawRoundedRect(0, 0, light_width, light_height, light_width / 2, light_width / 2)
         painter.end()
 
-        self.update_light_brightness(light_height, light_width, light_offset, light_size, 30)
-
+        self.update_light_brightness(canvas, light_height, light_width, light_offset, light_size, 0)
         self.light_canvas_label.setPixmap(self.light_canvas)
 
-    def update_light_brightness(self, light_height, light_width, light_offset, light_size, brightness):
-        gray_value = int((brightness / 100) * (255 - 30) + 30)
-        painter = QPainter(self.light_canvas)
+    def update_light_brightness(self, canvas, light_height, light_width, light_offset, light_size, brightness):
+        gray_value = int((brightness / 100) * (255 - MIN_BRIGHTNESS_COLOR) + MIN_BRIGHTNESS_COLOR)
+        painter = QPainter(canvas)
         painter.setBrush(QColor(gray_value, 0, 0))
         painter.drawEllipse(int((light_width - light_size) / 2), light_offset, light_size, light_size)
         painter.end()
@@ -105,88 +103,3 @@ class RearLightStatusPanel(SignalTable):
                             network.get_signal("RearLightStatus", "TurnSignalLightStatus"),
                             network.get_signal("RearLightStatus", "ThermalStatus")
                          ], parent)
-
-# class RearLightStatusPanel(QWidget, RequestListener, NodeStatusListener):
-    
-#     status_signal = pyqtSignal(dict)
-
-#     def __init__(self, master: LineMaster, parent=None):
-#         super().__init__(parent)
-
-#         master.add_request_listener(self)
-
-#         self.rearlight_status = {
-#             'TailLightStatus': None,
-#             'BrakeLightStatus': None,
-#             'TurnSignalLightStatus': None,
-#             'ThermalStatus': None
-#         }
-
-#         self.main_layout = QVBoxLayout()
-
-#         self.group = QGroupBox("RearLight status")
-#         self.signal_layout = QGridLayout()
-        
-#         self.tail_light_label = QLabel("TailLight")
-#         self.tail_light_status = QLabel("")
-#         self.brake_light_label = QLabel("BrakeLight")
-#         self.brake_light_status = QLabel("")
-#         self.turn_light_label = QLabel("TurnSignalLight")
-#         self.turn_light_status = QLabel("")
-#         self.thermal_status_label = QLabel("ThermalStatus")
-#         self.thermal_status = QLabel("")
-
-#         self.signal_layout.addWidget(self.tail_light_label, 0, 0)
-#         self.signal_layout.addWidget(self.tail_light_status, 0, 1)
-#         self.signal_layout.addWidget(self.brake_light_label, 1, 0)
-#         self.signal_layout.addWidget(self.brake_light_status, 1, 1)
-#         self.signal_layout.addWidget(self.turn_light_label, 2, 0)
-#         self.signal_layout.addWidget(self.turn_light_status, 2, 1)
-#         self.signal_layout.addWidget(self.thermal_status_label, 3, 0)
-#         self.signal_layout.addWidget(self.thermal_status, 3, 1)
-
-#         self.status_signal.connect(self.update_status)
-#         self.update_status()
-
-#         self.group.setLayout(self.signal_layout)
-#         self.main_layout.addWidget(self.group)
-#         self.setLayout(self.main_layout)
-
-#     def update_status(self):
-#         if self.rearlight_status['TailLightStatus'] is not None:
-#             self.tail_light_status.setText(self.rearlight_status['TailLightStatus'])
-#         else:
-#             self.tail_light_status.setText("N/A")
-
-#         if self.rearlight_status['BrakeLightStatus'] is not None:
-#             self.brake_light_status.setText(self.rearlight_status['BrakeLightStatus'])
-#         else:
-#             self.brake_light_status.setText("N/A")
-
-#         if self.rearlight_status.get('TurnSignalLightStatus') is not None:
-#             self.turn_light_status.setText(self.rearlight_status['TurnSignalLightStatus'])
-#         else:
-#             self.turn_light_status.setText("N/A")
-
-#         if self.rearlight_status.get('ThermalStatus') is not None:
-#             self.thermal_status.setText(self.rearlight_status['ThermalStatus'])
-#         else:
-#             self.thermal_status.setText("N/A")
-
-#     def on_user_request(self, timestamp: float, request: Request, signals) -> None:
-#         if request.name == 'RearLightStatus':
-#             self.rearlight_status = signals
-#             self.status_signal.emit(self.rearlight_status)
-
-#     def on_error(self, timestamp: float, request: Request, error_type):
-#         if request.name == 'RearLightStatus':
-#             self.rearlight_status = {
-#                 'TailLightStatus': None,
-#                 'BrakeLightStatus': None,
-#                 'TurnSignalLightStatus': None,
-#                 'ThermalStatus': None
-#             }
-#             self.status_signal.emit(self.rearlight_status)
-
-#     # def on_node_status(self, node):
-#     #     pass

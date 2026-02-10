@@ -4,13 +4,13 @@
             "id": "0x3000",
             "description": "Reloads the configuration from EEPROM",
             "params": [],
-            "return": "uint8"
+            "return": "uint8_t"
         },
         "Config_Save": {
             "id": "0x3001",
             "description": "Saves the configuration to EEPROM",
             "params": [],
-            "return": "uint8"
+            "return": "uint8_t"
         }
     },
     "properties": {
