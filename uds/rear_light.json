@@ -199,6 +199,54 @@
             "min": 50,
             "max": 500,
             "default": 200
+        },
+        "Driver_TailRefCurrent": {
+            "id": "0x4060",
+            "description": "Current for tail light segments",
+            "type": "uint16_t",
+            "min": 1,
+            "max": 1000,
+            "default": 500
+        },
+        "Driver_BrakeRefCurrent": {
+            "id": "0x4061",
+            "description": "Current for brake light segments",
+            "type": "uint16_t",
+            "min": 1,
+            "max": 1000,
+            "default": 500
+        },
+        "Driver_TailRefVoltage": {
+            "id": "0x4062",
+            "description": "Forward voltage of tail light segments",
+            "type": "uint8_t",
+            "min": 10,
+            "max": 50,
+            "default": 25
+        },
+        "Driver_BrakeRefVoltage": {
+            "id": "0x4063",
+            "description": "Forward voltage of brake light segments",
+            "type": "uint8_t",
+            "min": 10,
+            "max": 50,
+            "default": 25
+        },
+        "Driver_TailEfficiency": {
+            "id": "0x4064",
+            "description": "Efficiency for tail light segments in %",
+            "type": "uint8_t",
+            "min": 1,
+            "max": 100,
+            "default": 80
+        },
+        "Driver_BrakeEfficiency": {
+            "id": "0x4065",
+            "description": "Efficiency for brake light segments in %",
+            "type": "uint8_t",
+            "min": 1,
+            "max": 100,
+            "default": 80
         }
     }
 }
