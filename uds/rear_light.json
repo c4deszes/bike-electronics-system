@@ -1,27 +1,199 @@
 {
+    "types": {
+        "StrobeMode": {
+            "type": "enum",
+            "values": [
+                "DISABLED",
+                "INTERNAL_SINGLE",
+                "INTERNAL_RAPID",
+                "EXTERNAL_POS",
+                "EXTERNAL_NEG"
+            ]
+        },
+        "Segment": {
+            "type": "enum",
+            "values": [
+                "TAIL",
+                "BRAKE",
+                "SIGNAL_LEFT",
+                "SIGNAL_RIGHT"
+            ]
+        },
+        "AdcChannel": {
+            "type": "enum",
+            "values": [
+                "McuTemperature",
+                "DriveTemperature",
+                "Reserved1",
+                "Reserved2",
+                "BatteryVoltage",
+                "TailDriverVoltage",
+                "Reserved3",
+                "Reserved4"
+            ]
+        },
+        "DriverFault": {
+            "type": "enum",
+            "values": [
+                "NoError",
+                "OverTemperature",
+                "OpenLoad",
+                "ShortToGround",
+                "ShortToVcc"
+            ]
+        },
+        "DriverStatus": {
+            "type": "struct",
+            "fields": {
+                "TailLightStatus": {
+                    "type": "DriverFault"
+                },
+                "BrakeLightStatus": {
+                    "type": "DriverFault"
+                },
+                "SignalLeftStatus": {
+                    "type": "DriverFault"
+                },
+                "SignalRightStatus": {
+                    "type": "DriverFault"
+                }
+            }
+        },
+        "ImuData": {
+            "type": "struct",
+            "fields": {
+                "AccelX": {
+                    "type": "int16_t"
+                },
+                "AccelY": {
+                    "type": "int16_t"
+                },
+                "AccelZ": {
+                    "type": "int16_t"
+                },
+                "GyroX": {
+                    "type": "int16_t"
+                },
+                "GyroY": {
+                    "type": "int16_t"
+                },
+                "GyroZ": {
+                    "type": "int16_t"
+                }
+            }
+        }
+    },
     "services": {
         "Config_Reload": {
             "id": "0x3000",
-            "description": "Reloads the configuration from EEPROM",
-            "params": [],
-            "return": "uint8_t"
+            "description": "Updates the configuration with the latest UDS property values",
+            "group": "Configuration",
+            "params": {},
+            "return": "void"
         },
         "Config_Save": {
             "id": "0x3001",
-            "description": "Saves the configuration to EEPROM",
-            "params": [],
-            "return": "uint8_t"
+            "description": "Saves the current UDS property values to EEPROM",
+            "group": "Configuration",
+            "params": {},
+            "return": "void"
+        },
+        "Calib_Brightness": {
+            "id": "0x3002",
+            "description": "Changes an entry in the brightness curve calibration table",
+            "group": "Calibration",
+            "params": {
+                "Duty": {
+                    "type": "uint8_t"
+                },
+                "Value": {
+                    "type": "uint8_t"
+                }
+            },
+            "return": "bool"
+        },
+        "Calib_Voltage": {
+            "id": "0x3003",
+            "description": "Changes the voltage calibration values for battery voltage readings",
+            "group": "Calibration",
+            "params": {
+                "Slope": {
+                    "type": "uint16_t"
+                },
+                "Offset": {
+                    "type": "int16_t"
+                }
+            },
+            "return": "void"
+        },
+        "Calib_Save": {
+            "id": "0x3004",
+            "description": "Saves the current calibration values to EEPROM",
+            "group": "Calibration",
+            "params": {},
+            "return": "void"
+        },
+        "Driver_Control": {
+            "id": "0x3010",
+            "description": "Tests each segment of the light",
+            "group": "Driver",
+            "params": {
+                "Segment": {
+                    "type": "Segment"
+                },
+                "Brightness": {
+                    "type": "uint16_t"
+                }
+            },
+            "return": "void"
+        },
+        "Driver_Status": {
+            "id": "0x3011",
+            "description": "Returns the current status of the LED driver",
+            "group": "Driver",
+            "params": {},
+            "return": "DriverStatus"
+        },
+        "Adc_Read": {
+            "id": "0x3020",
+            "description": "Reads the value of an ADC channel",
+            "group": "IO",
+            "params": {
+                "Channel": {
+                    "type": "AdcChannel"
+                }
+            },
+            "return": "uint16_t"
+        },
+        "Imu_Read": {
+            "id": "0x3030",
+            "description": "Reads the current IMU data",
+            "group": "IO",
+            "params": {},
+            "return": "ImuData"
+        },
+        "Imu_Calibrate": {
+            "id": "0x3031",
+            "description": "Calibrates the IMU by taking multiple readings and calculating offsets",
+            "group": "IO",
+            "params": {},
+            "return": "void"
         }
     },
     "properties": {
         "AutomaticDiagnostics": {
             "id": "0x4000",
             "description": "When enabled the light is allowed to run segment diagnosis on it's own",
+            "group": "LED Driver",
+            "storage": "persistent",
             "type": "bool",
             "default": true
         },
         "BrightnessCurve_Cutoff_X": {
             "id": "0x4010",
+            "description": "Cutoff point of the brightness curve",
+            "group": "Brightness curve",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 0,
             "max": 400,
@@ -29,6 +201,9 @@
         },
         "BrightnessCurve_Cutoff_Y": {
             "id": "0x4011",
+            "description": "Cutoff point of the brightness curve",
+            "group": "Brightness curve",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 0,
             "max": 1000,
@@ -36,6 +211,9 @@
         },
         "BrightnessCurve_Max_X": {
             "id": "0x4012",
+            "description": "Maximum setpoint for the brightness curve",
+            "group": "Brightness curve",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 500,
             "max": 1000,
@@ -43,6 +221,9 @@
         },
         "BrightnessCurve_Max_Y": {
             "id": "0x4013",
+            "description": "Maximum setpoint for the brightness curve",
+            "group": "Brightness curve",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 0,
             "max": 1000,
@@ -51,6 +232,8 @@
         "Brightness_LevelStandard": {
             "id": "0x4020",
             "description": "Minimum brightness in daylight running mode",
+            "group": "Brightness curve",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 10,
             "max": 800,
@@ -59,6 +242,8 @@
         "Brightness_LevelEmergency": {
             "id": "0x4021",
             "description": "Brightness in emergency mode",
+            "group": "Brightness curve",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 10,
             "max": 500,
@@ -67,6 +252,8 @@
         "Brightness_LevelSafety": {
             "id": "0x4023",
             "description": "Brightness in case of communication loss",
+            "group": "Brightness curve",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 10,
             "max": 1000,
@@ -75,6 +262,8 @@
         "Brightness_BrakeLow": {
             "id": "0x4026",
             "description": "Brake light brightness at 0 setpoint",
+            "group": "Brightness curve",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 100,
             "max": 1000,
@@ -83,6 +272,8 @@
         "Brightness_BrakeHigh": {
             "id": "0x4027",
             "description": "Brake light brightness at 100 setpoint",
+            "group": "Brightness curve",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 100,
             "max": 1000,
@@ -91,6 +282,8 @@
         "Strobe_LevelLow": {
             "id": "0x4030",
             "description": "Strobe off level at 0 setpoint",
+            "group": "Strobe",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 0,
             "max": 1000,
@@ -99,6 +292,8 @@
         "Strobe_LevelHigh": {
             "id": "0x4031",
             "description": "Strobe off level at 100 setpoint",
+            "group": "Strobe",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 0,
             "max": 1000,
@@ -107,6 +302,8 @@
         "Strobe_LevelEmergency": {
             "id": "0x4032",
             "description": "Strobe off level in emergency mode",
+            "group": "Strobe",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 0,
             "max": 1000,
@@ -115,6 +312,8 @@
         "Strobe_LevelSafety": {
             "id": "0x4033",
             "description": "Strobe off level in safety mode",
+            "group": "Strobe",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 0,
             "max": 1000,
@@ -123,54 +322,40 @@
         "Strobe_ModeDefault": {
             "id": "0x4038",
             "description": "Strobe pattern in default mode",
-            "type": "enum",
-            "values": [
-                "DISABLED",
-                "INTERNAL_SINGLE",
-                "INTERNAL_RAPID",
-                "EXTERNAL_POS",
-                "EXTERNAL_NEG"
-            ],
+            "group": "Strobe",
+            "storage": "persistent",
+            "type": "StrobeMode",
             "default": "DISABLED"
         },
         "Strobe_ModePrimary": {
             "id": "0x4039",
             "description": "Strobe pattern in blinking mode",
-            "type": "enum",
-            "values": [
-                "DISABLED",
-                "INTERNAL_SINGLE",
-                "INTERNAL_RAPID",
-                "EXTERNAL_POS",
-                "EXTERNAL_NEG"
-            ],
+            "group": "Strobe",
+            "storage": "persistent",
+            "type": "StrobeMode",
             "default": "INTERNAL_SINGLE"
         },
         "Strobe_ModeEmergency": {
             "id": "0x4040",
             "description": "Strobe pattern in emergency mode",
-            "type": "enum",
-            "values": [
-                "DISABLED",
-                "INTERNAL_SINGLE",
-                "INTERNAL_RAPID"
-            ],
+            "group": "Strobe",
+            "storage": "persistent",
+            "type": "StrobeMode",
             "default": "DISABLED"
         },
         "Strobe_ModeSafety": {
             "id": "0x4041",
             "description": "Strobe pattern in safety mode",
-            "type": "enum",
-            "values": [
-                "DISABLED",
-                "INTERNAL_SINGLE",
-                "INTERNAL_RAPID"
-            ],
+            "group": "Strobe",
+            "storage": "persistent",
+            "type": "StrobeMode",
             "default": "DISABLED"
         },
         "Strobe_SingleOnTime": {
             "id": "0x4050",
             "description": "Duration of a single strobe flash",
+            "group": "Strobe",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 150,
             "max": 500,
@@ -179,6 +364,8 @@
         "Strobe_SingleOffTime": {
             "id": "0x4051",
             "description": "Duration between two strobe flashes",
+            "group": "Strobe",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 150,
             "max": 500,
@@ -187,6 +374,8 @@
         "Strobe_RapidOnTime": {
             "id": "0x4052",
             "description": "Duration of a single strobe flash",
+            "group": "Strobe",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 50,
             "max": 200,
@@ -195,6 +384,8 @@
         "Strobe_RapidOffTime": {
             "id": "0x4053",
             "description": "Duration between two strobe flashes",
+            "group": "Strobe",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 50,
             "max": 500,
@@ -203,6 +394,8 @@
         "Driver_TailRefCurrent": {
             "id": "0x4060",
             "description": "Current for tail light segments",
+            "group": "LED Driver",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 1,
             "max": 1000,
@@ -211,6 +404,8 @@
         "Driver_BrakeRefCurrent": {
             "id": "0x4061",
             "description": "Current for brake light segments",
+            "group": "LED Driver",
+            "storage": "persistent",
             "type": "uint16_t",
             "min": 1,
             "max": 1000,
@@ -219,6 +414,8 @@
         "Driver_TailRefVoltage": {
             "id": "0x4062",
             "description": "Forward voltage of tail light segments",
+            "group": "LED Driver",
+            "storage": "persistent",
             "type": "uint8_t",
             "min": 10,
             "max": 50,
@@ -227,6 +424,8 @@
         "Driver_BrakeRefVoltage": {
             "id": "0x4063",
             "description": "Forward voltage of brake light segments",
+            "group": "LED Driver",
+            "storage": "persistent",
             "type": "uint8_t",
             "min": 10,
             "max": 50,
@@ -235,6 +434,8 @@
         "Driver_TailEfficiency": {
             "id": "0x4064",
             "description": "Efficiency for tail light segments in %",
+            "group": "LED Driver",
+            "storage": "persistent",
             "type": "uint8_t",
             "min": 1,
             "max": 100,
@@ -243,6 +444,8 @@
         "Driver_BrakeEfficiency": {
             "id": "0x4065",
             "description": "Efficiency for brake light segments in %",
+            "group": "LED Driver",
+            "storage": "persistent",
             "type": "uint8_t",
             "min": 1,
             "max": 100,
