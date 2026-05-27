@@ -110,7 +110,7 @@
                     "type": "uint8_t"
                 }
             },
-            "return": "bool"
+            "return": "void"
         },
         "Calib_Voltage": {
             "id": "0x3003",
