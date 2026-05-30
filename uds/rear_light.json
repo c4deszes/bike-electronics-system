@@ -141,6 +141,9 @@
                 "Segment": {
                     "type": "Segment"
                 },
+                "Mode": {
+                    "type": "uint8_t"
+                },
                 "Brightness": {
                     "type": "uint16_t"
                 }
