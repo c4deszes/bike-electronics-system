@@ -98,20 +98,6 @@
             "params": {},
             "return": "void"
         },
-        "Calib_Brightness": {
-            "id": "0x3002",
-            "description": "Changes an entry in the brightness curve calibration table",
-            "group": "Calibration",
-            "params": {
-                "Duty": {
-                    "type": "uint8_t"
-                },
-                "Value": {
-                    "type": "uint8_t"
-                }
-            },
-            "return": "void"
-        },
         "Calib_Voltage": {
             "id": "0x3003",
             "description": "Changes the voltage calibration values for battery voltage readings",
