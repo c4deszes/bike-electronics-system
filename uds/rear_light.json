@@ -288,26 +288,6 @@
             "max": 1000,
             "default": 100
         },
-        "Strobe_LevelEmergency": {
-            "id": "0x4032",
-            "description": "Strobe off level in emergency mode",
-            "group": "Strobe",
-            "storage_class": "persistent",
-            "type": "uint16_t",
-            "min": 0,
-            "max": 1000,
-            "default": 0
-        },
-        "Strobe_LevelSafety": {
-            "id": "0x4033",
-            "description": "Strobe off level in safety mode",
-            "group": "Strobe",
-            "storage_class": "persistent",
-            "type": "uint16_t",
-            "min": 0,
-            "max": 1000,
-            "default": 0
-        },
         "Strobe_ModeDefault": {
             "id": "0x4038",
             "description": "Strobe pattern in default mode",
