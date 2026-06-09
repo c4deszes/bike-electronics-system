@@ -446,18 +446,6 @@
                 }
             }
         },
-        "RearLightBrightnessDebug": {
-            "id": "0x1052",
-            "size": 2,
-            "layout": {
-                "Brightness": {
-                    "offset": 0,
-                    "width": 16,
-                    "initial": 0,
-                    "encoder": "LightBrightnessEncoder"
-                }
-            }
-        },
         "RearLightTemperatureDebug": {
             "id": "0x1053",
             "size": 2,
@@ -497,13 +485,13 @@
                 },
                 "Braking": {
                     "offset": 48,
-                    "width": 1,
+                    "width": 2,
                     "initial": "Off",
-                    "encoder": "GenericSwitchEncoder"
+                    "encoder": "BrakeStateEncoder"
                 },
                 "Reserved": {
-                    "offset": 49,
-                    "width": 7,
+                    "offset": 50,
+                    "width": 6,
                     "initial": 0
                 }
             }
@@ -567,17 +555,6 @@
                 "ControlCycleCount": {
                     "offset": 8,
                     "width": 8,
-                    "initial": 0
-                }
-            }
-        },
-        "FrontLightBrightnessDebug": {
-            "id": "0x1063",
-            "size": 2,
-            "layout": {
-                "Brightness": {
-                    "offset": 0,
-                    "width": 16,
                     "initial": 0
                 }
             }
@@ -839,6 +816,16 @@
                 {"type": "request", "request": "FrontLightSetting", "cycle": 8, "maxAge": 15},
                 {"type": "request", "request": "RearLightSetting", "cycle": 8, "maxAge": 15},
                 {"type": "request", "request": "RearLightStatus", "cycle": 8, "maxAge": 15}
+            ]
+        },
+        "MinimalSchedule": {
+            "type": "fixed",
+            "delay": 0.1,
+            "entries": [
+                {"type": "request", "request": "SpeedStatus"},
+                {"type": "request", "request": "LightSynchronization"},
+                {"type": "request", "request": "FrontLightSetting"},
+                {"type": "request", "request": "RearLightSetting"}
             ]
         },
         "RotorSensorSchedule": {
