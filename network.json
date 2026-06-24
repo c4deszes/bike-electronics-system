@@ -484,7 +484,7 @@
                 "Braking": {
                     "offset": 48,
                     "width": 2,
-                    "initial": "Off",
+                    "initial": "Disabled",
                     "encoder": "BrakeStateEncoder"
                 },
                 "Reserved": {
