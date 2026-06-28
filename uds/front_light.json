@@ -231,26 +231,6 @@
             "max": 1000,
             "default": 350
         },
-        "Brightness_BrakeLow": {
-            "id": "0x4026",
-            "description": "Brake light brightness at 0 setpoint",
-            "group": "Brightness curve",
-            "storage_class": "persistent",
-            "type": "uint16_t",
-            "min": 100,
-            "max": 1000,
-            "default": 200
-        },
-        "Brightness_BrakeHigh": {
-            "id": "0x4027",
-            "description": "Brake light brightness at 100 setpoint",
-            "group": "Brightness curve",
-            "storage_class": "persistent",
-            "type": "uint16_t",
-            "min": 100,
-            "max": 1000,
-            "default": 500
-        },
         "Strobe_LevelLow": {
             "id": "0x4030",
             "description": "Strobe off level at 0 setpoint",
