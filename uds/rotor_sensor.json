@@ -1,271 +1,526 @@
 {
-    "services": {
-        "Ride_ForceStart": {
-            "id": "0x1000",
-            "description": "Start/resume the ride",
-            "params": [
-            ],
-            "return": {
-                "type": "void"
-            }
+    "types": {
+        "SpeedSensorType": {
+            "type": "enum",
+            "values": [
+                "TLE5045"
+            ]
         },
-        "Ride_ForcePause": {
-            "id": "0x1001",
-            "description": "Pause the ride",
-            "params": [
-            ],
-            "return": {
-                "type": "void"
-            }
+        "AdcChannel": {
+            "type": "enum",
+            "values": [
+                "McuTemperature",
+                "Reserved1",
+                "FrontSensor",
+                "RearSensor",
+                "BatteryVoltage",
+                "Reserved2",
+                "CrankSensor",
+                "Reserved3"
+            ]
         },
-        "Ride_ForceStop": {
-            "id": "0x1002",
-            "description": "Stop the ride",
-            "params": [
-            ],
-            "return": {
-                "type": "void"
-            }
-        },
-        "Alt_SetQNH": {
-            "id": "0x2000",
-            "description": "Set the QNH altitude",
-            "params": [
-                {
-                    "name": "Pressure",
-                    "type": "uint16",
-                    "min": 980,
-                    "max": 1050,
-                    "default": 1013
+        "ImuData": {
+            "type": "struct",
+            "fields": {
+                "AccelX": {
+                    "type": "int16_t"
+                },
+                "AccelY": {
+                    "type": "int16_t"
+                },
+                "AccelZ": {
+                    "type": "int16_t"
+                },
+                "GyroX": {
+                    "type": "int16_t"
+                },
+                "GyroY": {
+                    "type": "int16_t"
+                },
+                "GyroZ": {
+                    "type": "int16_t"
                 }
-            ],
-            "return": {
-                "type": "void"
             }
         },
-        "Imu_Level": {
-            "id": "0x2001",
-            "description": "Calibrate the IMU level",
-            "params": [],
-            "return": {
-                "type": "void"
+        "RideRecord": {
+            "type": "struct",
+            "fields": {
+                "Identifier": {
+                    "type": "uint16_t"
+                },
+                "Duration": {
+                    "type": "uint16_t"
+                },
+                "Distance": {
+                    "type": "uint32_t"
+                },
+                "CrankRevolutions": {
+                    "type": "uint16_t"
+                },
+                "TopSpeed": {
+                    "type": "uint16_t"
+                },
+                "AvgSpeed": {
+                    "type": "uint16_t"
+                },
+                "Elevation": {
+                    "type": "uint16_t"
+                },
+                "Descent": {
+                    "type": "uint16_t"
+                },
+                "Flags": {
+                    "type": "uint16_t"
+                }
             }
-        },
+        }
+    },
+    "services": {
         "Config_Reload": {
-            "id": "0x3000",
-            "description": "Reload the configuration from EEPROM",
-            "params": [],
-            "return": {
-                "type": "uint8"
-            }
+            "id": "0x1000",
+            "description": "Updates the configuration with the latest UDS property values",
+            "group": "Configuration",
+            "params": {},
+            "return": "void"
         },
         "Config_Save": {
-            "id": "0x3001",
-            "description": "Save the configuration to EEPROM",
-            "params": [],
-            "return": {
-                "type": "uint8"
-            }
+            "id": "0x1001",
+            "description": "Saves the current UDS property values to EEPROM",
+            "group": "Configuration",
+            "params": {},
+            "return": "void"
+        },
+        "Calib_Voltage": {
+            "id": "0x1003",
+            "description": "Changes the voltage calibration values for battery voltage readings",
+            "group": "Calibration",
+            "params": {
+                "Slope": {
+                    "type": "uint16_t"
+                },
+                "Offset": {
+                    "type": "int16_t"
+                }
+            },
+            "return": "void"
+        },
+        "Calib_Imu": {
+            "id": "0x1004",
+            "description": "Calibrates the IMU sensor",
+            "group": "Calibration",
+            "params": {},
+            "return": "void"
+        },
+        "Calib_Save": {
+            "id": "0x1008",
+            "description": "Saves the current calibration values to EEPROM",
+            "group": "Calibration",
+            "params": {},
+            "return": "void"
+        },
+        "Adc_Read": {
+            "id": "0x1020",
+            "description": "Reads the value of an ADC channel",
+            "group": "IO",
+            "params": {
+                "Channel": {
+                    "type": "AdcChannel"
+                }
+            },
+            "return": "uint16_t"
+        },
+        "Ride_ForceStart": {
+            "id": "0x1030",
+            "description": "Start/resume the ride",
+            "group": "Ride",
+            "params": {},
+            "return": "void"
+        },
+        "Ride_ForcePause": {
+            "id": "0x1031",
+            "description": "Pause the ride",
+            "group": "Ride",
+            "params": {
+                "DisableAutoResume": {
+                    "type": "bool",
+                    "default": false
+                }
+            },
+            "return": "void"
+        },
+        "Ride_ForceStop": {
+            "id": "0x1032",
+            "description": "Stop the ride",
+            "group": "Ride",
+            "params": {
+                "DisableAutoStart": {
+                    "type": "bool",
+                    "default": false
+                },
+                "DiscardRecord": {
+                    "type": "bool",
+                    "default": false
+                }
+            },
+            "return": "void"
+        },
+        "PressureRead": {
+            "id": "0x1040",
+            "description": "Reads the current pressure value from the sensor",
+            "group": "Pressure",
+            "params": {},
+            "return": "uint32_t"
+        },
+        "PressureSetQnh": {
+            "id": "0x1041",
+            "description": "Sets the QNH value for the pressure sensor",
+            "group": "Pressure",
+            "params": {
+                "Qnh": {
+                    "type": "uint32_t"
+                }
+            },
+            "return": "void"
+        },
+        "ImuRead": {
+            "id": "0x1050",
+            "description": "Reads the current IMU values",
+            "group": "IMU",
+            "params": {},
+            "return": "ImuData"
+        },
+        "Ridelog_ReadRecord": {
+            "id": "0x1060",
+            "description": "Reads a ride record from the ride log",
+            "group": "RideLog",
+            "params": {
+                "Index": {
+                    "type": "uint16_t"
+                }
+            },
+            "return": "RideRecord"
+        },
+        "Ridelog_NumberOfRecords": {
+            "id": "0x1061",
+            "description": "Returns the number of ride records in the ride log",
+            "group": "RideLog",
+            "params": {},
+            "return": "uint16_t"
         }
     },
     "properties": {
         "FrontWheel_Circumference": {
-            "id": "0x4000",
-            "type": "uint16",
+            "id": "0x2000",
             "description": "Front wheel circumference in mm",
-            "default": 2275
+            "group": "Wheel",
+            "storage_class": "persistent",
+            "type": "uint16_t",
+            "default": 2275,
+            "min": 1000,
+            "max": 2500
         },
         "RearWheel_Circumference": {
-            "id": "0x4001",
-            "type": "uint16",
+            "id": "0x2001",
             "description": "Rear wheel circumference in mm",
-            "default": 2275
+            "group": "Wheel",
+            "storage_class": "persistent",
+            "type": "uint16_t",
+            "default": 2275,
+            "min": 1000,
+            "max": 2500
         },
         "CrankArm_Circumference": {
-            "id": "0x4002",
-            "type": "uint16",
+            "id": "0x2002",
             "description": "Crank arm circumference in mm",
-            "default": 175
+            "group": "Crank",
+            "storage_class": "persistent",
+            "type": "uint16_t",
+            "default": 175,
+            "min": 120,
+            "max": 200
         },
         "FrontWheel_PoleCount": {
-            "id": "0x4010",
-            "type": "uint8",
+            "id": "0x2010",
             "description": "Number of pulses per wheel rotation",
-            "default": 1
+            "group": "Wheel",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 1,
+            "min": 1,
+            "max": 120
         },
         "RearWheel_PoleCount": {
-            "id": "0x4011",
-            "type": "uint8",
+            "id": "0x2011",
             "description": "Number of pulses per wheel rotation",
-            "default": 1
+            "group": "Wheel",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 1,
+            "min": 1,
+            "max": 120
         },
         "CrankArm_PoleCount": {
-            "id": "0x4012",
-            "type": "uint8",
+            "id": "0x2012",
             "description": "Number of pulses per crank rotation",
-            "default": 1
+            "group": "Crank",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 1,
+            "min": 1,
+            "max": 120
         },
         "FrontWheel_Sensor": {
-            "id": "0x4020",
-            "type": "enum",
-            "values": [
-                "TLE5045"
-            ],
-            "default": "TLE5045"
+            "id": "0x2020",
+            "description": "Type of the sensor used for the front wheel",
+            "group": "Sensors",
+            "storage_class": "persistent",
+            "type": "SpeedSensorType"
         },
         "RearWheel_Sensor": {
-            "id": "0x4021",
-            "type": "enum",
-            "values": [
-                "TLE5045"
-            ],
-            "default": "TLE5045"
+            "id": "0x2021",
+            "description": "Type of the sensor used for the rear wheel",
+            "group": "Sensors",
+            "storage_class": "persistent",
+            "type": "SpeedSensorType"
         },
         "CrankArm_Sensor": {
-            "id": "0x4022",
-            "type": "enum",
-            "values": [
-                "TLE5045"
-            ],
-            "default": "TLE5045"
+            "id": "0x2022",
+            "description": "Type of the sensor used for the crank arm",
+            "group": "Sensors",
+            "storage_class": "persistent",
+            "type": "SpeedSensorType"
         },
         "Gear_HoldTime": {
-            "id": "0x4040",
-            "type": "uint16",
+            "id": "0x2040",
             "description": "Time in milliseconds to wait before switching gears",
-            "default": 1000
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint16_t",
+            "default": 1000,
+            "min": 100,
+            "max": 5000
         },
         "Gear_MaxGears": {
-            "id": "0x4041",
-            "type": "uint8",
+            "id": "0x2041",
             "description": "Maximum number of gears",
-            "default": 10
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 10,
+            "min": 1,
+            "max": 12
         },
         "Gear_ChainringTeeth": {
-            "id": "0x4042",
-            "type": "uint8",
+            "id": "0x2042",
             "description": "Number of teeth on the chainring",
-            "default": 42
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 42,
+            "min": 20,
+            "max": 60
         },
         "Gear_CasetteTeeth1": {
-            "id": "0x4043",
-            "type": "uint8",
+            "id": "0x2043",
             "description": "Number of teeth on the first casette gear",
-            "default": 11
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 11,
+            "min": 5,
+            "max": 60
         },
         "Gear_CasetteTeeth2": {
-            "id": "0x4044",
-            "type": "uint8",
+            "id": "0x2044",
             "description": "Number of teeth on the second casette gear",
-            "default": 13
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 13,
+            "min": 5,
+            "max": 60
         },
         "Gear_CasetteTeeth3": {
-            "id": "0x4045",
-            "type": "uint8",
+            "id": "0x2045",
             "description": "Number of teeth on the third casette gear",
-            "default": 15
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 15,
+            "min": 5,
+            "max": 60
         },
         "Gear_CasetteTeeth4": {
-            "id": "0x4046",
-            "type": "uint8",
+            "id": "0x2046",
             "description": "Number of teeth on the fourth casette gear",
-            "default": 17
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 17,
+            "min": 5,
+            "max": 60
         },
         "Gear_CasetteTeeth5": {
-            "id": "0x4047",
-            "type": "uint8",
+            "id": "0x2047",
             "description": "Number of teeth on the fifth casette gear",
-            "default": 20
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 20,
+            "min": 5,
+            "max": 60
         },
         "Gear_CasetteTeeth6": {
-            "id": "0x4048",
-            "type": "uint8",
+            "id": "0x2048",
             "description": "Number of teeth on the sixth casette gear",
-            "default": 23
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 23,
+            "min": 5,
+            "max": 60
         },
         "Gear_CasetteTeeth7": {
-            "id": "0x4049",
-            "type": "uint8",
+            "id": "0x2049",
             "description": "Number of teeth on the seventh casette gear",
-            "default": 28
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 28,
+            "min": 5,
+            "max": 60
         },
         "Gear_CasetteTeeth8": {
-            "id": "0x404A",
-            "type": "uint8",
+            "id": "0x204A",
             "description": "Number of teeth on the eighth casette gear",
-            "default": 34
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 34,
+            "min": 5,
+            "max": 60
         },
         "Gear_CasetteTeeth9": {
-            "id": "0x404B",
-            "type": "uint8",
+            "id": "0x204B",
             "description": "Number of teeth on the ninth casette gear",
-            "default": 41
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 41,
+            "min": 5,
+            "max": 60
         },
         "Gear_CasetteTeeth10": {
-            "id": "0x404C",
-            "type": "uint8",
+            "id": "0x204C",
             "description": "Number of teeth on the tenth casette gear",
-            "default": 48
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 48,
+            "min": 5,
+            "max": 60
         },
         "Gear_CasetteTeeth11": {
-            "id": "0x404D",
-            "type": "uint8",
+            "id": "0x204D",
             "description": "Number of teeth on the eleventh casette gear",
-            "default": 0
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 0,
+            "min": 0,
+            "max": 60
         },
         "Gear_CasetteTeeth12": {
-            "id": "0x404E",
-            "type": "uint8",
+            "id": "0x204E",
             "description": "Number of teeth on the twelfth casette gear",
-            "default": 0
+            "group": "Gear",
+            "storage_class": "persistent",
+            "type": "uint8_t",
+            "default": 0,
+            "min": 0,
+            "max": 60
         },
         "Ride_AutoStart": {
-            "id": "0x4050",
-            "type": "bool",
+            "id": "0x2050",
             "description": "Start riding automatically when the bike is moving",
+            "group": "Ride",
+            "storage_class": "persistent",
+            "type": "bool",
             "default": true
         },
         "Ride_AutoPause": {
-            "id": "0x4051",
-            "type": "bool",
+            "id": "0x2051",
             "description": "Pause riding automatically when the bike is not moving",
+            "group": "Ride",
+            "storage_class": "persistent",
+            "type": "bool",
             "default": true
         },
         "Ride_AutoResume": {
-            "id": "0x4052",
-            "type": "bool",
+            "id": "0x2052",
             "description": "Resume riding automatically when the bike is moving",
+            "group": "Ride",
+            "storage_class": "persistent",
+            "type": "bool",
+            "default": true
+        },
+        "Ride_AutoStop": {
+            "id": "0x2053",
+            "description": "Stop riding automatically when the bike is not moving",
+            "group": "Ride",
+            "storage_class": "persistent",
+            "type": "bool",
             "default": true
         },
         "Ride_IdleSpeed": {
-            "id": "0x405A",
-            "type": "uint16",
+            "id": "0x205A",
             "description": "Speed in 0.1km/h below which the bike is considered to be idle",
-            "default": 25
+            "group": "Ride",
+            "storage_class": "persistent",
+            "type": "uint16_t",
+            "default": 25,
+            "min": 10,
+            "max": 1000
         },
         "Ride_IdleTimeout": {
-            "id": "0x405B",
-            "type": "uint16",
+            "id": "0x205B",
             "description": "Time in seconds to wait before declaring the bike to be idle",
-            "default": 2
+            "group": "Ride",
+            "storage_class": "persistent",
+            "type": "uint16_t",
+            "default": 2,
+            "min": 1,
+            "max": 120
         },
         "Ride_PauseTimeout": {
-            "id": "0x405C",
-            "type": "uint16",
+            "id": "0x205C",
             "description": "Time in seconds to wait before pausing the ride",
-            "default": 120
+            "group": "Ride",
+            "storage_class": "persistent",
+            "type": "uint16_t",
+            "default": 120,
+            "min": 5,
+            "max": 3600
         },
         "Ride_ResumeTimeout": {
-            "id": "0x405D",
-            "type": "uint16",
+            "id": "0x205D",
             "description": "Time in seconds to wait before resuming the ride",
-            "default": 5
+            "group": "Ride",
+            "storage_class": "persistent",
+            "type": "uint16_t",
+            "default": 5,
+            "min": 1,
+            "max": 120
         },
-        "Altitude_Enabled": {
-            "id": "0x4060",
-            "type": "bool",
-            "description": "Enable altitude measurement",
-            "default": true
+        "Ride_StopTimeout": {
+            "id": "0x205E",
+            "description": "Time in seconds to wait before stopping the ride",
+            "group": "Ride",
+            "storage_class": "persistent",
+            "type": "uint16_t",
+            "default": 300,
+            "min": 5,
+            "max": 3600
         }
     }
 }
