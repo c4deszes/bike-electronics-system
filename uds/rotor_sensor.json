@@ -164,14 +164,14 @@
             },
             "return": "void"
         },
-        "PressureRead": {
+        "Pressure_Read": {
             "id": "0x1040",
             "description": "Reads the current pressure value from the sensor",
             "group": "Pressure",
             "params": {},
             "return": "uint32_t"
         },
-        "PressureSetQnh": {
+        "Pressure_SetQnh": {
             "id": "0x1041",
             "description": "Sets the QNH value for the pressure sensor",
             "group": "Pressure",
@@ -182,7 +182,7 @@
             },
             "return": "void"
         },
-        "ImuRead": {
+        "Imu_Read": {
             "id": "0x1050",
             "description": "Reads the current IMU values",
             "group": "IMU",
