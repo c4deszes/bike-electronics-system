@@ -19,9 +19,26 @@
                 "Reserved3"
             ]
         },
+        "PressureData": {
+            "type": "struct",
+            "fields": {
+                "ErrorCode": {
+                    "type": "uint8_t"
+                },
+                "Pressure": {
+                    "type": "uint32_t"
+                },
+                "Temperature": {
+                    "type": "int8_t"
+                }
+            }
+        },
         "ImuData": {
             "type": "struct",
             "fields": {
+                "ErrorCode": {
+                    "type": "uint8_t"
+                },
                 "AccelX": {
                     "type": "int16_t"
                 },
@@ -169,7 +186,7 @@
             "description": "Reads the current pressure value from the sensor",
             "group": "Pressure",
             "params": {},
-            "return": "uint32_t"
+            "return": "PressureData"
         },
         "Pressure_SetQnh": {
             "id": "0x1041",
@@ -195,7 +212,7 @@
             "group": "RideLog",
             "params": {
                 "Index": {
-                    "type": "uint16_t"
+                    "type": "uint8_t"
                 }
             },
             "return": "RideRecord"
@@ -205,7 +222,7 @@
             "description": "Returns the number of ride records in the ride log",
             "group": "RideLog",
             "params": {},
-            "return": "uint16_t"
+            "return": "uint8_t"
         }
     },
     "properties": {
