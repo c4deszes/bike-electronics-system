@@ -1,0 +1,6 @@
+PyQt6
+
+pyqtgraph
+pyopengl
+
+git+https://github.com/c4deszes/bike-line-protocol@feature/codegen-exec#subdirectory=python-lib

@@ -101,5 +101,7 @@ class RearLightStatusPanel(SignalTable):
                             network.get_signal("RearLightStatus", "TailLightStatus"),
                             network.get_signal("RearLightStatus", "BrakeLightStatus"),
                             network.get_signal("RearLightStatus", "TurnSignalLightStatus"),
-                            network.get_signal("RearLightStatus", "ThermalStatus")
+                            network.get_signal("RearLightStatus", "ThermalStatus"),
+                            network.get_signal("RearLightTemperatureDebug", "DriveTemperature"),
+                            network.get_signal("RearLightTemperatureDebug", "EcuTemperature")
                          ], parent)

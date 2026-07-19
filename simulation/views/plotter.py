@@ -47,7 +47,7 @@ class PlotView(QWidget, RequestListener):
         for signal_ref in self.signals:
             if request.name == signal_ref.request.name:
                 if signal_ref.signal.name in signals:
-                    value = signals[signal_ref.signal.name]
+                    value = signals[signal_ref.signal.name].phy
                     series = self.data_series[signal_ref]
                     series.timestamps.append(time.time())
                     series.data.append(value)

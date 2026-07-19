@@ -17,7 +17,7 @@ from PyQt6.QtWidgets import *
 # Peripherals
 from body_computer import BodyComputerSimulation
 from rear_light import RearLightSimulationPanel, RearLightSimulation, RearLightStatusPanel
-from rotor_sensor import RotorSensorSimulation
+from rotor_sensor import RotorSensorSimulation, RotorSensorSimulationPanel, RotorSensorStatusPanel
 from front_light import FrontLightSimulation, FrontLightSimulationPanel, FrontLightStatusPanel
 
 # Utilities
@@ -56,12 +56,13 @@ class SimulationThread(threading.Thread):
     def run(self):
         self.running = True
         self.context.body_computer.start()
-        #self.context.rotor_sensor.start()
+        self.context.rotor_sensor.start()
         self.context.rear_light.start()
         self.context.front_light.start()
 
         while self.running:
             # TODO: increase tick rate
+            self.context.rotor_sensor.on_tick(0.01)
             self.context.rear_light.on_tick(0.01)
             self.context.front_light.on_tick(0.01)
             time.sleep(0.01)
@@ -115,6 +116,8 @@ if __name__ == "__main__":
 
     rear_light_panel = RearLightSimulationPanel(simulation_context.rear_light)
     rear_light_status_panel = RearLightStatusPanel(bus_thread.master, simulation_context.network)
+    rotor_sensor_panel = RotorSensorSimulationPanel(simulation_context.rotor_sensor)
+    rotor_sensor_status_panel = RotorSensorStatusPanel(bus_thread.master, simulation_context.network)
     front_light_panel = FrontLightSimulationPanel(simulation_context.front_light)
     front_light_status_panel = FrontLightStatusPanel(bus_thread.master, simulation_context.network)
     schedule_control = ScheduleControl(bus_thread.master, simulation_context.network.schedules)
@@ -137,7 +140,9 @@ if __name__ == "__main__":
 
     middle_layout.addWidget(rear_light_panel)
     middle_layout.addWidget(rear_light_status_panel)
+    middle_layout.addWidget(rotor_sensor_status_panel)
 
+    right_layout.addWidget(rotor_sensor_panel)
     right_layout.addWidget(front_light_panel)
     right_layout.addWidget(front_light_status_panel)
 

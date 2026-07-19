@@ -14,7 +14,7 @@ from PyQt6.QtWidgets import *
 # Peripherals
 from body_computer import BodyComputerSimulation
 from rear_light import RearLightSimulationPanel, RearLightSimulation, RearLightStatusPanel
-from rotor_sensor import RotorSensorSimulation
+from rotor_sensor import RotorSensorSimulation, RotorSensorFullPanel
 from front_light import FrontLightSimulation, FrontLightSimulationPanel
 
 # Utilities
@@ -49,7 +49,7 @@ class BusThread(threading.Thread):
         super().__init__()
         self.context = context
         self.running = True
-        self.transport = LineSerialTransport('COM9', self.context.network.baudrate)
+        self.transport = LineSerialTransport('/dev/ttyFTDI_B', self.context.network.baudrate)
         self.master = LineMaster(self.transport, self.context.network)
 
     def run(self):
@@ -87,10 +87,12 @@ if __name__ == "__main__":
         event.accept()
 
     rear_light_status_panel = RearLightStatusPanel(bus_thread.master, simulation_context.network)
+    rotor_sensor_full_panel = RotorSensorFullPanel(bus_thread.master, simulation_context.network)
     schedule_control = ScheduleControl(bus_thread.master, simulation_context.network.schedules)
 
     main_layout.addWidget(schedule_control)
     main_layout.addWidget(rear_light_status_panel)
+    main_layout.addWidget(rotor_sensor_full_panel)
 
     simulation_thread.start()
     bus_thread.start()

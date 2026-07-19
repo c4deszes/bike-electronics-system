@@ -14,7 +14,7 @@ from PyQt6.QtWidgets import *
 # Peripherals
 from body_computer import BodyComputerControlPanel
 from rear_light import RearLightStatusPanel
-from rotor_sensor import RotorSensorStatusPanel
+from rotor_sensor import RotorSensorSimulation, RotorSensorSimulationPanel, RotorSensorStatusPanel
 
 # Utilities
 from views.schedule_control import ScheduleControl
@@ -25,6 +25,7 @@ class SimulationContext:
 
     def setup(self):
         self.body_computer = SimulatedPeripheral(self.network.get_node("BodyComputer"))
+        self.rotor_sensor = RotorSensorSimulation(self.network.get_node("RotorSensor"))
 
 class SimulationThread(threading.Thread):
     def __init__(self, context: SimulationContext):
@@ -34,10 +35,12 @@ class SimulationThread(threading.Thread):
 
     def run(self):
         self.running = True
+        self.context.rotor_sensor.start()
 
         while self.running:
             # TODO: increase tick rate
-            time.sleep(0.1)
+            self.context.rotor_sensor.on_tick(0.01)
+            time.sleep(0.01)
 
     def stop(self):
         self.running = False
@@ -47,13 +50,14 @@ class BusThread(threading.Thread):
         super().__init__()
         self.context = context
         self.running = True
-        self.transport = LineSerialTransport('/dev/ttyUSB2', self.context.network.baudrate)
+        self.transport = LineSerialTransport('/dev/ttyFTDI_B', self.context.network.baudrate)
         self.master = LineMaster(self.transport, self.context.network)
 
     def run(self):
         with self.transport:
             with self.master:
                 self.master.virtual_bus.add(self.context.body_computer)
+                self.master.virtual_bus.add(self.context.rotor_sensor)
 
                 while self.running:
                     time.sleep(0.1)
@@ -86,14 +90,16 @@ if __name__ == "__main__":
 
     rear_light_status_panel = RearLightStatusPanel(bus_thread.master, simulation_context.network)
     rotor_sensor_status_panel = RotorSensorStatusPanel(bus_thread.master, simulation_context.network)
+    rotor_sensor_simulation_panel = RotorSensorSimulationPanel(simulation_context.rotor_sensor)
     body_computer_control_panel = BodyComputerControlPanel(simulation_context.body_computer)
     schedule_control = ScheduleControl(bus_thread.master, simulation_context.network.schedules)
 
     main_layout.addWidget(schedule_control, 0, 0)
     main_layout.addWidget(body_computer_control_panel, 1, 0)
     main_layout.addWidget(rear_light_status_panel, 2, 0)
+    main_layout.addWidget(rotor_sensor_simulation_panel, 3, 0)
 
-    main_layout.addWidget(rotor_sensor_status_panel, 0, 1, 3, 1)
+    main_layout.addWidget(rotor_sensor_status_panel, 0, 1, 4, 1)
 
     simulation_thread.start()
     bus_thread.start()
