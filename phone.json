@@ -1,0 +1,77 @@
+{
+    "name": "PhoneNetwork",
+    "baudrate": 115200,
+    "master": "Phone",
+    "nodes": {
+        "Phone": {
+            "address": "0x0",
+            "subscribes": [
+                "PrimaryErrors",
+                "PrimaryRideState"
+            ],
+            "publishes": []
+        },
+        "BodyComputer": {
+            "address": "0x1",
+            "subscribes": [],
+            "publishes": [
+                "PrimaryErrors",
+                "PrimaryRideState"
+            ]
+        }
+    },
+    "requests": {
+        "PrimaryErrors": {
+            "id": "0x2000",
+            "size": 1,
+            "layout": {
+                "RotorSensor_Inoperative": {
+                    "offset": 0,
+                    "width": 1,
+                    "initial": 1
+                },
+                "RearLight_Inoperative": {
+                    "offset": 1,
+                    "width": 1,
+                    "initial": 1
+                },
+                "FrontLight_Inoperative": {
+                    "offset": 2,
+                    "width": 1,
+                    "initial": 1
+                },
+                "Reserved": {
+                    "offset": 3,
+                    "width": 5,
+                    "initial": 0
+                }
+            }
+        },
+        "PrimaryRideState": {
+            "id": "0x2001",
+            "size": 8,
+            "layout": {
+                "Speed": {
+                    "offset": 0,
+                    "width": 16,
+                    "initial": 0
+                },
+                "Distance": {
+                    "offset": 16,
+                    "width": 32,
+                    "initial": 0
+                },
+                "Duration": {
+                    "offset": 48,
+                    "width": 16,
+                    "initial": 0
+                }
+            }
+        }
+    },
+    "encoders": {
+    },
+    "schedules": {
+        
+    }
+}
