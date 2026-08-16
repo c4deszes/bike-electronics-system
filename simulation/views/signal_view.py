@@ -1,5 +1,5 @@
 import time
-from PyQt6.QtCore import QObject, pyqtSignal
+from PyQt6.QtCore import pyqtSignal, pyqtSlot
 from PyQt6.QtWidgets import *
 
 import pyqtgraph as pg
@@ -15,6 +15,8 @@ class SignalTable(QWidget, RequestListener):
     """
     A widget that displays a table of signals for a given request.
     """
+
+    value_received = pyqtSignal(object, object)
 
     def __init__(self, name: str, master: LineMaster, signals: List[SignalRef], parent=None):
         super().__init__(parent)
@@ -42,17 +44,23 @@ class SignalTable(QWidget, RequestListener):
         self.main_layout.addWidget(self.group)
         self.setLayout(self.main_layout)
 
+        self.value_received.connect(self._apply_value)
+
+    @pyqtSlot(object, object)
+    def _apply_value(self, signal_ref: SignalRef, value: Any) -> None:
+        label = self.signal_labels[signal_ref]
+
+        if isinstance(signal_ref.signal.encoder, FormulaEncoder):
+            label.setText(f"{value:.03f} {signal_ref.signal.encoder.unit}")
+        else:
+            label.setText(str(value))
+
     def on_user_request(self, timestamp: float, request: Request, buffer: List[int], signals) -> None:
         for signal_ref in self.signals:
             if request.name == signal_ref.request.name:
                 if signal_ref.signal.name in signals:
                     value = signals[signal_ref.signal.name].phy
-                    label = self.signal_labels[signal_ref]
-
-                    if isinstance(signal_ref.signal.encoder, FormulaEncoder):
-                        label.setText(f"{value:.03f} {signal_ref.signal.encoder.unit}")
-                    else:
-                        label.setText(str(value))
+                    self.value_received.emit(signal_ref, value)
 
     def on_error(self, timestamp: float, request: Request, error_type):
         pass

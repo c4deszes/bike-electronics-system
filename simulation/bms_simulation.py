@@ -15,7 +15,7 @@ from PyQt6.QtWidgets import *
 from body_computer import BodyComputerSimulation
 from rear_light import RearLightSimulationPanel, RearLightSimulation, RearLightStatusPanel
 from rotor_sensor import RotorSensorSimulation, RotorSensorFullPanel
-from front_light import FrontLightSimulation, FrontLightSimulationPanel
+from front_light import FrontLightSimulation, FrontLightSimulationPanel, FrontLightStatusPanel
 
 # Utilities
 from views.schedule_control import ScheduleControl
@@ -88,12 +88,13 @@ if __name__ == "__main__":
 
     rear_light_status_panel = RearLightStatusPanel(bus_thread.master, simulation_context.network)
     rotor_sensor_full_panel = RotorSensorFullPanel(bus_thread.master, simulation_context.network)
+    front_light_status_panel = FrontLightStatusPanel(bus_thread.master, simulation_context.network)
     schedule_control = ScheduleControl(bus_thread.master, simulation_context.network.schedules)
 
     main_layout.addWidget(schedule_control)
     main_layout.addWidget(rear_light_status_panel)
     main_layout.addWidget(rotor_sensor_full_panel)
-
+    main_layout.addWidget(front_light_status_panel)
     simulation_thread.start()
     bus_thread.start()
 

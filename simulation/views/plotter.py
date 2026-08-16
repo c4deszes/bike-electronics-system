@@ -1,5 +1,5 @@
 import time
-from PyQt6.QtCore import QObject, pyqtSignal
+from PyQt6.QtCore import pyqtSignal, pyqtSlot
 from PyQt6.QtWidgets import *
 
 import pyqtgraph as pg
@@ -19,12 +19,16 @@ class TimeSeries:
 
 class PlotView(QWidget, RequestListener):
 
+    sample_received = pyqtSignal(float, object, object)
+
     def __init__(self, name: str, master: LineMaster, signals: List[SignalRef], parent=None) -> None:
         super().__init__(parent)
 
         self.master = master
         self.master.add_request_listener(self)
         self.signals = signals
+        self.max_points = 3000
+        self.window_seconds = 30.0
 
         self.main_layout = QHBoxLayout()
         self.group = QGroupBox(name)
@@ -43,18 +47,27 @@ class PlotView(QWidget, RequestListener):
 
         self.setLayout(self.main_layout)
 
+        self.sample_received.connect(self._append_sample)
+
+    @pyqtSlot(float, object, object)
+    def _append_sample(self, timestamp: float, signal_ref: SignalRef, value: Any) -> None:
+        series = self.data_series[signal_ref]
+        series.timestamps.append(timestamp)
+        series.data.append(value)
+
+        if len(series.timestamps) > self.max_points:
+            del series.timestamps[:-self.max_points]
+            del series.data[:-self.max_points]
+
+        series.plot.setData(series.timestamps, series.data)
+        self.plot_widget.setXRange(timestamp - self.window_seconds, timestamp, padding=0.0)
+
     def on_user_request(self, timestamp: float, request: Request, buffer: List[int], signals) -> None:
         for signal_ref in self.signals:
             if request.name == signal_ref.request.name:
                 if signal_ref.signal.name in signals:
                     value = signals[signal_ref.signal.name].phy
-                    series = self.data_series[signal_ref]
-                    series.timestamps.append(time.time())
-                    series.data.append(value)
-                    series.plot.setData(
-                        series.timestamps,
-                        series.data
-                    )
+                    self.sample_received.emit(time.time(), signal_ref, value)
 
     def on_error(self, timestamp: float, request: Request, error_type):
         pass
