@@ -6,18 +6,13 @@
         "BodyComputer": {
             "address": "0x0",
             "subscribes": [
-                "SpeedStatus",
-                "DrivetrainStatus",
                 "RideStatus",
                 "RoadStatus",
-                "RideStatistics",
                 "RearLightStatus",
                 "FrontLightStatus"
             ],
             "publishes": [
-                "LightSynchronization",
-                "RearLightSetting",
-                "FrontLightSetting"
+                "LightSynchronization"
             ]
         },
         "RotorSensor": {
@@ -25,328 +20,188 @@
             "subscribes": [
             ],
             "publishes": [
-                "SpeedStatus",
-                "DrivetrainStatus",
                 "RideStatus",
-                "RoadStatus",
-                "RideStatistics",
-                "RotorSensorPressureDebug",
-                "RotorSensorMotionDebug",
-                "RotorSensorSpeedDebug"
+                "RoadStatus"
             ]
         },
         "RearLight": {
             "address": "0x03",
             "subscribes": [
-                "SpeedStatus",
-                "LightSynchronization",
-                "RearLightSetting"
+                "RideStatus",
+                "LightSynchronization"
             ],
             "publishes": [
-                "RearLightStatus",
-                "RearLightTemperatureDebug",
-                "RearLightMotionDebug"
+                "RearLightStatus"
             ]
         },
         "FrontLight": {
             "address": "0x04",
             "subscribes": [
-                "SpeedStatus",
-                "LightSynchronization",
-                "FrontLightSetting"
+                "LightSynchronization"
             ],
             "publishes": [
-                "FrontLightStatus",
-                "FrontLightTemperatureDebug"
+                "FrontLightStatus"
             ]
         }
     },
     "requests": {
-        "SpeedStatus": {
+        "RideStatus": {
             "id": "0x1000",
-            "size": 3,
+            "size": 10,
             "layout": {
                 "Speed": {
                     "offset": 0,
-                    "width": 16,
+                    "width": 10,
                     "initial": 0.0,
                     "encoder": "SpeedEncoder"
                 },
                 "SpeedState": {
-                    "offset": 16,
+                    "offset": 10,
                     "width": 2,
                     "initial": "Error",
                     "encoder": "SpeedStateEncoder"
                 },
                 "BrakeState": {
-                    "offset": 18,
+                    "offset": 12,
                     "width": 2,
                     "initial": "Disabled",
                     "encoder": "BrakeStateEncoder"
                 },
-                "FrontWheelSlip": {
-                    "offset": 20,
-                    "width": 1,
-                    "initial": "NotSlipping",
-                    "encoder": "WheelSlipEncoder"
+                "RollingCode": {
+                    "offset": 14,
+                    "width": 2,
+                    "initial": 0
                 },
-                "FrontWheelLockup": {
-                    "offset": 21,
-                    "width": 1,
-                    "initial": "NoLockup",
-                    "encoder": "WheelLockupEncoder"
-                },
-                "RearWheelSlip": {
-                    "offset": 22,
-                    "width": 1,
-                    "initial": "NotSlipping",
-                    "encoder": "WheelSlipEncoder"
-                },
-                "RearWheelLockup": {
-                    "offset": 23,
-                    "width": 1,
-                    "initial": "NoLockup",
-                    "encoder": "WheelLockupEncoder"
-                }
-            }
-        },
-        "DrivetrainStatus": {
-            "id": "0x1001",
-            "size": 2,
-            "layout": {
                 "Cadence": {
-                    "offset": 0,
+                    "offset": 16,
                     "width": 8,
                     "initial": 0,
                     "encoder": "CadenceEncoder"
                 },
-                "CadenceStatus": {
-                    "offset": 8,
+                "CadenceState": {
+                    "offset": 24,
                     "width": 2,
                     "initial": "NotAvailable",
-                    "encoder": "CadenceStatusEncoder"
+                    "encoder": "CadenceStateEncoder"
+                },
+                "GearState": {
+                    "offset": 26,
+                    "width": 2,
+                    "initial": "Unknown",
+                    "encoder": "GearStateEncoder"
                 },
                 "EstimatedGear": {
-                    "offset": 10,
+                    "offset": 28,
                     "width": 4,
                     "initial": 0
                 },
-                "GearStatus": {
-                    "offset": 14,
-                    "width": 2,
-                    "initial": "Unknown",
-                    "encoder": "GearStatusEncoder"
-                }
-            }
-        },
-        "RideStatus": {
-            "id": "0x1002",
-            "size": 7,
-            "layout": {
                 "Duration": {
-                    "offset": 0,
+                    "offset": 32,
                     "width": 16,
                     "initial": 0
                 },
-                "RideStatus": {
-                    "offset": 16,
-                    "width": 2,
-                    "initial": "NotStarted",
-                    "encoder": "RideStatusEncoder"
-                },
-                "DistanceStatus": {
-                    "offset": 18,
-                    "width": 2,
-                    "initial": "NotAvailable",
-                    "encoder": "DistanceStatusEncoder"
-                },
-                "Reserved": {
-                    "offset": 20,
-                    "width": 4,
-                    "initial": 0
-                },
                 "Distance": {
-                    "offset": 24,
-                    "width": 32,
+                    "offset": 48,
+                    "width": 20,
                     "initial": 0,
                     "encoder": "DistanceEncoder"
+                },
+                "DistanceState": {
+                    "offset": 68,
+                    "width": 2,
+                    "initial": "NotAvailable",
+                    "encoder": "DistanceStateEncoder"
+                },
+                "RideState": {
+                    "offset": 70,
+                    "width": 2,
+                    "initial": "NotStarted",
+                    "encoder": "RideStateEncoder"
+                },
+                "Reserved1": {
+                    "offset": 72,
+                    "width": 8,
+                    "initial": 0
                 }
             }
         },
         "RoadStatus": {
-            "id": "0x1003",
-            "size": 5,
+            "id": "0x1001",
+            "size": 10,
             "layout": {
                 "Altitude": {
                     "offset": 0,
-                    "width": 16,
+                    "width": 12,
                     "initial": 0,
                     "encoder": "AltitudeEncoder"
                 },
-                "AmbientTemperature": {
+                "AltitudeState": {
+                    "offset": 12,
+                    "width": 1,
+                    "initial": "Error",
+                    "encoder": "GenericStateFlag"
+                },
+                "PressureState": {
+                    "offset": 13,
+                    "width": 1,
+                    "initial": "Error",
+                    "encoder": "GenericStateFlag"
+                },
+                "TemperatureState": {
+                    "offset": 14,
+                    "width": 1,
+                    "initial": "Error",
+                    "encoder": "GenericStateFlag"
+                },
+                "Reserved1": {
+                    "offset": 15,
+                    "width": 1,
+                    "initial": 0
+                },
+                "Pressure": {
                     "offset": 16,
-                    "width": 8,
+                    "width": 17,
+                    "initial": 0
+                },
+                "Temperature": {
+                    "offset": 33,
+                    "width": 7,
                     "initial": 0,
                     "encoder": "TemperatureEncoder"
                 },
-                "Grade": {
-                    "offset": 24,
-                    "width": 8,
+                "RoadGrade": {
+                    "offset": 40,
+                    "width": 6,
                     "initial": 0,
-                    "encoder": "GradeEncoder"
+                    "encoder": "RoadGradeEncoder"
                 },
                 "RoadQuality": {
-                    "offset": 32,
+                    "offset": 46,
                     "width": 2,
                     "initial": "NotMeasured",
                     "encoder": "RoadQualityEncoder"
                 },
-                "ITPMS": {
-                    "offset": 34,
+                "ITPMSState": {
+                    "offset": 48,
                     "width": 2,
                     "initial": "Stopped",
                     "encoder": "ITPMSEncoder"
                 },
-                "AltitudeError": {
-                    "offset": 36,
-                    "width": 1,
-                    "initial": "Ok",
-                    "encoder": "GenericStatusFlag"
-                },
-                "TemperatureError": {
-                    "offset": 37,
-                    "width": 1,
-                    "initial": "Ok",
-                    "encoder": "GenericStatusFlag"
-                },
-                "Reserved": {
-                    "offset": 38,
-                    "width": 2,
-                    "initial": 0
-                }
-            }
-        },
-        "RideStatistics": {
-            "id": "0x1004",
-            "size": 8,
-            "layout": {
-                "TopSpeed": {
-                    "offset": 0,
-                    "width": 16,
-                    "initial": 0.0,
-                    "encoder": "SpeedEncoder"
-                },
-                "AverageSpeed": {
-                    "offset": 16,
-                    "width": 16,
-                    "initial": 0.0,
-                    "encoder": "SpeedEncoder"
-                },
-                "Elevation": {
-                    "offset": 32,
-                    "width": 16,
-                    "initial": 0,
-                    "encoder": "DistanceEncoder"
-                },
-                "Descent": {
-                    "offset": 48,
-                    "width": 16,
-                    "initial": 0,
-                    "encoder": "DistanceEncoder"
-                }
-            }
-        },
-        "RotorSensorPressureDebug": {
-            "id": "0x1010",
-            "size": 4,
-            "layout": {
-                "Pressure": {
-                    "offset": 0,
-                    "width": 32,
-                    "initial": 0
-                }
-            }
-        },
-        "RotorSensorMotionDebug": {
-            "id": "0x1011",
-            "size": 12,
-            "layout": {
-                "aX": {
-                    "offset": 0,
-                    "width": 16,
+                "Reserved2": {
+                    "offset": 50,
+                    "width": 6,
                     "initial": 0
                 },
-                "aY": {
-                    "offset": 16,
-                    "width": 16,
-                    "initial": 0
-                },
-                "aZ": {
-                    "offset": 32,
-                    "width": 16,
-                    "initial": 0
-                },
-                "gX": {
-                    "offset": 48,
-                    "width": 16,
-                    "initial": 0
-                },
-                "gY": {
-                    "offset": 64,
-                    "width": 16,
-                    "initial": 0
-                },
-                "gZ": {
-                    "offset": 80,
-                    "width": 16,
-                    "initial": 0
-                }
-            }
-        },
-        "RotorSensorSpeedDebug": {
-            "id": "0x1012",
-            "size": 8,
-            "layout": {
-                "FrontSpeed": {
-                    "offset": 0,
-                    "width": 16,
-                    "initial": 0,
-                    "encoder": "SpeedEncoder"
-                },
-                "RearSpeed": {
-                    "offset": 16,
-                    "width": 16,
-                    "initial": 0,
-                    "encoder": "SpeedEncoder"
-                },
-                "FrontSensorStatus": {
-                    "offset": 32,
-                    "width": 4,
-                    "initial": "Ok",
-                    "encoder": "SpeedSensorStateEncoder"
-                },
-                "RearSensorStatus": {
-                    "offset": 36,
-                    "width": 4,
-                    "initial": "Ok",
-                    "encoder": "SpeedSensorStateEncoder"
-                },
-                "CrankSensorStatus": {
-                    "offset": 40,
-                    "width": 4,
-                    "initial": "Ok",
-                    "encoder": "SpeedSensorStateEncoder"
-                },
-                "CrankPosition": {
-                    "offset": 44,
-                    "width": 4,
+                "Reserved3": {
+                    "offset": 56,
+                    "width": 24,
                     "initial": 0
                 }
             }
         },
         "LightSynchronization": {
             "id": "0x1040",
-            "size": 2,
+            "size": 10,
             "layout": {
                 "TargetBrightness": {
                     "offset": 0,
@@ -378,200 +233,186 @@
                     "initial": "Off",
                     "encoder": "StrobeSignalEncoder"
                 },
-                "Reserved": {
+                "RollingCode": {
                     "offset": 14,
                     "width": 2,
                     "initial": 0
-                }
-            }
-        },
-        "RearLightSetting": {
-            "id": "0x1050",
-            "size": 1,
-            "layout": {
-                "Behavior": {
-                    "offset": 0,
+                },
+                "RearBehavior": {
+                    "offset": 16,
                     "width": 2,
-                    "initial": "Default",
+                    "initial": "Solid",
+                    "encoder": "LightBehaviorEncoder"
+                },
+                "FrontBehavior": {
+                    "offset": 18,
+                    "width": 2,
+                    "initial": "Solid",
                     "encoder": "LightBehaviorEncoder"
                 },
                 "BrakeLightMode": {
-                    "offset": 2,
+                    "offset": 20,
                     "width": 1,
                     "initial": "Default",
                     "encoder": "GenericModeSwitchEncoder"
                 },
                 "TurnSignalLightMode": {
-                    "offset": 3,
+                    "offset": 21,
                     "width": 1,
                     "initial": "Default",
                     "encoder": "GenericModeSwitchEncoder"
                 },
-                "Reserved": {
-                    "offset": 4,
-                    "width": 4,
+                "BeamForming": {
+                    "offset": 22,
+                    "width": 1,
+                    "initial": "Default",
+                    "encoder": "GenericModeSwitchEncoder"
+                },
+                "HighBeam": {
+                    "offset": 23,
+                    "width": 1,
+                    "initial": "Default",
+                    "encoder": "GenericSwitchEncoder"
+                },
+                "Reserved1": {
+                    "offset": 24,
+                    "width": 24,
+                    "initial": 0
+                },
+                "Reserved2": {
+                    "offset": 48,
+                    "width": 32,
                     "initial": 0
                 }
             }
         },
         "RearLightStatus": {
             "id": "0x1051",
-            "size": 1,
+            "size": 10,
             "layout": {
-                "TailLightStatus": {
+                "TailLightState": {
                     "offset": 0,
                     "width": 2,
                     "initial": "Off",
-                    "encoder": "LightStatusEncoder"
+                    "encoder": "LightStateEncoder"
                 },
-                "BrakeLightStatus": {
+                "BrakeLightState": {
                     "offset": 2,
                     "width": 2,
                     "initial": "Off",
-                    "encoder": "LightStatusEncoder"
+                    "encoder": "LightStateEncoder"
                 },
-                "TurnSignalLightStatus": {
+                "TurnSignalState": {
                     "offset": 4,
                     "width": 2,
                     "initial": "Off",
-                    "encoder": "LightStatusEncoder"
+                    "encoder": "LightStateEncoder"
                 },
-                "ThermalStatus": {
+                "ThermalState": {
                     "offset": 6,
                     "width": 2,
                     "initial": "NotMeasured",
-                    "encoder": "ThermalStatusEncoder"
-                }
-            }
-        },
-        "RearLightTemperatureDebug": {
-            "id": "0x1053",
-            "size": 2,
-            "layout": {
+                    "encoder": "ThermalStateEncoder"
+                },
                 "DriveTemperature": {
-                    "offset": 0,
-                    "width": 8,
-                    "initial": 0,
-                    "encoder": "TemperatureEncoder"
-                },
-                "EcuTemperature": {
                     "offset": 8,
-                    "width": 8,
+                    "width": 7,
                     "initial": 0,
                     "encoder": "TemperatureEncoder"
-                }
-            }
-        },
-        "RearLightMotionDebug": {
-            "id": "0x1054",
-            "size": 7,
-            "layout": {
-                "aX": {
-                    "offset": 0,
-                    "width": 16,
+                },
+                "McuTemperature": {
+                    "offset": 15,
+                    "width": 7,
+                    "initial": 0,
+                    "encoder": "TemperatureEncoder"
+                },
+                "RollingCode": {
+                    "offset": 22,
+                    "width": 2,
                     "initial": 0
                 },
-                "aY": {
-                    "offset": 16,
-                    "width": 16,
+                "Reserved1": {
+                    "offset": 24,
+                    "width": 24,
                     "initial": 0
                 },
-                "aZ": {
-                    "offset": 32,
-                    "width": 16,
-                    "initial": 0
-                },
-                "Braking": {
+                "Reserved2": {
                     "offset": 48,
-                    "width": 2,
-                    "initial": "Disabled",
-                    "encoder": "BrakeStateEncoder"
-                },
-                "Reserved": {
-                    "offset": 50,
-                    "width": 6,
-                    "initial": 0
-                }
-            }
-        },
-        "FrontLightSetting": {
-            "id": "0x1060",
-            "size": 1,
-            "layout": {
-                "Behavior": {
-                    "offset": 0,
-                    "width": 2,
-                    "initial": "Default",
-                    "encoder": "LightBehaviorEncoder"
-                },
-                "BeamForming": {
-                    "offset": 2,
-                    "width": 1,
-                    "initial": "Default",
-                    "encoder": "GenericModeSwitchEncoder"
-                },
-                "TurnSignalLightMode": {
-                    "offset": 3,
-                    "width": 1,
-                    "initial": "Default",
-                    "encoder": "GenericModeSwitchEncoder"
-                },
-                "HighBeam": {
-                    "offset": 4,
-                    "width": 1,
-                    "initial": "Off",
-                    "encoder": "GenericSwitchEncoder"
-                },
-                "Reserved": {
-                    "offset": 5,
-                    "width": 3,
+                    "width": 32,
                     "initial": 0
                 }
             }
         },
         "FrontLightStatus": {
             "id": "0x1061",
-            "size": 2,
+            "size": 10,
             "layout": {
-                "MainBeamStatus": {
+                "MainLightState": {
                     "offset": 0,
                     "width": 2,
                     "initial": "Off",
-                    "encoder": "LightStatusEncoder"
+                    "encoder": "LightStateEncoder"
                 },
-                "Reserved": {
+                "HighBeamState": {
                     "offset": 2,
-                    "width": 4,
-                    "initial": 0
+                    "width": 2,
+                    "initial": "Off",
+                    "encoder": "LightStateEncoder"
                 },
-                "ThermalStatus": {
+                "TurnSignalState": {
+                    "offset": 4,
+                    "width": 2,
+                    "initial": "Off",
+                    "encoder": "LightStateEncoder"
+                },
+                "ThermalState": {
                     "offset": 6,
                     "width": 2,
                     "initial": "NotMeasured",
-                    "encoder": "ThermalStatusEncoder"
+                    "encoder": "ThermalStateEncoder"
                 },
-                "ControlCycleCount": {
-                    "offset": 8,
-                    "width": 8,
-                    "initial": 0
-                }
-            }
-        },
-        "FrontLightTemperatureDebug": {
-            "id": "0x1064",
-            "size": 2,
-            "layout": {
                 "DriveTemperature": {
-                    "offset": 0,
-                    "width": 8,
+                    "offset": 8,
+                    "width": 7,
                     "initial": 0,
                     "encoder": "TemperatureEncoder"
                 },
                 "McuTemperature": {
-                    "offset": 8,
-                    "width": 8,
+                    "offset": 15,
+                    "width": 7,
                     "initial": 0,
                     "encoder": "TemperatureEncoder"
+                },
+                "RollingCode": {
+                    "offset": 22,
+                    "width": 2,
+                    "initial": 0
+                },
+                "ModeSwitchRequested": {
+                    "offset": 24,
+                    "width": 1,
+                    "initial": "NotRequested",
+                    "encoder": "GenericRequestEncoder"
+                },
+                "ModeSwitchCycles": {
+                    "offset": 25,
+                    "width": 3,
+                    "initial": 0
+                },
+                "Reserved1": {
+                    "offset": 28,
+                    "width": 4,
+                    "initial": 0
+                },
+                "Reserved2": {
+                    "offset": 32,
+                    "width": 32,
+                    "initial": 0
+                },
+                "Reserved3": {
+                    "offset": 64,
+                    "width": 16,
+                    "initial": 0
                 }
             }
         }
@@ -592,19 +433,6 @@
                 "3": "Error"
             }
         },
-        "SpeedSensorStateEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "Ok",
-                "1": "UNUSED1",
-                "2": "UNUSED2",
-                "3": "SensorWarning",
-                "4": "SensorError",
-                "5": "OutputOpen",
-                "6": "OutputShorted",
-                "7": "Off"
-            }
-        },
         "BrakeStateEncoder": {
             "type": "mapping",
             "mapping": {
@@ -614,27 +442,13 @@
                 "3": "UNUSED"
             }
         },
-        "WheelSlipEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "NotSlipping",
-                "1": "Slipping"
-            }
-        },
-        "WheelLockupEncoder": {
-            "type": "mapping",
-            "mapping": {
-                "0": "NoLockup",
-                "1": "Lockup"
-            }
-        },
         "CadenceEncoder": {
             "type": "formula",
             "scale": 1,
             "offset": 0,
             "unit": "rpm"
         },
-        "CadenceStatusEncoder": {
+        "CadenceStateEncoder": {
             "type": "mapping",
             "mapping": {
                 "0": "NotAvailable",
@@ -643,7 +457,7 @@
                 "3": "Error"
             }
         },
-        "GearStatusEncoder": {
+        "GearStateEncoder": {
             "type": "mapping",
             "mapping": {
                 "0": "Unknown",
@@ -664,7 +478,7 @@
             "offset": 0,
             "unit": "m"
         },
-        "DistanceStatusEncoder": {
+        "DistanceStateEncoder": {
             "type": "mapping",
             "mapping": {
                 "0": "NotAvailable",
@@ -673,7 +487,7 @@
                 "3": "PermanentError"
             }
         },
-        "RideStatusEncoder": {
+        "RideStateEncoder": {
             "type": "mapping",
             "mapping": {
                 "0": "NotStarted",
@@ -688,10 +502,10 @@
             "offset": -1000,
             "unit": "m"
         },
-        "GradeEncoder": {
+        "RoadGradeEncoder": {
             "type": "formula",
             "scale": 1,
-            "offset": -128,
+            "offset": -31,
             "unit": "%"
         },
         "RoadQualityEncoder": {
@@ -712,7 +526,7 @@
                 "3": "RearPressureLow"
             }
         },
-        "GenericStatusFlag": {
+        "GenericStateFlag": {
             "type": "mapping",
             "mapping": {
                 "0": "Ok",
@@ -733,10 +547,17 @@
                 "1": "Off"
             }
         },
+        "GenericRequestEncoder": {
+            "type": "mapping",
+            "mapping": {
+                "0": "NotRequested",
+                "1": "Requested"
+            }
+        },
         "TemperatureEncoder": {
             "type": "formula",
             "scale": 1,
-            "offset": -40,
+            "offset": -20,
             "unit": "°C"
         },
         "LightBrightnessEncoder": {
@@ -748,7 +569,7 @@
             "type": "mapping",
             "mapping": {
                 "0": "Adaptive",
-                "1": "Standard",
+                "1": "DLR",
                 "2": "Emergency",
                 "3": "Off"
             }
@@ -778,7 +599,7 @@
                 "3": "UNUSED"
             }
         },
-        "LightStatusEncoder": {
+        "LightStateEncoder": {
             "type": "mapping",
             "mapping": {
                 "0": "Off",
@@ -787,7 +608,7 @@
                 "3": "Error"
             }
         },
-        "ThermalStatusEncoder": {
+        "ThermalStateEncoder": {
             "type": "mapping",
             "mapping": {
                 "0": "NotMeasured",
@@ -804,26 +625,18 @@
             "delay": 0.05,
             "phase": "adjusted",
             "entries": [
-                {"type": "request", "request": "SpeedStatus", "cycle": 0, "maxAge": 2},
+                {"type": "request", "request": "RideStatus", "cycle": 0, "maxAge": 2},
                 {"type": "request", "request": "LightSynchronization", "cycle": 1, "maxAge": 3},
-                {"type": "request", "request": "RideStatus", "cycle": 5, "maxAge": 20},
-                {"type": "request", "request": "DrivetrainStatus", "cycle": 5, "maxAge": 30},
-                {"type": "request", "request": "RoadStatus", "cycle": 15, "maxAge": 30},
-                {"type": "request", "request": "RideStatistics", "cycle": 15, "maxAge": 30},
-                {"type": "request", "request": "FrontLightStatus", "cycle": 8, "maxAge": 15},
-                {"type": "request", "request": "FrontLightSetting", "cycle": 8, "maxAge": 15},
-                {"type": "request", "request": "RearLightSetting", "cycle": 8, "maxAge": 15},
-                {"type": "request", "request": "RearLightStatus", "cycle": 8, "maxAge": 15}
+                {"type": "request", "request": "FrontLightStatus", "cycle": 2, "maxAge": 15},
+                {"type": "request", "request": "RearLightStatus", "cycle": 2, "maxAge": 15}
             ]
         },
         "MinimalSchedule": {
             "type": "fixed",
             "delay": 0.1,
             "entries": [
-                {"type": "request", "request": "SpeedStatus"},
-                {"type": "request", "request": "LightSynchronization"},
-                {"type": "request", "request": "FrontLightSetting"},
-                {"type": "request", "request": "RearLightSetting"}
+                {"type": "request", "request": "RideStatus"},
+                {"type": "request", "request": "LightSynchronization"}
             ]
         },
         "RotorSensorSchedule": {
@@ -831,14 +644,8 @@
             "slots": "variable",
             "delay": 0.05,
             "entries": [
-                {"type": "request", "request": "SpeedStatus"},
-                {"type": "request", "request": "DrivetrainStatus"},
                 {"type": "request", "request": "RideStatus"},
-                {"type": "request", "request": "RoadStatus"},
-                {"type": "request", "request": "RideStatistics"},
-                {"type": "request", "request": "RotorSensorPressureDebug"},
-                {"type": "request", "request": "RotorSensorMotionDebug"},
-                {"type": "request", "request": "RotorSensorSpeedDebug"}
+                {"type": "request", "request": "RoadStatus"}
             ]
         },
         "LightSchedule": {
@@ -847,9 +654,7 @@
             "delay": 0.05,
             "entries": [
                 {"type": "request", "request": "LightSynchronization"},
-                {"type": "request", "request": "RearLightSetting"},
                 {"type": "request", "request": "RearLightStatus"},
-                {"type": "request", "request": "FrontLightSetting"},
                 {"type": "request", "request": "FrontLightStatus"}
             ]
         },
@@ -859,10 +664,7 @@
             "delay": 0.05,
             "entries": [
                 {"type": "request", "request": "LightSynchronization"},
-                {"type": "request", "request": "RearLightSetting"},
                 {"type": "request", "request": "RearLightStatus"},
-                {"type": "request", "request": "RearLightTemperatureDebug"},
-                {"type": "request", "request": "RearLightMotionDebug"},
                 {"type": "opstatus", "node": "RearLight"},
                 {"type": "pwrstatus", "node": "RearLight"},
                 {"type": "serial", "node": "RearLight"},
@@ -875,9 +677,7 @@
             "delay": 0.05,
             "entries": [
                 {"type": "request", "request": "LightSynchronization"},
-                {"type": "request", "request": "FrontLightSetting"},
                 {"type": "request", "request": "FrontLightStatus"},
-                {"type": "request", "request": "FrontLightTemperatureDebug"},
                 {"type": "opstatus", "node": "FrontLight"},
                 {"type": "pwrstatus", "node": "FrontLight"},
                 {"type": "serial", "node": "FrontLight"},
