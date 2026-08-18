@@ -8,6 +8,12 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Error loading network configuration: {e}")
 
+    # Check phone network configuration
+    try:
+        load_network('phone.json')
+    except Exception as e:
+        print(f"Error loading phone network configuration: {e}")
+
     # Validate UDS profiles
     try:
         load_profile('uds/front_light.json')

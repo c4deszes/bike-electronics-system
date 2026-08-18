@@ -7,7 +7,9 @@
             "address": "0x0",
             "subscribes": [
                 "PrimaryErrors",
-                "PrimaryRideState"
+                "PrimaryRideStatus",
+                "PrimaryRoadStatus",
+                "PrimaryLightStatus"
             ],
             "publishes": []
         },
@@ -16,7 +18,9 @@
             "subscribes": [],
             "publishes": [
                 "PrimaryErrors",
-                "PrimaryRideState"
+                "PrimaryRideStatus",
+                "PrimaryRoadStatus",
+                "PrimaryLightStatus"
             ]
         }
     },
@@ -47,23 +51,210 @@
                 }
             }
         },
-        "PrimaryRideState": {
+        "PrimaryRideStatus": {
             "id": "0x2001",
-            "size": 8,
+            "size": 9,
             "layout": {
                 "Speed": {
                     "offset": 0,
+                    "width": 10,
+                    "initial": 0
+                },
+                "SpeedState": {
+                    "offset": 10,
+                    "width": 2,
+                    "initial": 0
+                },
+                "BrakeState": {
+                    "offset": 12,
+                    "width": 2,
+                    "initial": 0
+                },
+                "Cadence": {
+                    "offset": 14,
+                    "width": 8,
+                    "initial": 0
+                },
+                "CadenceState": {
+                    "offset": 22,
+                    "width": 2,
+                    "initial": 0
+                },
+                "GearState": {
+                    "offset": 24,
+                    "width": 2,
+                    "initial": 0
+                },
+                "EstimatedGear": {
+                    "offset": 26,
+                    "width": 4,
+                    "initial": 0
+                },
+                "Duration": {
+                    "offset": 30,
                     "width": 16,
                     "initial": 0
                 },
                 "Distance": {
-                    "offset": 16,
-                    "width": 32,
+                    "offset": 46,
+                    "width": 20,
                     "initial": 0
                 },
-                "Duration": {
+                "DistanceState": {
+                    "offset": 66,
+                    "width": 2,
+                    "initial": 0
+                },
+                "RideState": {
+                    "offset": 68,
+                    "width": 2,
+                    "initial": 0
+                },
+                "Reserved1": {
+                    "offset": 70,
+                    "width": 2,
+                    "initial": 0
+                }
+            }
+        },
+        "PrimaryRoadStatus": {
+            "id": "0x2002",
+            "size": 10,
+            "layout": {
+                "Altitude": {
+                    "offset": 0,
+                    "width": 12,
+                    "initial": 0
+                },
+                "AltitudeState": {
+                    "offset": 12,
+                    "width": 1,
+                    "initial": 0
+                },
+                "PressureState": {
+                    "offset": 13,
+                    "width": 1,
+                    "initial": 0
+                },
+                "TemperatureState": {
+                    "offset": 14,
+                    "width": 1,
+                    "initial": 0
+                },
+                "Reserved1": {
+                    "offset": 15,
+                    "width": 1,
+                    "initial": 0
+                },
+                "Pressure": {
+                    "offset": 16,
+                    "width": 17,
+                    "initial": 0
+                },
+                "Temperature": {
+                    "offset": 33,
+                    "width": 7,
+                    "initial": 0
+                },
+                "RoadGrade": {
+                    "offset": 40,
+                    "width": 6,
+                    "initial": 0
+                },
+                "RoadQuality": {
+                    "offset": 46,
+                    "width": 2,
+                    "initial": 0
+                },
+                "ITPMSState": {
                     "offset": 48,
-                    "width": 16,
+                    "width": 2,
+                    "initial": 0
+                },
+                "Reserved2": {
+                    "offset": 50,
+                    "width": 6,
+                    "initial": 0
+                },
+                "Reserved3": {
+                    "offset": 56,
+                    "width": 24,
+                    "initial": 0
+                }
+            }
+        },
+        "PrimaryLightStatus": {
+            "id": "0x2003",
+            "size": 6,
+            "layout": {
+                "RearTailLightState": {
+                    "offset": 0,
+                    "width": 2,
+                    "initial": 0
+                },
+                "RearBrakeLightState": {
+                    "offset": 2,
+                    "width": 2,
+                    "initial": 0
+                },
+                "RearTurnSignalState": {
+                    "offset": 4,
+                    "width": 2,
+                    "initial": 0
+                },
+                "RearThermalState": {
+                    "offset": 6,
+                    "width": 2,
+                    "initial": 0
+                },
+                "RearDriveTemperature": {
+                    "offset": 8,
+                    "width": 7,
+                    "initial": 0
+                },
+                "RearMcuTemperature": {
+                    "offset": 15,
+                    "width": 7,
+                    "initial": 0
+                },
+                "FrontMainLightState": {
+                    "offset": 22,
+                    "width": 2,
+                    "initial": 0
+                },
+                "FrontHighBeamState": {
+                    "offset": 24,
+                    "width": 2,
+                    "initial": 0
+                },
+                "FrontTurnSignalState": {
+                    "offset": 26,
+                    "width": 2,
+                    "initial": 0
+                },
+                "FrontThermalState": {
+                    "offset": 28,
+                    "width": 2,
+                    "initial": 0
+                },
+                "FrontDriveTemperature": {
+                    "offset": 30,
+                    "width": 7,
+                    "initial": 0
+                },
+                "FrontMcuTemperature": {
+                    "offset": 37,
+                    "width": 7,
+                    "initial": 0
+                },
+                "FrontModeSwitchRequested": {
+                    "offset": 44,
+                    "width": 1,
+                    "initial": 0
+                },
+                "FrontModeSwitchCycles": {
+                    "offset": 45,
+                    "width": 3,
                     "initial": 0
                 }
             }
@@ -72,6 +263,5 @@
     "encoders": {
     },
     "schedules": {
-        
     }
 }
