@@ -98,6 +98,11 @@ class FrontLightStatusPanel(SignalTable):
         super().__init__('FrontLight status', master, 
                          [
                             network.get_signal("FrontLightStatus", "MainLightState"),
+                            network.get_signal("FrontLightStatus", "HighBeamState"),
+                            network.get_signal("FrontLightStatus", "TurnSignalState"),
                             network.get_signal("FrontLightStatus", "ThermalState"),
+                            network.get_signal("FrontLightStatus", "DriveTemperature"),
+                            network.get_signal("FrontLightStatus", "McuTemperature"),
+                            network.get_signal("FrontLightStatus", "ModeSwitchRequested"),
                             network.get_signal("FrontLightStatus", "ModeSwitchCycles")
                          ], parent)
