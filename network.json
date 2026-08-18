@@ -499,7 +499,7 @@
         "AltitudeEncoder": {
             "type": "formula",
             "scale": 1,
-            "offset": -1000,
+            "offset": -500,
             "unit": "m"
         },
         "RoadGradeEncoder": {
@@ -578,9 +578,9 @@
             "type": "mapping",
             "mapping": {
                 "0": "Disabled",
-                "1": "Warning",
+                "1": "Right",
                 "2": "Left",
-                "3": "Right"
+                "3": "Hazard"
             }
         },
         "StrobeSignalEncoder": {
@@ -593,10 +593,10 @@
         "LightBehaviorEncoder": {
             "type": "mapping",
             "mapping": {
-                "0": "Default",
-                "1": "Solid",
-                "2": "Blink",
-                "3": "UNUSED"
+                "0": "Solid",
+                "1": "Blink",
+                "2": "Pulse",
+                "3": "Dynamic"
             }
         },
         "LightStateEncoder": {
