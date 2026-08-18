@@ -628,7 +628,8 @@
                 {"type": "request", "request": "RideStatus", "cycle": 0, "maxAge": 2},
                 {"type": "request", "request": "LightSynchronization", "cycle": 1, "maxAge": 3},
                 {"type": "request", "request": "FrontLightStatus", "cycle": 2, "maxAge": 15},
-                {"type": "request", "request": "RearLightStatus", "cycle": 2, "maxAge": 15}
+                {"type": "request", "request": "RearLightStatus", "cycle": 2, "maxAge": 15},
+                {"type": "request", "request": "RoadStatus", "cycle": 5, "maxAge": 15}
             ]
         },
         "MinimalSchedule": {

@@ -25,7 +25,6 @@ class SimulationContext:
 
     def setup(self):
         self.body_computer = SimulatedPeripheral(self.network.get_node("BodyComputer"))
-        self.rotor_sensor = RotorSensorSimulation(self.network.get_node("RotorSensor"))
 
 class SimulationThread(threading.Thread):
     def __init__(self, context: SimulationContext):
@@ -35,11 +34,9 @@ class SimulationThread(threading.Thread):
 
     def run(self):
         self.running = True
-        self.context.rotor_sensor.start()
 
         while self.running:
             # TODO: increase tick rate
-            self.context.rotor_sensor.on_tick(0.01)
             time.sleep(0.01)
 
     def stop(self):
@@ -90,15 +87,12 @@ if __name__ == "__main__":
 
     rear_light_status_panel = RearLightStatusPanel(bus_thread.master, simulation_context.network)
     rotor_sensor_status_panel = RotorSensorStatusPanel(bus_thread.master, simulation_context.network)
-    rotor_sensor_simulation_panel = RotorSensorSimulationPanel(simulation_context.rotor_sensor)
     body_computer_control_panel = BodyComputerControlPanel(simulation_context.body_computer)
     schedule_control = ScheduleControl(bus_thread.master, simulation_context.network.schedules)
 
     main_layout.addWidget(schedule_control, 0, 0)
     main_layout.addWidget(body_computer_control_panel, 1, 0)
     main_layout.addWidget(rear_light_status_panel, 2, 0)
-    main_layout.addWidget(rotor_sensor_simulation_panel, 3, 0)
-
     main_layout.addWidget(rotor_sensor_status_panel, 0, 1, 4, 1)
 
     simulation_thread.start()

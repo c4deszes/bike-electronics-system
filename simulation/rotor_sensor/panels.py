@@ -54,17 +54,32 @@ class RotorSensorStatusPanel(QWidget):
         self.group_layout = QVBoxLayout()
 
         self.ride_monitor = SignalTable("Ride Monitor", master, [
+            network.get_signal('RideStatus', 'Speed'),
+            network.get_signal('RideStatus', 'BrakeState'),
             network.get_signal('RideStatus', 'SpeedState'),
 
-            network.get_signal('RideStatus', 'RideStatus'),
+            network.get_signal('RideStatus', 'Cadence'),
+            network.get_signal('RideStatus', 'CadenceState'),
+
+            network.get_signal('RideStatus', 'GearState'),
+            network.get_signal('RideStatus', 'EstimatedGear'),
+
+            network.get_signal('RideStatus', 'RideState'),
             network.get_signal('RideStatus', 'Duration'),
-            network.get_signal('RideStatus', 'DistanceStatus'),
+            network.get_signal('RideStatus', 'DistanceState'),
             network.get_signal('RideStatus', 'Distance'),
         ])
 
         self.pressure_monitor = SignalTable("Pressure Monitor", master, [
             network.get_signal('RoadStatus', 'Altitude'),
-            network.get_signal('RoadStatus', 'Pressure')
+            network.get_signal('RoadStatus', 'AltitudeState'),
+            network.get_signal('RoadStatus', 'Pressure'),
+            network.get_signal('RoadStatus', 'PressureState'),
+            network.get_signal('RoadStatus', 'Temperature'),
+            network.get_signal('RoadStatus', 'TemperatureState'),
+            network.get_signal('RoadStatus', 'RoadGrade'),
+            network.get_signal('RoadStatus', 'RoadQuality'),
+            network.get_signal('RoadStatus', 'ITPMSState'),
         ])
 
         # Cadence graph
