@@ -271,7 +271,7 @@
                 "HighBeam": {
                     "offset": 23,
                     "width": 1,
-                    "initial": "Default",
+                    "initial": "Off",
                     "encoder": "GenericSwitchEncoder"
                 },
                 "Reserved1": {

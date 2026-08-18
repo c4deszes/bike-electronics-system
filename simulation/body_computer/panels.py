@@ -75,5 +75,5 @@ class BodyComputerControlPanel(QWidget):
     def update_signals(self):
         self.peripheral.requests.LightSynchronization.TargetBrightness = self.brightness_slider.value()
         self.peripheral.requests.LightSynchronization.LightMode = self.light_mode_combo.currentText()
-        self.peripheral.requests.FrontLightSetting.Behavior = self.front_mode_combo.currentText()
-        self.peripheral.requests.RearLightSetting.Behavior = self.rear_mode_combo.currentText()
+        self.peripheral.requests.LightSynchronization.FrontBehavior = self.front_mode_combo.currentText()
+        self.peripheral.requests.LightSynchronization.RearBehavior = self.rear_mode_combo.currentText()

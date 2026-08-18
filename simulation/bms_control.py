@@ -55,7 +55,6 @@ class BusThread(threading.Thread):
         with self.transport:
             with self.master:
                 self.master.virtual_bus.add(self.context.body_computer)
-                self.master.virtual_bus.add(self.context.rotor_sensor)
 
                 while self.running:
                     time.sleep(0.1)
