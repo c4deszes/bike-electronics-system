@@ -29,13 +29,11 @@ class RotorSensorSpeedPanel(QWidget):
 
         # Speed Graph
         self.speed_plot = PlotView("Speed", master, [
-            network.get_signal('SpeedStatus', 'Speed'),
-            #network.get_signal('RotorSensorSpeedDebug', 'FrontSpeed'),
-            #network.get_signal('RotorSensorSpeedDebug', 'RearSpeed')
+            network.get_signal('RideStatus', 'Speed'),
         ])
 
         self.ride_monitor = SignalTable("Braking", master, [
-            network.get_signal('SpeedStatus', 'BrakeState'),
+            network.get_signal('RideStatus', 'BrakeState'),
         ])
 
         self.group_layout.addWidget(self.speed_plot)
@@ -56,7 +54,7 @@ class RotorSensorStatusPanel(QWidget):
         self.group_layout = QVBoxLayout()
 
         self.ride_monitor = SignalTable("Ride Monitor", master, [
-            network.get_signal('SpeedStatus', 'SpeedState'),
+            network.get_signal('RideStatus', 'SpeedState'),
 
             network.get_signal('RideStatus', 'RideStatus'),
             network.get_signal('RideStatus', 'Duration'),
@@ -64,27 +62,15 @@ class RotorSensorStatusPanel(QWidget):
             network.get_signal('RideStatus', 'Distance'),
         ])
 
-        self.sensor_monitor = SignalTable("Sensor Monitor", master, [
-            network.get_signal('RotorSensorSpeedDebug', 'FrontSensorStatus'),
-            network.get_signal('RotorSensorSpeedDebug', 'RearSensorStatus'),
-            network.get_signal('RotorSensorSpeedDebug', 'CrankSensorStatus')
-        ])
-
         self.pressure_monitor = SignalTable("Pressure Monitor", master, [
-            network.get_signal('RoadStatus', 'Altitude')
-        ])
-
-        self.stats_view = SignalTable("Statistics", master, [
-            network.get_signal('RideStatistics', 'TopSpeed'),
-            network.get_signal('RideStatistics', 'AverageSpeed'),
+            network.get_signal('RoadStatus', 'Altitude'),
+            network.get_signal('RoadStatus', 'Pressure')
         ])
 
         # Cadence graph
 
         self.group_layout.addWidget(self.ride_monitor)
-        self.group_layout.addWidget(self.sensor_monitor)
         self.group_layout.addWidget(self.pressure_monitor)
-        self.group_layout.addWidget(self.stats_view)
 
         self.group.setLayout(self.group_layout)
         self.main_layout.addWidget(self.group)
@@ -152,14 +138,12 @@ class RotorSensorFullPanel(QWidget, RequestListener):
         self._update_cadence_view_geometry()
 
 # Ride status table
-        self.ride_status = QLabel(network.get_signal('RideStatus', 'RideStatus').signal.initial)
+        self.ride_status = QLabel(network.get_signal('RideStatus', 'RideState').signal.initial)
         self.ride_duration = QLabel(str(network.get_signal('RideStatus', 'Duration').signal.initial))
-        self.ride_distance_status = QLabel(network.get_signal('RideStatus', 'DistanceStatus').signal.initial)
+        self.ride_distance_status = QLabel(network.get_signal('RideStatus', 'DistanceState').signal.initial)
         self.ride_distance = QLabel(str(network.get_signal('RideStatus', 'Distance').signal.initial))
 
-        self.braking = QLabel(network.get_signal('SpeedStatus', 'BrakeState').signal.initial)
-        self.front_period = QLabel(str(network.get_signal('RotorSensorSpeedDebug', 'FrontSpeed').signal.initial))
-        self.rear_period = QLabel(str(network.get_signal('RotorSensorSpeedDebug', 'RearSpeed').signal.initial))
+        self.braking = QLabel(network.get_signal('RideStatus', 'BrakeState').signal.initial)
 
         self.main_layout.addWidget(self.plot_widget)
         self.main_layout.addWidget(self.ride_status)
@@ -167,8 +151,6 @@ class RotorSensorFullPanel(QWidget, RequestListener):
         self.main_layout.addWidget(self.ride_distance_status)
         self.main_layout.addWidget(self.ride_distance)
         self.main_layout.addWidget(self.braking)
-        self.main_layout.addWidget(self.front_period)
-        self.main_layout.addWidget(self.rear_period)
 
         self.setLayout(self.main_layout)
 
@@ -218,13 +200,13 @@ class RotorSensorFullPanel(QWidget, RequestListener):
         self.rear_period.setText(str(rear_period))
 
     def on_user_request(self, timestamp: float, request: Request, buffer: List[int], signals: SignalValueContainer) -> None:
-        if request.name == 'SpeedStatus':
+        if request.name == 'RideStatus':
             global_speed = signals['Speed'].phy
             brake_state = signals['BrakeState'].phy
             self.speed_received.emit(timestamp, global_speed)
             self.braking.setText(str(brake_state))
 
-        if request.name == 'DrivetrainStatus':
+        if request.name == 'RideStatus':
             crank_speed = signals['Cadence'].phy
 
             cadence = crank_speed
@@ -232,16 +214,11 @@ class RotorSensorFullPanel(QWidget, RequestListener):
 
         if request.name == 'RideStatus':
             self.ride_status_received.emit(
-                signals['RideStatus'].phy,
+                signals['RideState'].phy,
                 signals['Duration'].phy,
-                signals['DistanceStatus'].phy,
+                signals['DistanceState'].phy,
                 signals['Distance'].phy,
             )
-
-        if request.name == 'RotorSensorSpeedDebug':
-            front_period = signals['FrontSpeed'].raw
-            rear_period = signals['RearSpeed'].raw
-            self.period_received.emit(front_period, rear_period)
 
     def on_error(self, timestamp: float, request: Request, error_type):
         pass

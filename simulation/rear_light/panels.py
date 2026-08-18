@@ -98,10 +98,10 @@ class RearLightStatusPanel(SignalTable):
     def __init__(self, master: LineMaster, network: Network, parent=None):
         super().__init__('RearLight status', master, 
                          [
-                            network.get_signal("RearLightStatus", "TailLightStatus"),
-                            network.get_signal("RearLightStatus", "BrakeLightStatus"),
-                            network.get_signal("RearLightStatus", "TurnSignalLightStatus"),
-                            network.get_signal("RearLightStatus", "ThermalStatus"),
-                            network.get_signal("RearLightTemperatureDebug", "DriveTemperature"),
-                            network.get_signal("RearLightTemperatureDebug", "EcuTemperature")
+                            network.get_signal("RearLightStatus", "TailLightState"),
+                            network.get_signal("RearLightStatus", "BrakeLightState"),
+                            network.get_signal("RearLightStatus", "TurnSignalState"),
+                            network.get_signal("RearLightStatus", "ThermalState"),
+                            network.get_signal("RearLightStatus", "DriveTemperature"),
+                            network.get_signal("RearLightStatus", "McuTemperature")
                          ], parent)

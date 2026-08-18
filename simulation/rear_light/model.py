@@ -74,6 +74,5 @@ class RearLightSimulation(SimulatedPeripheral):
         if request.name == 'LightSynchronization':
             self.last_setpoint = time.time()
             self.target_brightness = signals['TargetBrightness'].phy
-        if request.name == 'RearLightSetting':
             self.last_setpoint = time.time()
-            self.target_mode = signals['Behavior'].phy
+            self.target_mode = signals['RearBehavior'].phy

@@ -97,7 +97,7 @@ class FrontLightStatusPanel(SignalTable):
     def __init__(self, master: LineMaster, network, parent=None):
         super().__init__('FrontLight status', master, 
                          [
-                            network.get_signal("FrontLightStatus", "MainBeamStatus"),
-                            network.get_signal("FrontLightStatus", "ThermalStatus"),
-                            network.get_signal("FrontLightStatus", "ControlCycleCount")
+                            network.get_signal("FrontLightStatus", "MainLightState"),
+                            network.get_signal("FrontLightStatus", "ThermalState"),
+                            network.get_signal("FrontLightStatus", "ModeSwitchCycles")
                          ], parent)

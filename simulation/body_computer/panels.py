@@ -24,7 +24,7 @@ class BodyComputerControlPanel(QWidget):
         self.light_mode_label = QLabel("Mode")
         self.light_mode_combo = QComboBox()
         # TODO: populate based on encoder
-        self.light_mode_combo.addItems(['Adaptive', 'Standard', 'Emergency', 'Off'])
+        self.light_mode_combo.addItems(['Adaptive', 'DLR', 'Emergency', 'Off'])
         self.light_mode_combo.currentTextChanged.connect(self.update_signals)
 
         self.brightness_label = QLabel("Brightness")
@@ -46,7 +46,7 @@ class BodyComputerControlPanel(QWidget):
 
         self.front_mode_label = QLabel("Front Light Mode")
         self.front_mode_combo = QComboBox()
-        self.front_mode_combo.addItems(['Default', 'Solid', 'Blink', 'UNUSED'])
+        self.front_mode_combo.addItems(['Solid', 'Blink', 'Pulse', 'Dynamic'])
         self.front_mode_combo.currentTextChanged.connect(self.update_signals)
 
         self.front_light_layout.addWidget(self.front_mode_label, 0, 0)
@@ -59,7 +59,7 @@ class BodyComputerControlPanel(QWidget):
 
         self.rear_mode_label = QLabel("Rear Light Mode")
         self.rear_mode_combo = QComboBox()
-        self.rear_mode_combo.addItems(['Default', 'Solid', 'Blink', 'UNUSED'])
+        self.rear_mode_combo.addItems(['Solid', 'Blink', 'Pulse', 'Dynamic'])
         self.rear_mode_combo.currentTextChanged.connect(self.update_signals)
         self.rear_light_layout.addWidget(self.rear_mode_label, 0, 0)
         self.rear_light_layout.addWidget(self.rear_mode_combo, 0, 1)

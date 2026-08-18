@@ -37,7 +37,7 @@ class BodyComputerSimulation(SimulatedPeripheral):
 
     def on_subscriber_event(self, request, signals):
         if request.name == 'FrontLightStatus':
-            new_cycle_count = signals['ControlCycleCount'].phy
+            new_cycle_count = signals['ModeSwitchCycles'].phy
 
             if new_cycle_count != self.last_cycle_count:
                 self.active = True
